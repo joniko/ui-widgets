@@ -18,10 +18,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         <div
           key={index}
           className={cn(
-            "max-w-xs lg:max-w-md px-4 py-2 rounded-2xl",
             isUser
-              ? "bg-blue-600 text-white ml-auto"
-              : "bg-muted text-foreground"
+              ? "max-w-[310px] px-4 py-3 bg-purple-500 text-white ml-auto shadow-md rounded-2xl"
+              : "max-w-[310px] text-gray-800 text-base leading-relaxed py-1"
           )}
         >
           {block.text}
@@ -45,7 +44,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         />
         <AvatarFallback className={cn(
           "text-xs",
-          isUser ? "bg-blue-100 text-blue-600" : "bg-green-100 text-green-600"
+          isUser ? "bg-purple-100 text-purple-600" : "bg-green-100 text-green-600"
         )}>
           {isUser ? "U" : "A"}
         </AvatarFallback>
@@ -57,15 +56,14 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       )}>
         {message.blocks.map((block, index) => renderBlock(block, index))}
         
-        <div className={cn(
-          "text-xs text-muted-foreground",
-          isUser ? "text-right" : "text-left"
-        )}>
-          {new Date(message.createdAt).toLocaleTimeString('es-ES', {
-            hour: '2-digit',
-            minute: '2-digit'
-          })}
-        </div>
+        {isUser && (
+          <div className="text-xs text-muted-foreground text-right">
+            {new Date(message.createdAt).toLocaleTimeString('es-ES', {
+              hour: '2-digit',
+              minute: '2-digit'
+            })}
+          </div>
+        )}
       </div>
     </div>
   )

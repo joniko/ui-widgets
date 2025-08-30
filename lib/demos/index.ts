@@ -2,8 +2,10 @@ import { DemoDefinition } from '../types'
 import { transferDemo } from './transfer'
 import { payServiceDemo } from './pay-service'
 import { helpDemo } from './help'
+import { mainAssistantDemo } from './main-assistant'
 
 export const DEMO_REGISTRY: Record<string, DemoDefinition> = {
+  'main-assistant': mainAssistantDemo,
   transfer: transferDemo,
   'pay-service': payServiceDemo,
   help: helpDemo
