@@ -19,11 +19,6 @@ export type BottomSheetProps = {
   children: React.ReactNode
   footer?: React.ReactNode
   modal?: boolean
-  snapPoints?: Array<number>
-  initialSnap?: number
-  fadeFromIndex?: number
-  snapToSequentialPoint?: boolean
-  repositionInputs?: boolean
   className?: string
 }
 
@@ -35,12 +30,9 @@ export function BottomSheet({
   children,
   footer,
   modal = true,
-  fadeFromIndex = 0,
-  snapToSequentialPoint = true,
-  repositionInputs = true,
   className
 }: BottomSheetProps) {
-  const { isOpen, closeSheet, options } = useBottomSheet()
+  const { isOpen, closeSheet } = useBottomSheet()
   
   const isControlled = open !== undefined
   const isOpenState = isControlled ? open : isOpen
