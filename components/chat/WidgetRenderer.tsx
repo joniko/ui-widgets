@@ -22,7 +22,14 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
   const { openSheet } = useBottomSheet()
 
   const renderInfoCard = (props: Record<string, unknown>) => (
-    <Card className="w-full max-w-sm">
+    <Card 
+      className="w-full max-w-sm"
+      style={{
+        borderRadius: '16px',
+        background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
+        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+      }}
+    >
       <CardHeader className="pb-3">
         <CardTitle className="text-base">{props.title as string}</CardTitle>
       </CardHeader>
@@ -76,7 +83,14 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
   )
 
   const renderAccountList = (props: Record<string, unknown>) => (
-    <Card className="w-full max-w-sm">
+    <Card 
+      className="w-full max-w-sm"
+      style={{
+        borderRadius: '16px',
+        background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
+        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+      }}
+    >
       <CardHeader className="pb-3">
         <CardTitle className="text-base">Tus Cuentas</CardTitle>
       </CardHeader>
@@ -133,7 +147,14 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
   )
 
   const renderPaymentCta = (props: Record<string, unknown>) => (
-    <Card className="w-full max-w-sm">
+    <Card 
+      className="w-full max-w-sm"
+      style={{
+        borderRadius: '16px',
+        background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
+        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+      }}
+    >
       <CardContent className="p-4">
         <div className="text-center space-y-3">
           <div className="text-2xl">💳</div>
@@ -174,7 +195,14 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
   )
 
   const renderConfirmation = (props: Record<string, unknown>) => (
-    <Card className="w-full max-w-sm">
+    <Card 
+      className="w-full max-w-sm"
+      style={{
+        borderRadius: '16px',
+        background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
+        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+      }}
+    >
       <CardContent className="p-4">
         <div className="text-center space-y-3">
           <div className="text-2xl">✅</div>

@@ -42,18 +42,6 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       "flex items-start space-x-3 mb-6",
       isUser && "flex-row-reverse space-x-reverse"
     )}>
-      <Avatar className="w-8 h-8">
-        <AvatarImage 
-          src={isUser ? "/avatars/user.png" : "/avatars/assistant.png"} 
-          alt={isUser ? "Usuario" : "Asistente"}
-        />
-        <AvatarFallback className={cn(
-          "text-xs",
-          isUser ? "bg-primary/20 text-primary" : "bg-green-100 text-green-600"
-        )}>
-          {isUser ? "U" : "A"}
-        </AvatarFallback>
-      </Avatar>
       
       <div className={cn(
         "flex flex-col space-y-2",
