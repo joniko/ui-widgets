@@ -3,6 +3,7 @@
 import { Drawer } from 'vaul'
 import { useBottomSheet } from './useBottomSheet'
 import { cn } from '@/lib/utils'
+import { VisuallyHidden } from '@/components/ui/visually-hidden'
 
 export type BottomSheetProps = {
   open?: boolean
@@ -58,6 +59,11 @@ export function BottomSheet({
         "pb-[max(theme(spacing.4),env(safe-area-inset-bottom))]",
         className
       )}>
+        {/* Hidden title for accessibility */}
+        <VisuallyHidden>
+          <h2>Bottom Sheet</h2>
+        </VisuallyHidden>
+        
         <div className="mx-auto w-full max-w-md">
           <div className="rounded-t-[10px] bg-background">
             <div className="flex items-center justify-center p-4">

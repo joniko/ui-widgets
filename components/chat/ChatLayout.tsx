@@ -96,22 +96,7 @@ export function ChatLayout({
   return (
     <div className="flex flex-col h-screen bg-background">
       {/* Header */}
-      <div className="border-b border-neutral-100 bg-white">
-        <div className="flex items-center space-x-3 px-4 py-4">
-          <Avatar className="w-10 h-10">
-            <AvatarImage src="/avatars/assistant.png" alt="Asistente" />
-            <AvatarFallback className="bg-primary/20 text-primary">A</AvatarFallback>
-          </Avatar>
-          <div className="flex-1">
-            <h1 className="font-semibold text-neutral-900 text-lg">Asistente</h1>
-            <div className="flex items-center space-x-2">
-              <Badge variant="secondary" className="text-xs bg-primary/20 text-primary border-0">
-                En línea
-              </Badge>
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* Messages */}
       <div className="flex-1 overflow-hidden bg-white px-4">
