@@ -28,7 +28,6 @@ export function AppHeader({ currentDemo, showBackButton = false }: AppHeaderProp
             {currentDemo ? (
               <div>
                 <h1 className="text-xl font-semibold flex items-center space-x-2">
-                  <span>{currentDemo.icon}</span>
                   <span>{currentDemo.title}</span>
                 </h1>
                 {currentDemo.description && (
@@ -55,10 +54,6 @@ export function AppHeader({ currentDemo, showBackButton = false }: AppHeaderProp
                 </Button>
               </Link>
             )}
-            
-            <Badge variant="outline" className="text-xs">
-              v1.0.0
-            </Badge>
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ export function ChatComposer({ onSendMessage, disabled = false }: ChatComposerPr
   }, [message])
 
   return (
-    <div className="border-t border-neutral-100 bg-white p-4 pb-[max(theme(spacing.4),env(safe-area-inset-bottom))]">
+    <div className="bg-transparent">
       <div className="relative max-h-full min-h-[60px] w-full">
         {/* Capa 1: Sombra exterior principal */}
         <div 

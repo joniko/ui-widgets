@@ -24,6 +24,7 @@ export function ChatLayout({
 }: ChatLayoutProps) {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [quickReplies, setQuickReplies] = useState<QuickReply[]>(initialQuickReplies)
+  const [hasUserInteracted, setHasUserInteracted] = useState(false)
   const { openSheet, isOpen, content, closeSheet } = useBottomSheet()
 
   const pushMessage = useCallback((message: Message) => {
@@ -41,6 +42,10 @@ export function ChatLayout({
   }, [pushMessage])
 
   const handleQuickReply = useCallback((quickReply: QuickReply) => {
+    // Mark user interaction and hide quick replies
+    setHasUserInteracted(true)
+    setQuickReplies([])
+    
     // Add user message for the quick reply
     const userMessage = createMessage('user', [createTextBlock(quickReply.label)])
     pushMessage(userMessage)
@@ -57,17 +62,13 @@ export function ChatLayout({
     if (onQuickReply) {
       onQuickReply(quickReply, ctx)
     }
-
-    // Update quick replies if needed
-    if (quickReply.payload?.action === 'open_transfer') {
-      setQuickReplies([
-        { id: '1', label: 'Confirmar transferencia', payload: { action: 'confirm_transfer' } },
-        { id: '2', label: 'Cancelar', payload: { action: 'cancel_transfer' } }
-      ])
-    }
-  }, [onQuickReply, openSheet, pushAssistantMessage])
+  }, [onQuickReply, openSheet, pushAssistantMessage, pushMessage])
 
   const handleSendMessage = useCallback((text: string) => {
+    // Mark user interaction and hide quick replies
+    setHasUserInteracted(true)
+    setQuickReplies([])
+    
     // Add user message
     pushUserMessage(text)
 
@@ -94,22 +95,25 @@ export function ChatLayout({
   }, [onUserMessage, openSheet, pushAssistantMessage, pushUserMessage])
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen bg-background relative">
       {/* Header */}
 
 
-      {/* Messages */}
-      <div className="flex-1 overflow-hidden bg-white px-4">
+      {/* Messages - Full height with padding for floating bottom */}
+      <div className="flex-1 overflow-hidden bg-white px-4 pb-32">
         <MessageList messages={messages} />
       </div>
 
-      {/* Quick Replies */}
-      {quickReplies.length > 0 && (
-        <QuickReplies quickReplies={quickReplies} onQuickReply={handleQuickReply} />
-      )}
+      {/* Floating Bottom Container */}
+      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/95 to-transparent pt-6 pb-6 px-4">
+        {/* Quick Replies - Only show if user hasn't interacted */}
+        {!hasUserInteracted && (
+          <QuickReplies quickReplies={quickReplies} onQuickReply={handleQuickReply} />
+        )}
 
-      {/* Composer */}
-      <ChatComposer onSendMessage={handleSendMessage} />
+        {/* Composer */}
+        <ChatComposer onSendMessage={handleSendMessage} />
+      </div>
       
       {/* Bottom Sheet */}
       <BottomSheet 

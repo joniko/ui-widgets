@@ -38,10 +38,12 @@ export default function DemosPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base">
-                    {demo.description}
-                  </CardDescription>
-                  <div className="mt-4">
+                  {demo.description && (
+                    <CardDescription className="text-base">
+                      {demo.description}
+                    </CardDescription>
+                  )}
+                  <div className={demo.description ? "mt-4" : ""}>
                     <Button className="w-full" variant="outline">
                       Probar Demo
                     </Button>

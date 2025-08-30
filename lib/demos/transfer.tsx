@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeftIcon } from 'lucide-react'
 
 // Mock de contactos
 const mockContacts = [
@@ -57,7 +58,7 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
 
   const scaleVariants = {
     enter: {
-      scale: 0.95,
+      scale: 0.97,
       opacity: 0,
       y: 20
     },
@@ -118,21 +119,21 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       animate="center"
       exit="exit"
       transition={{
-        scale: { type: "spring", stiffness: 300, damping: 30 },
+        scale: { type: "tween", ease: "easeInOut", duration: 0.3 },
         opacity: { duration: 0.1 },
-        y: { type: "spring", stiffness: 400, damping: 25 }
+        y: { type: "tween", ease: "easeInOut", duration: 0.3 }
       }}
-      className="flex flex-col h-full"
+      className="flex flex-col"
     >
-      <div className="px-6 py-4 border-b">
+      <div className="px-0 py-4">
         <h2 className="text-xl font-semibold">Elegí el contacto</h2>
       </div>
       
-      <div className="flex-1 overflow-auto">
+      <div className="">
         {mockContacts.map((contact) => (
           <button
             key={contact.id}
-            className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full px-0 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
             onClick={() => handleContactSelect(contact)}
           >
             <div className="flex items-center gap-4">
@@ -154,10 +155,10 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
         ))}
       </div>
       
-      <div className="px-6 py-4 border-t">
-        <button className="w-full text-primary font-medium">
+      <div className="px-0 py-4">
+        <Button variant="secondary" className="w-full" size="lg">
           Elegí desde tus contactos
-        </button>
+        </Button>
       </div>
     </motion.div>
   )
@@ -170,28 +171,31 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       animate="center"
       exit="exit"
       transition={{
-        scale: { type: "spring", stiffness: 300, damping: 30 },
+        scale: { type: "tween", ease: "easeInOut", duration: 0.3 },
         opacity: { duration: 0.1 },
-        y: { type: "spring", stiffness: 400, damping: 25 }
+        y: { type: "tween", ease: "easeInOut", duration: 0.3 }
       }}
-      className="flex flex-col h-full"
+      className="flex flex-col"
     >
-      <div className="px-6 py-4 border-b">
-        <button 
+      <div className="flex flex-row px-0 py-4">
+        <Button 
+          variant="ghost"
           onClick={() => setCurrentStep('contacts')}
-          className="text-primary hover:underline text-sm mb-2"
+          className="p-2 mb-2 -ml-2 flex-shrink-0"
         >
-          ← Volver
-        </button>
+          <ArrowLeftIcon className="w-4 h-4" />
+        </Button>
         <h2 className="text-xl font-semibold">Seleccioná la cuenta para transferir</h2>
-        <p className="text-sm text-gray-600 mt-1">{selectedContact?.name}</p>
       </div>
       
-      <div className="flex-1 overflow-auto">
+      <div className="">
+        <div className="p-0">
+          <p className="text-sm text-gray-600 mt-1">{selectedContact?.name}</p>
+        </div>
         {mockBankAccounts.map((account) => (
           <button
             key={account.id}
-            className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full px-0 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
             onClick={() => handleAccountSelect(account)}
           >
             <div className="flex items-center gap-4">
@@ -217,23 +221,24 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       animate="center"
       exit="exit"
       transition={{
-        scale: { type: "spring", stiffness: 300, damping: 30 },
+        scale: { type: "tween", ease: "easeInOut", duration: 0.3 },
         opacity: { duration: 0.1 },
-        y: { type: "spring", stiffness: 400, damping: 25 }
+        y: { type: "tween", ease: "easeInOut", duration: 0.3 }
       }}
-      className="flex flex-col h-full"
+      className="flex flex-col"
     >
-      <div className="px-6 py-4 border-b">
-        <button 
+      <div className="flex flex-row px-0 py-4">
+        <Button 
+          variant="ghost"
           onClick={() => setCurrentStep('accounts')}
-          className="text-primary hover:underline text-sm mb-2"
+          className="p-2 mb-2 -ml-2 flex-shrink-0"
         >
-          ← Volver
-        </button>
+          <ArrowLeftIcon className="w-4 h-4" />
+        </Button>
         <h2 className="text-xl font-semibold">Confirma la transferencia</h2>
       </div>
       
-      <div className="flex-1 px-6 py-6">
+      <div className="px-0 py-0">
         <div className="flex items-center gap-4 mb-6">
           <Avatar className="w-12 h-12">
             <AvatarImage src={selectedContact?.avatar} />
@@ -249,7 +254,7 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
           <p className="text-4xl font-bold">${monto.toLocaleString()}</p>
         </div>
         
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
+        <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex justify-between items-center">
             <span className="text-gray-600">Dinero en cuenta</span>
             <span className="text-gray-400">›</span>
@@ -257,9 +262,9 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
         </div>
       </div>
       
-      <div className="px-6 pb-6">
-        <Button 
-          className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl text-lg font-medium"
+      <div className="px-0 py-4">
+        <Button className="w-full" size="lg" variant="default"
+  
           onClick={handleConfirm}
         >
           Confirmar transferencia
@@ -269,13 +274,19 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   )
 
   return (
-    <div className="flex flex-col h-full relative overflow-hidden">
+    <motion.div 
+      className="flex flex-col relative overflow-hidden"
+      layout
+      transition={{ 
+        layout: { duration: 0.3, ease: "easeInOut" }
+      }}
+    >
       <AnimatePresence mode="wait">
         {currentStep === 'contacts' && renderContactsStep()}
         {currentStep === 'accounts' && renderAccountsStep()}
         {currentStep === 'confirmation' && renderConfirmationStep()}
       </AnimatePresence>
-    </div>
+    </motion.div>
   )
 }
 
@@ -355,7 +366,10 @@ export const transferDemo: DemoDefinition = {
         
         // Abrir el bottom sheet con el flujo de transferencia
         setTimeout(() => {
-          ctx.openSheet(<TransferFlow monto={monto} ctx={ctx} />)
+          ctx.openSheet(
+            <TransferFlow monto={monto} ctx={ctx} />,
+            { snapPoints: [0.4, 0.6, 0.9], initialSnap: 0.6 }
+          )
         }, 500)
       }, 1000)
     } else if (text.toLowerCase().includes('transferir')) {
@@ -381,7 +395,10 @@ export const transferDemo: DemoDefinition = {
         
         // Abrir el bottom sheet con el flujo de transferencia
         setTimeout(() => {
-          ctx.openSheet(<TransferFlow monto={monto} ctx={ctx} />)
+          ctx.openSheet(
+            <TransferFlow monto={monto} ctx={ctx} />,
+            { snapPoints: [0.4, 0.6, 0.9], initialSnap: 0.6 }
+          )
         }, 500)
       }, 1000)
     } else {

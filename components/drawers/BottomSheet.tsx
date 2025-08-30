@@ -8,6 +8,7 @@ import {
   DrawerDescription,
   DrawerFooter,
 } from '@/components/ui/drawer'
+import { VisuallyHidden } from '@/components/ui/visually-hidden'
 import { useBottomSheet } from './useBottomSheet'
 import { cn } from '@/lib/utils'
 
@@ -48,12 +49,16 @@ export function BottomSheet({
         "max-h-[95svh]",
         className
       )}>
-        {(title || description) && (
-          <DrawerHeader>
-            {title && <DrawerTitle>{title}</DrawerTitle>}
-            {description && <DrawerDescription>{description}</DrawerDescription>}
-          </DrawerHeader>
-        )}
+        <DrawerHeader className={!title && !description ? "sr-only" : ""}>
+          {title ? (
+            <DrawerTitle>{title}</DrawerTitle>
+          ) : (
+            <VisuallyHidden>
+              <DrawerTitle>Dialog</DrawerTitle>
+            </VisuallyHidden>
+          )}
+          {description && <DrawerDescription>{description}</DrawerDescription>}
+        </DrawerHeader>
         
         <div className="flex-1 overflow-auto px-4">
           {children}

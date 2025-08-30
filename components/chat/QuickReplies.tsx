@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { QuickReply } from '@/lib/types'
@@ -26,14 +26,21 @@ interface QuickRepliesProps {
 }
 
 export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) {
-  if (quickReplies.length === 0) return null
-
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
+      y: 0,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        duration: 0.3
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        duration: 0.2
       }
     }
   }
@@ -44,14 +51,18 @@ export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) 
   }
 
   return (
-    <div className="px-4 py-4 border-t border-neutral-100 bg-white">
-      <ScrollArea className="w-full">
-        <motion.div
-          className="flex space-x-3 min-w-max px-2"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
+    <AnimatePresence>
+      {quickReplies.length > 0 && (
+    <motion.div 
+      className="pb-4"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      <div className="">
+        <ScrollArea className="w-full">
+          <div className="flex space-x-3 min-w-max px-2">
           {quickReplies.map((quickReply) => (
             <motion.div key={quickReply.id} variants={itemVariants}>
               <Button
@@ -76,9 +87,12 @@ export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) 
               </Button>
             </motion.div>
           ))}
-        </motion.div>
-        <ScrollBar orientation="horizontal" className="hidden" />
-      </ScrollArea>
-    </div>
+          </div>
+          <ScrollBar orientation="horizontal" className="hidden" />
+        </ScrollArea>
+      </div>
+    </motion.div>
+      )}
+    </AnimatePresence>
   )
 }
