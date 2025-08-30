@@ -14,9 +14,9 @@ export default function HomePage() {
             <Badge variant="secondary" className="mb-4">
               Prototipo
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Chat Agéntico con
-              <span className="text-blue-600"> Widgets Inline</span>
+            <h1 className="text-4xl font-bold text-center mb-8">
+              Chat Agéntico con{' '}
+              <span className="text-primary"> Widgets Inline</span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
               Demostración de un chat inteligente donde el asistente puede insertar widgets interactivos 
@@ -46,8 +46,8 @@ export default function HomePage() {
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="text-center">
               <CardHeader>
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MessageCircleIcon className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MessageCircleIcon className="w-8 h-8 text-primary" />
                 </div>
                 <CardTitle>Chat Inteligente</CardTitle>
                 <CardDescription>
@@ -112,7 +112,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-blue-600 text-white">
+      <section className="py-20 px-4 bg-primary text-primary-foreground">
         <div className="container mx-auto text-center">
           <h2 className="text-3xl font-bold mb-6">
             ¿Listo para explorar?

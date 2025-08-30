@@ -52,7 +52,7 @@ export const payServiceDemo: DemoDefinition = {
               <button className="flex-1 bg-gray-200 text-gray-800 py-3 rounded-lg font-medium">
                 Cancelar
               </button>
-              <button className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium">
+              <button className="flex-1 bg-primary text-primary-foreground py-3 rounded-lg font-medium">
                 Pagar Ahora
               </button>
             </div>

@@ -49,7 +49,7 @@ export const transferDemo: DemoDefinition = {
               <label className="block text-sm font-medium mb-2">Concepto</label>
               <textarea placeholder="Descripción de la transferencia" className="w-full p-3 border rounded-lg" rows={3} />
             </div>
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium">
+            <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium">
               Continuar
             </button>
           </div>

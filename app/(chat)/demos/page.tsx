@@ -28,7 +28,7 @@ export default function DemosPage() {
                   <div className="flex items-center space-x-3">
                     <div className="text-3xl">{demo.icon}</div>
                     <div>
-                      <CardTitle className="group-hover:text-blue-600 transition-colors">
+                      <CardTitle className="group-hover:text-primary transition-colors">
                         {demo.title}
                       </CardTitle>
                       <Badge variant="outline" className="mt-2">

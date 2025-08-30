@@ -65,7 +65,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
           <div className="space-y-2">
             {(props.operations as string[]).map((op: string, index: number) => (
               <div key={index} className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                <div className="w-2 h-2 bg-primary rounded-full" />
                 <span className="text-sm">{op}</span>
               </div>
             ))}
@@ -90,7 +90,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                 <h3 className="text-lg font-semibold mb-4">{account.name as string}</h3>
                 <div className="space-y-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600">
+                    <div className="text-3xl font-bold text-primary">
                       ${(account.balance as number).toLocaleString()}
                     </div>
                     <div className="text-sm text-muted-foreground">Saldo disponible</div>
@@ -110,8 +110,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
             )}
           >
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                                  <span className="text-blue-600 font-semibold">
+              <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                                  <span className="text-primary font-semibold">
                     {(account.name as string).charAt(0)}
                   </span>
               </div>
@@ -184,8 +184,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
               <div className="mt-3 space-y-2 text-left">
                 {(props.steps as string[]).map((step: string, index: number) => (
                   <div key={index} className="flex items-center space-x-2">
-                    <div className="w-5 h-5 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 text-xs font-bold">{index + 1}</span>
+                    <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center">
+                      <span className="text-primary text-xs font-bold">{index + 1}</span>
                     </div>
                     <span className="text-sm">{step}</span>
                   </div>

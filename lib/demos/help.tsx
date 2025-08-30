@@ -31,23 +31,23 @@ export const helpDemo: DemoDefinition = {
         <div className="p-6">
           <h3 className="text-lg font-semibold mb-4">Cómo hacer una transferencia</h3>
           <div className="space-y-4">
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-medium text-blue-900 mb-2">Paso 1: Selecciona tu cuenta</h4>
-              <p className="text-blue-800 text-sm">Elige la cuenta desde la cual quieres transferir dinero</p>
+            <div className="bg-primary/5 p-4 rounded-lg">
+              <h4 className="font-medium text-primary-foreground mb-2">Paso 1: Selecciona tu cuenta</h4>
+              <p className="text-primary-foreground/80 text-sm">Elige la cuenta desde la cual quieres transferir dinero</p>
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-medium text-blue-900 mb-2">Paso 2: Ingresa el monto</h4>
-              <p className="text-blue-800 text-sm">Escribe la cantidad que deseas transferir</p>
+            <div className="bg-primary/5 p-4 rounded-lg">
+              <h4 className="font-medium text-primary-foreground mb-2">Paso 2: Ingresa el monto</h4>
+              <p className="text-primary-foreground/80 text-sm">Escribe la cantidad que deseas transferir</p>
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-medium text-blue-900 mb-2">Paso 3: Cuenta destino</h4>
-              <p className="text-blue-800 text-sm">Ingresa el número de cuenta o CBU del destinatario</p>
+            <div className="bg-primary/5 p-4 rounded-lg">
+              <h4 className="font-medium text-primary-foreground mb-2">Paso 3: Cuenta destino</h4>
+              <p className="text-primary-foreground/80 text-sm">Ingresa el número de cuenta o CBU del destinatario</p>
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <h4 className="font-medium text-blue-900 mb-2">Paso 4: Confirma</h4>
-              <p className="text-blue-800 text-sm">Revisa los datos y confirma la operación</p>
+            <div className="bg-primary/5 p-4 rounded-lg">
+              <h4 className="font-medium text-primary-foreground mb-2">Paso 4: Confirma</h4>
+              <p className="text-primary-foreground/80 text-sm">Revisa los datos y confirma la operación</p>
             </div>
-            <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium">
+            <button className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-medium">
               Entendido
             </button>
           </div>
@@ -75,7 +75,7 @@ export const helpDemo: DemoDefinition = {
           <h3 className="text-lg font-semibold mb-4">Contactar Soporte</h3>
           <div className="space-y-4">
             <div className="text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">📞</span>
               </div>
               <h4 className="font-medium mb-2">Línea de Atención</h4>
