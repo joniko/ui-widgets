@@ -9,6 +9,7 @@ import { MessageList } from './MessageList'
 import { QuickReplies } from './QuickReplies'
 import { ChatComposer } from './ChatComposer'
 import { useBottomSheet } from '@/components/drawers/useBottomSheet'
+import { BottomSheet } from '@/components/drawers/BottomSheet'
 
 interface ChatLayoutProps {
   initialMessages: Message[]
@@ -25,7 +26,7 @@ export function ChatLayout({
 }: ChatLayoutProps) {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [quickReplies, setQuickReplies] = useState<QuickReply[]>(initialQuickReplies)
-  const { openSheet } = useBottomSheet()
+  const { openSheet, isOpen, content, closeSheet } = useBottomSheet()
 
   const pushMessage = useCallback((message: Message) => {
     setMessages(prev => [...prev, message])
@@ -124,6 +125,14 @@ export function ChatLayout({
 
       {/* Composer */}
       <ChatComposer onSendMessage={handleSendMessage} />
+      
+      {/* Bottom Sheet */}
+      <BottomSheet 
+        open={isOpen}
+        onOpenChange={closeSheet}
+      >
+        {content}
+      </BottomSheet>
     </div>
   )
 }
