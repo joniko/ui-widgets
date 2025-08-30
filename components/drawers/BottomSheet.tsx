@@ -1,9 +1,15 @@
 'use client'
 
-import { Drawer } from 'vaul'
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
+} from '@/components/ui/drawer'
 import { useBottomSheet } from './useBottomSheet'
 import { cn } from '@/lib/utils'
-import { VisuallyHidden } from '@/components/ui/visually-hidden'
 
 export type BottomSheetProps = {
   open?: boolean
@@ -41,59 +47,32 @@ export function BottomSheet({
   const handleOpenChange = isControlled ? onOpenChange : closeSheet
 
   return (
-          <Drawer.Root
-        open={isOpenState}
-        onOpenChange={handleOpenChange}
-        modal={modal}
-        snapPoints={options.snapPoints || [0.25, 0.5, 0.9]}
-        activeSnapPoint={options.initialSnap || 0.5}
-        setActiveSnapPoint={() => {}}
-        fadeFromIndex={fadeFromIndex}
-        snapToSequentialPoint={snapToSequentialPoint}
-        repositionInputs={repositionInputs}
-      >
-      <Drawer.Overlay className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
-      <Drawer.Content className={cn(
-        "bg-background flex flex-col rounded-t-[10px] max-h-[95svh]",
-        "fixed bottom-0 left-0 right-0 z-50",
-        "pb-[max(theme(spacing.4),env(safe-area-inset-bottom))]",
+    <Drawer
+      open={isOpenState}
+      onOpenChange={handleOpenChange}
+      modal={modal}
+    >
+      <DrawerContent className={cn(
+        "max-h-[95svh]",
         className
       )}>
-        {/* Hidden title for accessibility */}
-        <VisuallyHidden>
-          <h2>Bottom Sheet</h2>
-        </VisuallyHidden>
+        {(title || description) && (
+          <DrawerHeader>
+            {title && <DrawerTitle>{title}</DrawerTitle>}
+            {description && <DrawerDescription>{description}</DrawerDescription>}
+          </DrawerHeader>
+        )}
         
-        <div className="mx-auto w-full max-w-md">
-          <div className="rounded-t-[10px] bg-background">
-            <div className="flex items-center justify-center p-4">
-              <div className="h-1 w-12 rounded-full bg-muted" />
-            </div>
-            {(title || description) && (
-              <div className="px-4 pb-4">
-                {title && (
-                  <h3 className="text-lg font-semibold leading-none tracking-tight">
-                    {title}
-                  </h3>
-                )}
-                {description && (
-                  <p className="text-sm text-muted-foreground mt-1">
-                    {description}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-          <div className="flex-1 overflow-auto">
-            {children}
-          </div>
-          {footer && (
-            <div className="border-t bg-muted/50 p-4">
-              {footer}
-            </div>
-          )}
+        <div className="flex-1 overflow-auto px-4">
+          {children}
         </div>
-      </Drawer.Content>
-    </Drawer.Root>
+        
+        {footer && (
+          <DrawerFooter>
+            {footer}
+          </DrawerFooter>
+        )}
+      </DrawerContent>
+    </Drawer>
   )
 }
