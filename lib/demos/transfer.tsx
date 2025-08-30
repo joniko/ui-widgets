@@ -58,15 +58,18 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const scaleVariants = {
     enter: {
       scale: 0.95,
-      opacity: 0
+      opacity: 0,
+      y: 20
     },
     center: {
       scale: 1,
-      opacity: 1
+      opacity: 1,
+      y: 0
     },
     exit: {
       scale: 0.95,
-      opacity: 0
+      opacity: 0,
+      y: 10
     }
   }
 
@@ -116,7 +119,8 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       exit="exit"
       transition={{
         scale: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.15 }
+        opacity: { duration: 0.15 },
+        y: { type: "spring", stiffness: 400, damping: 25 }
       }}
       className="flex flex-col h-full"
     >
@@ -167,7 +171,8 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       exit="exit"
       transition={{
         scale: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.15 }
+        opacity: { duration: 0.15 },
+        y: { type: "spring", stiffness: 400, damping: 25 }
       }}
       className="flex flex-col h-full"
     >
@@ -213,7 +218,8 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       exit="exit"
       transition={{
         scale: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.15 }
+        opacity: { duration: 0.15 },
+        y: { type: "spring", stiffness: 400, damping: 25 }
       }}
       className="flex flex-col h-full"
     >
