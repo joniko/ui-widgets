@@ -55,21 +55,19 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const [selectedContact, setSelectedContact] = useState<typeof mockContacts[0] | null>(null)
   const [selectedAccount, setSelectedAccount] = useState<typeof mockBankAccounts[0] | null>(null)
 
-  const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
+  const scaleVariants = {
+    enter: {
+      scale: 0.95,
       opacity: 0
-    }),
+    },
     center: {
-      zIndex: 1,
-      x: 0,
+      scale: 1,
       opacity: 1
     },
-    exit: (direction: number) => ({
-      zIndex: 0,
-      x: direction < 0 ? 300 : -300,
+    exit: {
+      scale: 0.95,
       opacity: 0
-    })
+    }
   }
 
   const handleContactSelect = (contact: typeof mockContacts[0]) => {
@@ -112,14 +110,13 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const renderContactsStep = () => (
     <motion.div
       key="contacts"
-      custom={-1}
-      variants={slideVariants}
+      variants={scaleVariants}
       initial="enter"
       animate="center"
       exit="exit"
       transition={{
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
+        scale: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.15 }
       }}
       className="flex flex-col h-full"
     >
@@ -164,14 +161,13 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const renderAccountsStep = () => (
     <motion.div
       key="accounts"
-      custom={1}
-      variants={slideVariants}
+      variants={scaleVariants}
       initial="enter"
       animate="center"
       exit="exit"
       transition={{
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
+        scale: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.15 }
       }}
       className="flex flex-col h-full"
     >
@@ -211,14 +207,13 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const renderConfirmationStep = () => (
     <motion.div
       key="confirmation"
-      custom={1}
-      variants={slideVariants}
+      variants={scaleVariants}
       initial="enter"
       animate="center"
       exit="exit"
       transition={{
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 }
+        scale: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.15 }
       }}
       className="flex flex-col h-full"
     >
@@ -269,7 +264,7 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
 
   return (
     <div className="flex flex-col h-full relative overflow-hidden">
-      <AnimatePresence mode="wait" custom={currentStep}>
+      <AnimatePresence mode="wait">
         {currentStep === 'contacts' && renderContactsStep()}
         {currentStep === 'accounts' && renderAccountsStep()}
         {currentStep === 'confirmation' && renderConfirmationStep()}
