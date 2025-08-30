@@ -57,7 +57,7 @@ export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) 
               <Button
                 variant="outline"
                 size="lg"
-                className="flex flex-col items-center space-y-2 p-4 h-auto min-w-[140px] rounded-full border border-[#D0D4E6] bg-indigo-50 hover:bg-indigo-100 transition-all duration-200"
+                className="flex flex-col items-center space-y-2 p-4 h-auto min-w-[140px] rounded-2xl border border-[#D0D4E6] bg-indigo-50 hover:bg-indigo-100 transition-all duration-200"
                 style={{
                   boxShadow: '0 2px 4px 0 rgba(40, 40, 52, 0.10)'
                 }}

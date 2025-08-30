@@ -4,6 +4,7 @@ import * as React from "react"
 import { Drawer as DrawerPrimitive } from "vaul"
 
 import { cn } from "@/lib/utils"
+import { VisuallyHidden } from "./visually-hidden"
 
 function Drawer({
   ...props
@@ -65,6 +66,11 @@ function DrawerContent({
         )}
         {...props}
       >
+        {/* Hidden title for accessibility */}
+        <VisuallyHidden>
+          <h2>Drawer Content</h2>
+        </VisuallyHidden>
+        
         <div className="bg-muted mx-auto mt-4 hidden h-2 w-[100px] shrink-0 rounded-full group-data-[vaul-drawer-direction=bottom]/drawer-content:block" />
         {children}
       </DrawerPrimitive.Content>
