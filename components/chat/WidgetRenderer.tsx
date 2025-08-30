@@ -205,10 +205,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
         >
           <CardContent className="p-6">
             <div className="space-y-4">
-              {/* Título */}
               <h3 className="text-lg font-semibold text-green-900">{props.title as string}</h3>
               
-              {/* Información del destinatario */}
               <div className="flex items-center gap-3">
                 <Avatar className="w-10 h-10">
                   <AvatarFallback className="bg-green-600 text-white">
@@ -221,7 +219,6 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                 </div>
               </div>
               
-              {/* Monto */}
               <div className="text-center py-4">
                 <p className="text-3xl font-bold text-green-900">
                   ${(props.amount as number).toLocaleString()}
@@ -229,8 +226,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
                 <p className="text-sm text-green-700 mt-1">{props.accountType as string}</p>
               </div>
               
-              {/* Link de comprobante */}
-              {props.showReceipt && (
+              {(props.showReceipt as boolean) && (
                 <div className="text-center">
                   <button className="text-primary font-medium hover:underline">
                     Descargar comprobante
