@@ -64,7 +64,11 @@ export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) 
                 onClick={() => onQuickReply(quickReply)}
               >
                 <div className="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center">
-                  {getQuickReplyIcon(quickReply.label)}
+                  {quickReply.icon ? (
+                    <span className="text-lg">{quickReply.icon}</span>
+                  ) : (
+                    getQuickReplyIcon(quickReply.label)
+                  )}
                 </div>
                 <span className="text-sm font-medium text-center leading-tight text-indigo-900">
                   {quickReply.label}

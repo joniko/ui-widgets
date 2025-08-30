@@ -28,11 +28,13 @@ export type Message = {
 export type QuickReply = { 
   id: string 
   label: string 
+  icon?: string
   payload?: Record<string, unknown>
 }
 
 export type DemoContext = {
   openSheet: (node: React.ReactNode, opts?: { snapPoints?: number[]; initialSnap?: number }) => void
+  closeSheet?: () => void
   pushAssistantMessage: (msg: Message) => void
   pushUserMessage: (text: string) => void
 }

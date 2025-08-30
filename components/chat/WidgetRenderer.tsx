@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { InlineWidget } from '@/lib/types'
 
 import { useBottomSheet } from '@/components/drawers/useBottomSheet'
@@ -23,9 +24,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
 
   const renderInfoCard = (props: Record<string, unknown>) => (
     <Card 
-      className="w-full max-w-sm"
+      className="w-full max-w-sm rounded-2xl border-none"
       style={{
-        borderRadius: '16px',
         background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
         boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
       }}
@@ -84,9 +84,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
 
   const renderAccountList = (props: Record<string, unknown>) => (
     <Card 
-      className="w-full max-w-sm"
-      style={{
-        borderRadius: '16px',
+    className="w-full max-w-sm rounded-2xl border-none"
+    style={{
         background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
         boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
       }}
@@ -148,9 +147,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
 
   const renderPaymentCta = (props: Record<string, unknown>) => (
     <Card 
-      className="w-full max-w-sm"
+      className="w-full max-w-sm rounded-2xl border-none"
       style={{
-        borderRadius: '16px',
         background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
         boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
       }}
@@ -194,50 +192,102 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
     </Card>
   )
 
-  const renderConfirmation = (props: Record<string, unknown>) => (
-    <Card 
-      className="w-full max-w-sm"
-      style={{
-        borderRadius: '16px',
-        background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
-        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
-      }}
-    >
-      <CardContent className="p-4">
-        <div className="text-center space-y-3">
-          <div className="text-2xl">✅</div>
-          <div>
-            <h3 className="font-semibold">{props.title as string}</h3>
-            {(props.steps as string[]) && (
-              <div className="mt-3 space-y-2 text-left">
-                {(props.steps as string[]).map((step: string, index: number) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center">
-                      <span className="text-primary text-xs font-bold">{index + 1}</span>
+  const renderConfirmation = (props: Record<string, unknown>) => {
+    // Widget de confirmación de transferencia exitosa
+    if (props.type === 'success' && props.amount) {
+      return (
+        <Card 
+          className="w-full max-w-sm rounded-2xl border-0"
+          style={{
+            background: 'rgb(220 252 231)', // green-100
+            boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+          }}
+        >
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              {/* Título */}
+              <h3 className="text-lg font-semibold text-green-900">{props.title as string}</h3>
+              
+              {/* Información del destinatario */}
+              <div className="flex items-center gap-3">
+                <Avatar className="w-10 h-10">
+                  <AvatarFallback className="bg-green-600 text-white">
+                    {(props.recipient as string)?.charAt(0) || 'T'}
+                  </AvatarFallback>
+                </Avatar>
+                <div>
+                  <p className="font-medium text-green-900">{props.recipient as string}</p>
+                  <p className="text-sm text-green-700">{props.account as string}</p>
+                </div>
+              </div>
+              
+              {/* Monto */}
+              <div className="text-center py-4">
+                <p className="text-3xl font-bold text-green-900">
+                  ${(props.amount as number).toLocaleString()}
+                </p>
+                <p className="text-sm text-green-700 mt-1">{props.accountType as string}</p>
+              </div>
+              
+              {/* Link de comprobante */}
+              {props.showReceipt && (
+                <div className="text-center">
+                  <button className="text-primary font-medium hover:underline">
+                    Descargar comprobante
+                  </button>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )
+    }
+    
+    // Widget de confirmación genérico (mantener el original)
+    return (
+      <Card 
+        className="w-full max-w-sm rounded-2xl border-none"
+        style={{
+          background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
+          boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+        }}
+      >
+        <CardContent className="p-4">
+          <div className="text-center space-y-3">
+            <div className="text-2xl">✅</div>
+            <div>
+              <h3 className="font-semibold">{props.title as string}</h3>
+              {(props.steps as string[]) && (
+                <div className="mt-3 space-y-2 text-left">
+                  {(props.steps as string[]).map((step: string, index: number) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <div className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center">
+                        <span className="text-primary text-xs font-bold">{index + 1}</span>
+                      </div>
+                      <span className="text-sm">{step}</span>
                     </div>
-                    <span className="text-sm">{step}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            {(props.options as string[]) && (
-              <div className="mt-3 space-y-2 text-left">
-                {(props.options as string[]).map((option: string, index: number) => (
-                  <div key={index} className="flex items-center space-x-2">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full" />
-                    <span className="text-sm">{option}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+              {(props.options as string[]) && (
+                <div className="mt-3 space-y-2 text-left">
+                  {(props.options as string[]).map((option: string, index: number) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <div className="w-2 h-2 bg-gray-400 rounded-full" />
+                      <span className="text-sm">{option}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
+        </CardContent>
+      </Card>
+    )
+  }
 
   const renderImage = (props: Record<string, unknown>) => (
-    <div className="w-full max-w-sm">
+    <div className="w-full max-w-sm rounded-2xl border-none">
       <div 
         className="w-full h-48 bg-muted rounded-lg flex items-center justify-center"
       >

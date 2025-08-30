@@ -50,6 +50,7 @@ export function ChatLayout({
     // Create demo context
     const ctx: DemoContext = {
       openSheet,
+      closeSheet,
       pushAssistantMessage,
       pushUserMessage
     }
@@ -75,6 +76,7 @@ export function ChatLayout({
     // Create demo context
     const ctx: DemoContext = {
       openSheet,
+      closeSheet,
       pushAssistantMessage,
       pushUserMessage
     }
