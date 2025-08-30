@@ -19,8 +19,8 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           key={index}
           className={cn(
             isUser
-              ? "max-w-[310px] px-4 py-3 bg-purple-500 text-white ml-auto shadow-md rounded-2xl"
-              : "max-w-[310px] text-gray-800 text-base leading-relaxed py-1"
+              ? "max-w-[310px] px-4 py-3 bg-primary text-primary-foreground ml-auto shadow-md rounded-2xl"
+              : "max-w-[310px] text-neutral-800 text-base leading-relaxed py-1"
           )}
         >
           {block.text}
@@ -44,7 +44,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         />
         <AvatarFallback className={cn(
           "text-xs",
-          isUser ? "bg-purple-100 text-purple-600" : "bg-green-100 text-green-600"
+          isUser ? "bg-primary/20 text-primary" : "bg-green-100 text-green-600"
         )}>
           {isUser ? "U" : "A"}
         </AvatarFallback>
