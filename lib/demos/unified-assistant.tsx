@@ -78,11 +78,39 @@ export const unifiedAssistantDemo: DemoDefinition = {
   ],
   
   onQuickReply: (qr, ctx) => {
+    // Quick reply de Pagar servicios muestra los servicios pendientes inline
+    if (qr.label === 'Pagar servicios') {
+      // Mostrar servicios pendientes inline
+      setTimeout(() => {
+        ctx.pushAssistantMessage(
+          createMessage('assistant', [
+            createTextBlock('Estos son tus servicios pendientes:'),
+            createWidgetBlock('payment-cta', {
+              title: 'Servicios por Pagar',
+              services: [
+                { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
+                { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
+                { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
+              ]
+            })
+          ])
+        )
+        
+        setTimeout(() => {
+          ctx.pushAssistantMessage(
+            createMessage('assistant', [
+              createTextBlock('Puedes decirme "pagar todas", "pagar Edesur" o seleccionar un servicio específico del listado.')
+            ])
+          )
+        }, 800)
+      }, 500)
+      return
+    }
+    
     // Mapeo de quick replies a textos de prefill
     const prefillTexts: Record<string, string> = {
       'Transferir dinero': 'Quiero transferir a ',
       'Ver mi saldo': 'Quiero ver mi saldo',
-      'Pagar servicios': 'Quiero pagar ',
       'Ayuda': '¿Cómo puedo '
     }
     
@@ -169,7 +197,9 @@ export const unifiedAssistantDemo: DemoDefinition = {
       lowerText.includes('facturas pendientes') ||
       lowerText.includes('servicios por pagar') ||
       lowerText.includes('qué tengo que pagar') ||
-      lowerText.includes('cuentas por pagar')
+      lowerText.includes('cuentas por pagar') ||
+      lowerText === 'servicios' ||
+      lowerText === 'facturas'
     
     if (isServicesQuery) {
       // Mostrar servicios pendientes inline

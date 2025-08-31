@@ -73,12 +73,14 @@ export const paymentFlow: FlowDefinition = {
   name: 'Pago de Servicios',
   
   triggers: [
-    'pagar',
-    'pagar servicios',
-    'pagar facturas',
-    'facturas',
-    'servicios',
-    /pagar?\s+(luz|gas|agua|internet)/i
+    'quiero pagar',
+    'pagar servicio',
+    'pagar factura',
+    'pagar luz',
+    'pagar gas',
+    'pagar agua',
+    'pagar internet',
+    /pagar?\s+(luz|gas|agua|internet|edesur|metrogas|aysa|telecentro)/i
   ],
   
   steps: [
