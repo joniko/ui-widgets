@@ -91,13 +91,52 @@ export const unifiedAssistantDemo: DemoDefinition = {
             flow={flow}
             onComplete={(data) => {
               ctx.closeSheet?.()
-              // Mensaje de confirmación
+              // Mensaje de confirmación específico según el flujo
               setTimeout(() => {
-                ctx.pushAssistantMessage(
-                  createMessage('assistant', [
-                    createTextBlock('¡Listo! La operación se completó exitosamente.')
-                  ])
-                )
+                if (flow.id === 'transfer') {
+                  ctx.pushUserMessage('Confirmar transferencia')
+                  setTimeout(() => {
+                    ctx.pushAssistantMessage(
+                      createMessage('assistant', [
+                        createTextBlock('¡Listo! La transferencia fue realizada'),
+                        createWidgetBlock('confirmation', {
+                          type: 'success',
+                          title: '¡Transferencia realizada!',
+                          recipient: (data.contact as { name: string }).name,
+                          account: `${(data.account as { name: string; type: string; number: string }).name} - ${(data.account as { name: string; type: string; number: string }).type}****${(data.account as { name: string; type: string; number: string }).number.slice(-4)}`,
+                          amount: data.amount as number,
+                          accountType: 'Con dinero en cuenta',
+                          showReceipt: true
+                        })
+                      ])
+                    )
+                  }, 500)
+                } else if (flow.id === 'payment') {
+                  ctx.pushUserMessage('Confirmar pago')
+                  setTimeout(() => {
+                    ctx.pushAssistantMessage(
+                      createMessage('assistant', [
+                        createTextBlock('¡Listo! El pago fue realizado'),
+                        createWidgetBlock('confirmation', {
+                          type: 'success',
+                          title: '¡Pago realizado!',
+                          recipient: (data.service as { name: string }).name,
+                          account: `${(data.account as { name: string }).name}`,
+                          amount: (data.service as { amount: number }).amount,
+                          accountType: 'Pago de servicio',
+                          showReceipt: true
+                        })
+                      ])
+                    )
+                  }, 500)
+                } else {
+                  // Para otros flujos, mostrar mensaje genérico
+                  ctx.pushAssistantMessage(
+                    createMessage('assistant', [
+                      createTextBlock('¡Listo! La operación se completó exitosamente.')
+                    ])
+                  )
+                }
               }, 500)
             }}
             onCancel={() => ctx.closeSheet?.()}
