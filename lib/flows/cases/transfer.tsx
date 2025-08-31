@@ -8,6 +8,7 @@ import { Button as UIButton } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { WidgetComponentProps, createDomainWidgets } from '@/lib/widgets/registry'
+import { CreditCard, Building2, Users, ArrowRight, Heart, Send, ChevronRight } from 'lucide-react'
 
 // Types for transfer widgets
 interface TransferContact {
@@ -82,7 +83,7 @@ const accounts = [
     name: 'Mercado Pago',
     type: 'CVU',
     number: '0000003100090418135201',
-    icon: '💳',
+    icon: 'credit-card',
     color: 'bg-yellow-400'
   },
   { 
@@ -90,7 +91,7 @@ const accounts = [
     name: 'Banco Santander',
     type: 'CBU', 
     number: '0081590966990418138814',
-    icon: '🏦',
+    icon: 'building',
     color: 'bg-red-500'
   }
 ]
@@ -139,7 +140,7 @@ export const transferFlow: FlowDefinition = {
                     </div>
                   </div>
                 </div>
-                <span className="text-2xl">💙</span>
+                <Heart className="w-6 h-6 text-blue-500" />
               </button>
             ))}
             
@@ -222,7 +223,8 @@ export const transferFlow: FlowDefinition = {
                 className="w-full p-4 flex items-center gap-3 hover:bg-gray-50 rounded-lg transition-colors"
               >
                 <div className={`w-12 h-12 rounded-full ${account.color} flex items-center justify-center text-white`}>
-                  <span className="text-2xl">{account.icon}</span>
+                  {account.icon === 'credit-card' && <CreditCard className="w-6 h-6" />}
+                  {account.icon === 'building' && <Building2 className="w-6 h-6" />}
                 </div>
                 <div className="text-left flex-1">
                   <p className="font-medium">{account.name}</p>
@@ -271,7 +273,7 @@ export const transferFlow: FlowDefinition = {
             {/* Tipo de dinero */}
             <button className="w-full p-4 bg-gray-50 rounded-lg flex items-center justify-between mb-6">
               <span className="text-gray-700">Dinero en cuenta</span>
-              <span className="text-gray-400">›</span>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
             </button>
             
             {/* Botón confirmar */}
@@ -325,7 +327,7 @@ export const TransferContactList = ({ widget, openSheet }: WidgetComponentProps)
     >
       <CardHeader className="p-4 pb-3">
         <div className="flex items-center gap-2">
-          <div className="text-xl">👥</div>
+          <Users className="w-5 h-5" />
           <CardTitle className="text-base font-semibold">{props.title || 'Contactos Recientes'}</CardTitle>
         </div>
       </CardHeader>
@@ -354,7 +356,7 @@ export const TransferContactList = ({ widget, openSheet }: WidgetComponentProps)
                   </div>
                 </div>
                 <div className="text-gray-400">
-                  <span className="text-sm">→</span>
+                  <ArrowRight className="w-4 h-4" />
                 </div>
               </div>
             </div>
@@ -391,7 +393,7 @@ export const TransferQuickAction = ({ widget, openSheet }: WidgetComponentProps)
     >
       <CardContent className="p-4">
         <div className="text-center space-y-3">
-          <div className="text-2xl">💸</div>
+          <Send className="w-8 h-8 text-indigo-600" />
           <div>
             <h3 className="font-semibold">Transferir Dinero</h3>
             <p className="text-sm text-muted-foreground">
@@ -428,7 +430,7 @@ export const TransferAccountList = ({ widget, openSheet }: WidgetComponentProps)
     >
       <CardHeader className="p-4 pb-3">
         <div className="flex items-center gap-2">
-          <div className="text-xl">🏦</div>
+          <Building2 className="w-5 h-5" />
           <CardTitle className="text-base font-semibold">Desde qué cuenta</CardTitle>
         </div>
       </CardHeader>
@@ -444,7 +446,11 @@ export const TransferAccountList = ({ widget, openSheet }: WidgetComponentProps)
             >
               <div className="flex items-center gap-3">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center ${account.color || 'bg-gray-100'}`}>
-                  <span className="text-white font-semibold">{account.icon || '💳'}</span>
+                  <div className="text-white">
+                    {account.icon === 'credit-card' && <CreditCard className="w-4 h-4" />}
+                    {account.icon === 'building' && <Building2 className="w-4 h-4" />}
+                    {!account.icon && <CreditCard className="w-4 h-4" />}
+                  </div>
                 </div>
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-900">{account.name}</h4>
@@ -495,13 +501,13 @@ export const TransferContactBottomSheet = ({ contact }: { contact: TransferConta
         <p className="text-sm text-gray-600 mb-2">Acciones rápidas</p>
         <div className="space-y-2">
           <UIButton className="w-full justify-start" variant="outline">
-            💸 Transferir $1,000
+            <Send className="w-4 h-4 mr-2" /> Transferir $1,000
           </UIButton>
           <UIButton className="w-full justify-start" variant="outline">
-            💸 Transferir $5,000
+            <Send className="w-4 h-4 mr-2" /> Transferir $5,000
           </UIButton>
           <UIButton className="w-full justify-start" variant="outline">
-            💸 Transferir monto personalizado
+            <Send className="w-4 h-4 mr-2" /> Transferir monto personalizado
           </UIButton>
         </div>
       </div>
@@ -557,11 +563,11 @@ export const TransferQuickActionBottomSheet = () => (
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-3">
         <UIButton variant="outline" className="h-16 flex-col">
-          <span className="text-lg mb-1">👥</span>
+          <Users className="w-5 h-5 mb-1" />
           <span className="text-xs">A Contacto</span>
         </UIButton>
         <UIButton variant="outline" className="h-16 flex-col">
-          <span className="text-lg mb-1">🏦</span>
+          <Building2 className="w-5 h-5 mb-1" />
           <span className="text-xs">Por CBU/CVU</span>
         </UIButton>
       </div>
@@ -589,7 +595,11 @@ export const TransferAccountBottomSheet = ({ account }: { account: TransferAccou
   <div className="p-6">
     <div className="flex items-center gap-3 mb-4">
       <div className={`w-12 h-12 rounded-full flex items-center justify-center ${account.color || 'bg-gray-100'}`}>
-        <span className="text-white text-lg">{account.icon || '💳'}</span>
+        <div className="text-white">
+          {account.icon === 'credit-card' && <CreditCard className="w-5 h-5" />}
+          {account.icon === 'building' && <Building2 className="w-5 h-5" />}
+          {!account.icon && <CreditCard className="w-5 h-5" />}
+        </div>
       </div>
       <div>
         <h3 className="text-lg font-semibold">{account.name}</h3>

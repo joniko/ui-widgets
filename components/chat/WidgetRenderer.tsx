@@ -10,6 +10,7 @@ import { InlineWidget } from '@/lib/types'
 
 import { useBottomSheet } from '@/components/drawers/useBottomSheet'
 import { getWidgetComponent } from '@/lib/widgets'
+import { CheckCircle } from 'lucide-react'
 
 // Import widgets to ensure they are registered
 import '@/lib/widgets'
@@ -211,7 +212,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
       >
         <CardContent className="p-4">
           <div className="text-center space-y-3">
-            <div className="text-2xl">✅</div>
+            <CheckCircle className="w-8 h-8 text-green-600" />
             <div>
               <h3 className="font-semibold">{props.title as string}</h3>
               {(props.steps as string[]) && (

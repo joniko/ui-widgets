@@ -10,6 +10,7 @@ import { Button as UIButton } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { InlineWidget } from '@/lib/types'
 import { WidgetComponentProps, createDomainWidgets } from '@/lib/widgets/registry'
+import { Target, Star } from 'lucide-react'
 
 /**
  * 🚀 TEMPLATE PARA NUEVOS DOMINIOS
@@ -54,7 +55,7 @@ const templateItems: TemplateItemData[] = [
     description: 'Descripción del primer item',
     amount: 1500,
     status: 'active',
-    icon: '🎯'
+    icon: 'target'
   },
   {
     id: '2',
@@ -62,7 +63,7 @@ const templateItems: TemplateItemData[] = [
     description: 'Descripción del segundo item',
     amount: 2300,
     status: 'pending',
-    icon: '⭐'
+    icon: 'star'
   }
 ]
 
@@ -148,7 +149,11 @@ export const TemplateCta = ({ widget, openSheet }: WidgetComponentProps) => {
     >
       <CardContent className="p-4">
         <div className="text-center space-y-3">
-          <div className="text-2xl">{props.icon as string || '🎯'}</div>
+          <div className="text-gray-600">
+            {props.icon === 'target' && <Target className="w-6 h-6" />}
+            {props.icon === 'star' && <Star className="w-6 h-6" />}
+            {!props.icon && <Target className="w-6 h-6" />}
+          </div>
           <div>
             <h3 className="font-semibold">{props.title as string}</h3>
             <p className="text-sm text-muted-foreground">

@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button as UIButton } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { WidgetComponentProps, createDomainWidgets } from '@/lib/widgets/registry'
+import { CreditCard, Building2, DollarSign, BarChart3, Send, FileText, TrendingUp, ArrowRight, Wallet } from 'lucide-react'
 
 // Types for balance widgets
 interface BalanceAccount {
@@ -37,7 +38,7 @@ const accounts = [
     number: '****1234',
     balance: 125000,
     currency: 'ARS',
-    icon: '💳'
+    icon: 'credit-card'
   },
   { 
     id: '2', 
@@ -45,7 +46,7 @@ const accounts = [
     number: '****5678',
     balance: 450000,
     currency: 'ARS',
-    icon: '🏦'
+    icon: 'building'
   },
   { 
     id: '3', 
@@ -53,7 +54,7 @@ const accounts = [
     number: '****9012',
     balance: 1200,
     currency: 'USD',
-    icon: '💵'
+    icon: 'dollar-sign'
   }
 ]
 
@@ -104,7 +105,11 @@ export const balanceFlow: FlowDefinition = {
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{account.icon}</span>
+                    <div className="text-gray-600">
+                      {account.icon === 'credit-card' && <CreditCard className="w-6 h-6" />}
+                      {account.icon === 'building' && <Building2 className="w-6 h-6" />}
+                      {account.icon === 'dollar-sign' && <DollarSign className="w-6 h-6" />}
+                    </div>
                     <div>
                       <p className="font-medium">{account.type}</p>
                       <p className="text-sm text-gray-500">{account.number}</p>
@@ -128,7 +133,7 @@ export const balanceFlow: FlowDefinition = {
                 className="w-full p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left flex items-center justify-between group"
               >
                 <span>Hacer una transferencia</span>
-                <span className="text-gray-400 group-hover:text-gray-600">→</span>
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
               </button>
               
               <button
@@ -136,7 +141,7 @@ export const balanceFlow: FlowDefinition = {
                 className="w-full p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors text-left flex items-center justify-between group"
               >
                 <span>Ver movimientos</span>
-                <span className="text-gray-400 group-hover:text-gray-600">→</span>
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600" />
               </button>
             </div>
           </div>
@@ -223,7 +228,7 @@ export const BalanceAccountList = ({ widget, openSheet }: WidgetComponentProps) 
     >
       <CardHeader className="p-4 pb-3">
         <div className="flex items-center gap-2">
-          <div className="text-xl">💰</div>
+          <Wallet className="w-5 h-5" />
           <CardTitle className="text-base font-semibold">{props.title || 'Tus Cuentas'}</CardTitle>
         </div>
       </CardHeader>
@@ -239,7 +244,12 @@ export const BalanceAccountList = ({ widget, openSheet }: WidgetComponentProps) 
             >
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
-                  <span className="text-lg">{account.icon || '💳'}</span>
+                  <div className="text-gray-600">
+                    {account.icon === 'credit-card' && <CreditCard className="w-4 h-4" />}
+                    {account.icon === 'building' && <Building2 className="w-4 h-4" />}
+                    {account.icon === 'dollar-sign' && <DollarSign className="w-4 h-4" />}
+                    {!account.icon && <CreditCard className="w-4 h-4" />}
+                  </div>
                 </div>
                 <div className="flex-1">
                   <h4 className="font-semibold text-gray-900">{account.type}</h4>
@@ -290,7 +300,7 @@ export const BalanceActions = ({ widget, openSheet }: WidgetComponentProps) => {
     >
       <CardContent className="p-4">
         <div className="text-center space-y-3">
-          <div className="text-2xl">📊</div>
+          <BarChart3 className="w-8 h-8 text-indigo-600" />
           <div>
             <h3 className="font-semibold">Gestionar Dinero</h3>
             <p className="text-sm text-muted-foreground">
@@ -339,7 +349,11 @@ export const BalanceDetailBottomSheet = ({ accounts }: { accounts: BalanceAccoun
         {accounts?.map((account) => (
           <div key={account.id} className="bg-gray-50 rounded-lg p-4">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-xl">{account.icon}</span>
+              <div className="text-gray-600">
+                {account.icon === 'credit-card' && <CreditCard className="w-6 h-6" />}
+                {account.icon === 'building' && <Building2 className="w-6 h-6" />}
+                {account.icon === 'dollar-sign' && <DollarSign className="w-6 h-6" />}
+              </div>
               <div className="flex-1">
                 <h4 className="font-semibold">{account.type}</h4>
                 <p className="text-sm text-gray-600">{account.number}</p>
@@ -373,7 +387,7 @@ export const BalanceActionsBottomSheet = () => (
     <div className="space-y-3">
       <UIButton variant="outline" className="w-full justify-start h-16">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">💸</span>
+          <Send className="w-6 h-6 text-indigo-600" />
           <div className="text-left">
             <p className="font-medium">Transferir dinero</p>
             <p className="text-sm text-gray-600">Enviar a contactos o CBU/CVU</p>
@@ -383,7 +397,7 @@ export const BalanceActionsBottomSheet = () => (
       
       <UIButton variant="outline" className="w-full justify-start h-16">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">📋</span>
+          <FileText className="w-6 h-6 text-indigo-600" />
           <div className="text-left">
             <p className="font-medium">Ver movimientos</p>
             <p className="text-sm text-gray-600">Historial de transacciones</p>
@@ -393,7 +407,7 @@ export const BalanceActionsBottomSheet = () => (
       
       <UIButton variant="outline" className="w-full justify-start h-16">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">💳</span>
+          <CreditCard className="w-6 h-6 text-indigo-600" />
           <div className="text-left">
             <p className="font-medium">Pagar servicios</p>
             <p className="text-sm text-gray-600">Luz, gas, agua, internet</p>
@@ -403,7 +417,7 @@ export const BalanceActionsBottomSheet = () => (
       
       <UIButton variant="outline" className="w-full justify-start h-16">
         <div className="flex items-center gap-3">
-          <span className="text-2xl">📈</span>
+          <TrendingUp className="w-6 h-6 text-indigo-600" />
           <div className="text-left">
             <p className="font-medium">Invertir</p>
             <p className="text-sm text-gray-600">Plazo fijo, fondos, acciones</p>
@@ -421,7 +435,11 @@ export const BalanceAccountBottomSheet = ({ account }: { account: BalanceAccount
   <div className="p-6">
     <div className="flex items-center gap-3 mb-4">
       <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center">
-        <span className="text-xl">{account.icon}</span>
+        <div className="text-gray-600">
+          {account.icon === 'credit-card' && <CreditCard className="w-6 h-6" />}
+          {account.icon === 'building' && <Building2 className="w-6 h-6" />}
+          {account.icon === 'dollar-sign' && <DollarSign className="w-6 h-6" />}
+        </div>
       </div>
       <div>
         <h3 className="text-lg font-semibold">{account.type}</h3>

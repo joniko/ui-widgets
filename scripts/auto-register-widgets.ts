@@ -48,9 +48,9 @@ function detectDomainFiles(): DomainInfo[] {
         widgetsExportName
       })
       
-      console.log(`✅ Detectado dominio: ${domainName} (${widgetsExportName})`)
+      console.log(`✓ Detectado dominio: ${domainName} (${widgetsExportName})`)
     } else {
-      console.log(`⚠️  Archivo sin widgets: ${file}`)
+      console.log(`⚠ Archivo sin widgets: ${file}`)
     }
   }
 
@@ -101,7 +101,7 @@ function main() {
     const domains = detectDomainFiles()
     
     if (domains.length === 0) {
-      console.log('❌ No se encontraron dominios con widgets')
+      console.log('✗ No se encontraron dominios con widgets')
       return
     }
 
@@ -112,11 +112,11 @@ function main() {
     const content = generateWidgetsIndex(domains)
     fs.writeFileSync(WIDGETS_INDEX_FILE, content, 'utf-8')
 
-    console.log(`\n✅ Archivo generado: ${WIDGETS_INDEX_FILE}`)
+    console.log(`\n✓ Archivo generado: ${WIDGETS_INDEX_FILE}`)
     console.log('🎯 Widgets registrados automáticamente!')
 
   } catch (error) {
-    console.error('❌ Error:', error)
+    console.error('✗ Error:', error)
     process.exit(1)
   }
 }

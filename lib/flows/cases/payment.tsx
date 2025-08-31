@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button as UIButton } from '@/components/ui/button'
 import { InlineWidget } from '@/lib/types'
 import { WidgetComponentProps, createDomainWidgets } from '@/lib/widgets/registry'
+import { Lightbulb, Flame, Droplets, Wifi, FileText, AlertTriangle, CreditCard } from 'lucide-react'
 
 // Types for payment flow data
 interface ServiceData {
@@ -35,7 +36,7 @@ const services = [
     type: 'Electricidad',
     amount: 8500,
     dueDate: '2024-01-15',
-    icon: '💡',
+    icon: <Lightbulb className="w-4 h-4" />,
     status: 'pending'
   },
   { 
@@ -44,7 +45,7 @@ const services = [
     type: 'Gas',
     amount: 3200,
     dueDate: '2024-01-18',
-    icon: '🔥',
+    icon: <Flame className="w-4 h-4" />,
     status: 'pending'
   },
   { 
@@ -53,7 +54,7 @@ const services = [
     type: 'Agua',
     amount: 2100,
     dueDate: '2024-01-20',
-    icon: '💧',
+    icon: <Droplets className="w-4 h-4" />,
     status: 'pending'
   },
   { 
@@ -62,7 +63,7 @@ const services = [
     type: 'Internet',
     amount: 12000,
     dueDate: '2024-01-10',
-    icon: '📡',
+    icon: <Wifi className="w-4 h-4" />,
     status: 'overdue'
   }
 ]
@@ -86,12 +87,12 @@ export const PaymentServiceDetailList = ({ widget }: WidgetComponentProps) => {
     >
       <CardHeader className="p-4 pb-3">
         <div className="flex items-center gap-2">
-          <div className="text-xl">📋</div>
+          <FileText className="w-5 h-5" />
           <CardTitle className="text-base font-semibold">{props.title as string}</CardTitle>
         </div>
         {Array.isArray(props.services) && props.services.some((s: Record<string, unknown>) => s.status === 'overdue') && (
           <div className="mt-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-md inline-flex items-center gap-1 self-start">
-            <span className="text-red-600">⚠️</span>
+            <AlertTriangle className="w-4 h-4 text-red-600" />
             Tenés {props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length} factura{props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length > 1 ? 's' : ''} vencida{props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length > 1 ? 's' : ''}
           </div>
         )}
@@ -108,11 +109,11 @@ export const PaymentServiceDetailList = ({ widget }: WidgetComponentProps) => {
               }`}
             >
               <div className="flex items-start gap-3">
-                <div className="text-2xl mt-0.5">
-                  {service.name === 'Edesur' && '💡'}
-                  {service.name === 'Metrogas' && '🔥'}
-                  {service.name === 'Telecentro' && '📡'}
-                  {service.name === 'AySA' && '💧'}
+                <div className="text-gray-600 mt-0.5">
+                  {service.name === 'Edesur' && <Lightbulb className="w-6 h-6" />}
+                  {service.name === 'Metrogas' && <Flame className="w-6 h-6" />}
+                  {service.name === 'Telecentro' && <Wifi className="w-6 h-6" />}
+                  {service.name === 'AySA' && <Droplets className="w-6 h-6" />}
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
@@ -163,7 +164,7 @@ export const PaymentCta = ({ widget, openSheet }: WidgetComponentProps) => {
     >
       <CardContent className="p-4">
         <div className="text-center space-y-3">
-          <div className="text-2xl">💳</div>
+          <CreditCard className="w-8 h-8 text-indigo-600" />
           <div>
             <h3 className="font-semibold">Servicios Pendientes</h3>
             <p className="text-sm text-muted-foreground">
@@ -267,7 +268,7 @@ export const paymentFlow: FlowDefinition = {
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <span className="text-2xl">{service.icon}</span>
+                      <div className="text-gray-600">{service.icon}</div>
                       <div className="text-left">
                         <p className="font-medium">{service.name}</p>
                         <p className="text-sm text-gray-600">{service.type}</p>
@@ -308,7 +309,12 @@ export const paymentFlow: FlowDefinition = {
             {/* Servicio seleccionado */}
             <div className="bg-gray-50 rounded-lg p-4 mb-4">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{(data.service as ServiceData).icon}</span>
+                <div className="text-gray-600">
+                  {(data.service as ServiceData).icon === 'lightbulb' && <Lightbulb className="w-6 h-6" />}
+                  {(data.service as ServiceData).icon === 'flame' && <Flame className="w-6 h-6" />}
+                  {(data.service as ServiceData).icon === 'droplets' && <Droplets className="w-6 h-6" />}
+                  {(data.service as ServiceData).icon === 'wifi' && <Wifi className="w-6 h-6" />}
+                </div>
                 <div className="flex-1">
                   <p className="font-medium">{(data.service as ServiceData).name}</p>
                   <p className="text-sm text-gray-600">{(data.service as ServiceData).type}</p>
@@ -353,7 +359,12 @@ export const paymentFlow: FlowDefinition = {
               <div className="bg-gray-50 rounded-lg p-4">
                 <p className="text-sm text-gray-600 mb-1">Servicio</p>
                 <div className="flex items-center gap-2">
-                  <span>{(data.service as ServiceData).icon}</span>
+                  <div className="text-gray-600">
+                    {(data.service as ServiceData).icon === 'lightbulb' && <Lightbulb className="w-5 h-5" />}
+                    {(data.service as ServiceData).icon === 'flame' && <Flame className="w-5 h-5" />}
+                    {(data.service as ServiceData).icon === 'droplets' && <Droplets className="w-5 h-5" />}
+                    {(data.service as ServiceData).icon === 'wifi' && <Wifi className="w-5 h-5" />}
+                  </div>
                   <p className="font-medium">{(data.service as ServiceData).name}</p>
                 </div>
               </div>

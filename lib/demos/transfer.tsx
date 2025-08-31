@@ -54,7 +54,7 @@ const mockBankAccounts = [
     name: 'Mercado Pago',
     type: 'CVU',
     number: '0000003100090418135201',
-    icon: '💳',
+    icon: 'credit-card',
     color: 'bg-yellow-400'
   },
   {
@@ -62,7 +62,7 @@ const mockBankAccounts = [
     name: 'Banco Santander',
     type: 'CBU',
     number: '0081590966990418138814',
-    icon: '🏦',
+    icon: 'building',
     color: 'bg-red-500'
   }
 ]
@@ -358,12 +358,12 @@ export const transferDemo: DemoDefinition = {
     { 
       id: 'transfer', 
       label: 'Transferir dinero',
-      icon: '🔄'
+      icon: 'refresh-cw'
     },
     { 
       id: 'recharge', 
       label: 'Recargar celular',
-      icon: '📱'
+      icon: 'smartphone'
     },
     { 
       id: 'pay-services', 

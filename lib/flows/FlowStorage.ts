@@ -188,7 +188,7 @@ export class FlowStorage {
             number: '0000003100090418135201',
             balance: 125000,
             currency: 'ARS',
-            icon: '💳'
+            icon: 'card'
           },
           { 
             id: '2', 
@@ -197,11 +197,11 @@ export class FlowStorage {
             number: '0000003100090418135202',
             balance: 450000,
             currency: 'ARS',
-            icon: '🏦'
+            icon: 'bank'
           }
         ],
         contacts: [
-          { id: '1', name: 'Juan Pérez', avatar: '👤', banks: ['🇦🇷'] },
+          { id: '1', name: 'Juan Pérez', avatar: 'user', banks: ['AR'] },
           { id: '2', name: 'María García', avatar: '👩', banks: ['🇦🇷', '🇧🇷'] }
         ],
         services: [
@@ -211,7 +211,7 @@ export class FlowStorage {
             type: 'Electricidad',
             amount: 8500,
             dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-            icon: '💡',
+            icon: 'lightbulb',
             status: 'pending'
           }
         ]

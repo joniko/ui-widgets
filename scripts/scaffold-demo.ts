@@ -62,11 +62,11 @@ function scaffoldDemo() {
   
   if (args.length < 3) {
     console.log('Uso: npm run scaffold-demo <nombre> <slug> <descripción> [icono]')
-    console.log('Ejemplo: npm run scaffold-demo "Mi Demo" "mi-demo" "Descripción del demo" "🚀"')
+    console.log('Ejemplo: npm run scaffold-demo "Mi Demo" "mi-demo" "Descripción del demo" "rocket"')
     process.exit(1)
   }
 
-  const [name, slug, description, icon = '💡'] = args
+  const [name, slug, description, icon = 'lightbulb'] = args
   
   // Crear el archivo del demo
   const demoContent = DEMO_TEMPLATE
@@ -80,9 +80,9 @@ function scaffoldDemo() {
   
   try {
     fs.writeFileSync(demoPath, demoContent)
-    console.log(`✅ Demo creado: ${demoPath}`)
+    console.log(`✓ Demo creado: ${demoPath}`)
   } catch (error) {
-    console.error('❌ Error al crear el demo:', error)
+    console.error('✗ Error al crear el demo:', error)
     process.exit(1)
   }
 
@@ -106,13 +106,13 @@ function scaffoldDemo() {
     )
     
     fs.writeFileSync(registryPath, registryContent)
-    console.log(`✅ Registro actualizado: ${registryPath}`)
+    console.log(`✓ Registro actualizado: ${registryPath}`)
   } catch (error) {
-    console.error('❌ Error al actualizar el registro:', error)
+    console.error('✗ Error al actualizar el registro:', error)
     process.exit(1)
   }
 
-  console.log('\n🎉 Demo creado exitosamente!')
+  console.log('\n✓ Demo creado exitosamente!')
   console.log(`📁 Archivo: lib/demos/${slug}.ts`)
   console.log(`🔗 URL: /demos/${slug}`)
   console.log('\nPara probar el demo:')

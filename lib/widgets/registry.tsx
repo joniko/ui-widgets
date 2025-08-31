@@ -24,7 +24,7 @@ const globalWidgetRegistry: WidgetRegistry = {}
 // Register widgets from a domain
 export const registerWidgets = (widgets: WidgetRegistry) => {
   Object.assign(globalWidgetRegistry, widgets)
-  console.log('🎯 Widgets registrados:', Object.keys(widgets))
+  console.log('✓ Widgets registrados:', Object.keys(widgets))
 }
 
 // Get widget component by type
@@ -46,6 +46,6 @@ export const createDomainWidgets = <T extends string>(
 
 // Debug function to see all registered widgets
 export const debugWidgetRegistry = () => {
-  console.log('🔍 Widgets registrados:', globalWidgetRegistry)
+  console.log('✓ Widgets registrados:', globalWidgetRegistry)
   return globalWidgetRegistry
 }

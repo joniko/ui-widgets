@@ -1,5 +1,6 @@
 import { DemoDefinition } from '../types'
 import { createMessage, createTextBlock, createWidgetBlock } from '../agenticMocks'
+import { Phone, MessageCircle, Mail } from 'lucide-react'
 
 export const helpDemo: DemoDefinition = {
   slug: 'help',
@@ -75,21 +76,21 @@ export const helpDemo: DemoDefinition = {
           <div className="space-y-4">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📞</span>
+                <Phone className="w-6 h-6 text-indigo-600" />
               </div>
               <h4 className="font-medium mb-2">Línea de Atención</h4>
               <p className="text-gray-600">0800-333-4444</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">💬</span>
+                <MessageCircle className="w-6 h-6 text-indigo-600" />
               </div>
               <h4 className="font-medium mb-2">Chat en vivo</h4>
               <p className="text-gray-600">Disponible 24/7</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">✉️</span>
+                <Mail className="w-6 h-6 text-indigo-600" />
               </div>
               <h4 className="font-medium mb-2">Email</h4>
               <p className="text-gray-600">soporte@banco.com</p>

@@ -63,12 +63,12 @@ export const unifiedAssistantDemo: DemoDefinition = {
     { 
       id: 'balance', 
       label: 'Ver saldo',
-      icon: '💰'
+      icon: 'wallet'
     },
     { 
       id: 'pay', 
       label: 'Pagar servicios',
-      icon: '💳'
+      icon: 'credit-card'
     },
     { 
       id: 'help', 

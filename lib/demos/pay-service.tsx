@@ -4,7 +4,7 @@ import { createMessage, createTextBlock, createWidgetBlock, mockServices } from 
 export const payServiceDemo: DemoDefinition = {
   slug: 'pay-service',
   title: 'Pago de Servicios',
-  icon: '💳',
+  icon: 'credit-card',
   initialMessages: [
     createMessage('assistant', [
       createTextBlock('¡Hola! Soy tu asistente de pagos. ¿Qué servicio necesitas pagar hoy?'),
