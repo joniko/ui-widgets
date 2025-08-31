@@ -1,13 +1,12 @@
 'use client'
 
-import { DemoDefinition, DemoContext } from '../types'
-import { createMessage, createTextBlock, createWidgetBlock, createUIMessage } from '../agenticMocks'
+import { DemoDefinition } from '../types'
+import { createMessage, createTextBlock, createWidgetBlock } from '../agenticMocks'
 import { FlowEngine } from '../flows/FlowEngine'
 import { transferFlow } from '../flows/cases/transfer'
 import { balanceFlow } from '../flows/cases/balance'
 import { paymentFlow } from '../flows/cases/payment'
 import { transferWithPersistenceFlow } from '../flows/cases/transfer-with-persistence'
-import { useState, useEffect } from 'react'
 import { FlowStorage } from '../flows/FlowStorage'
 
 // Todos los flujos disponibles
@@ -48,7 +47,7 @@ const detectFlow = (text: string) => {
 
 export const unifiedAssistantDemo: DemoDefinition = {
   slug: 'unified',
-  title: 'Asistente Virtual',
+  title: 'Asistente',
   icon: '🤖',
   initialMessages: [
     createMessage('assistant', [
@@ -113,7 +112,95 @@ export const unifiedAssistantDemo: DemoDefinition = {
   },
   
   onUserMessage: (text, ctx) => {
-    // Detectar intención
+    const lowerText = text.toLowerCase()
+    
+    // Detectar si quiere pagar todos los servicios
+    if (lowerText.includes('pagar todas') || lowerText.includes('pagar todo')) {
+      setTimeout(() => {
+        ctx.pushAssistantMessage(
+          createMessage('assistant', [
+            createTextBlock('Perfecto, voy a procesar el pago de todos tus servicios pendientes.')
+          ])
+        )
+        
+        // Abrir bottom sheet para confirmar pago múltiple
+        setTimeout(() => {
+          ctx.openSheet(
+            <FlowEngine
+              flow={paymentFlow}
+              initialData={{ 
+                multiplePayment: true,
+                totalAmount: 23700,
+                services: ['Edesur', 'Metrogas', 'Telecentro']
+              }}
+              onComplete={(data) => {
+                ctx.pushUIMessage('Confirmar pago de todos los servicios')
+                ctx.closeSheet?.()
+                setTimeout(() => {
+                  ctx.pushAssistantMessage(
+                    createMessage('assistant', [
+                      createTextBlock('¡Listo! Se pagaron todos los servicios'),
+                      createWidgetBlock('confirmation', {
+                        type: 'success',
+                        title: '¡Pagos realizados!',
+                        recipient: '3 servicios',
+                        account: 'Cuenta Principal',
+                        amount: 23700,
+                        accountType: 'Pago múltiple',
+                        showReceipt: true
+                      })
+                    ])
+                  )
+                }, 500)
+              }}
+              onCancel={() => ctx.closeSheet?.()}
+            />,
+            { snapPoints: [0.5, 0.7, 0.9], initialSnap: 0.7 }
+          )
+        }, 1000)
+      }, 500)
+      return
+    }
+    
+    // Verificar si es una consulta de servicios pendientes
+    const isServicesQuery = 
+      lowerText.includes('servicios pendientes') ||
+      lowerText.includes('cuánto debo') ||
+      lowerText.includes('facturas pendientes') ||
+      lowerText.includes('servicios por pagar') ||
+      lowerText.includes('qué tengo que pagar') ||
+      lowerText.includes('cuentas por pagar')
+    
+    if (isServicesQuery) {
+      // Mostrar servicios pendientes inline
+      setTimeout(() => {
+        ctx.pushAssistantMessage(
+          createMessage('assistant', [
+            createTextBlock('Estos son tus servicios pendientes:'),
+            createWidgetBlock('payment-cta', {
+              title: 'Servicios por Pagar',
+              services: [
+                { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
+                { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
+                { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
+              ]
+            })
+          ])
+        )
+        
+        // Agregar opciones para acciones sobre los servicios
+        setTimeout(() => {
+          ctx.pushAssistantMessage(
+            createMessage('assistant', [
+              createTextBlock('Puedes decirme "pagar todas", "pagar Edesur" o seleccionar un servicio específico del listado.')
+            ])
+          )
+        }, 800)
+      }, 500)
+      return
+    }
+    
+    // Detectar otros flujos
     const flow = detectFlow(text)
     
     if (flow) {
@@ -121,14 +208,7 @@ export const unifiedAssistantDemo: DemoDefinition = {
       const informationalFlows = ['balance']
       const isInformational = informationalFlows.includes(flow.id)
       
-      // Detectar si es consulta de servicios pendientes (no pago)
-      const isPaymentQuery = flow.id === 'payment' && 
-        (text.toLowerCase().includes('cuánto debo') || 
-         text.toLowerCase().includes('facturas pendientes') ||
-         text.toLowerCase().includes('servicios por pagar') ||
-         text.toLowerCase().includes('qué tengo que pagar'))
-      
-      if (isInformational || isPaymentQuery) {
+      if (isInformational) {
         // Flujos informativos se ejecutan inline
         setTimeout(() => {
           ctx.pushAssistantMessage(
@@ -148,20 +228,6 @@ export const unifiedAssistantDemo: DemoDefinition = {
                     accounts: [
                       { id: '1', name: 'Cuenta Corriente', balance: 125000, number: '****1234', type: 'Corriente' },
                       { id: '2', name: 'Caja de Ahorro', balance: 450000, number: '****5678', type: 'Ahorro' }
-                    ]
-                  })
-                ])
-              )
-            } else if (isPaymentQuery) {
-              ctx.pushAssistantMessage(
-                createMessage('assistant', [
-                  createTextBlock('Estos son tus servicios pendientes de pago:'),
-                  createWidgetBlock('payment-cta', {
-                    title: 'Servicios por Pagar',
-                    services: [
-                      { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
-                      { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
-                      { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
                     ]
                   })
                 ])

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+
 import { ArrowLeftIcon } from 'lucide-react'
 import { DemoDefinition } from '@/lib/types'
 

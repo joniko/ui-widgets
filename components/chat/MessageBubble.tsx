@@ -1,7 +1,6 @@
 'use client'
 
 import { Message, ChatBlock } from '@/lib/types'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { WidgetRenderer } from './WidgetRenderer'
 import { cn } from '@/lib/utils'
 

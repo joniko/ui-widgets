@@ -2,7 +2,7 @@
 
 import { FlowDefinition } from '../types'
 import { FlowContainer } from '../components/FlowContainer'
-import { SelectList } from '../components/SelectList'
+
 import { SuccessAnimation } from '../components/SuccessAnimation'
 
 // Types for transfer flow data

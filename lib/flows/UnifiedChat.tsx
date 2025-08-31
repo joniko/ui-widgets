@@ -46,14 +46,7 @@ export const UnifiedChat = ({ onMessage, ctx }: UnifiedChatProps) => {
     return null
   }
   
-  const handleUserMessage = (text: string) => {
-    const flow = detectFlow(text)
-    if (flow) {
-      setActiveFlow(flow)
-    } else {
-      onMessage(text)
-    }
-  }
+
   
   if (activeFlow) {
     return (
