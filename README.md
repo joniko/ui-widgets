@@ -11,6 +11,17 @@ Un prototipo completo que demuestra cómo funcionará un chat agéntico donde el
 - **Demos Interactivos**: Múltiples escenarios para probar la funcionalidad
 - **Responsive**: Optimizado para móvil y desktop
 
+## 📐 Sistema de Diseño
+
+Este proyecto implementa un sistema de diseño completo para experiencias conversacionales que combina lo mejor de las interfaces de chat con micro-UIs. Para principios y lineamientos detallados, consulta nuestra [Documentación del Sistema de Diseño de Chat UI](docs/CHAT_UI_DESIGN_SYSTEM.md).
+
+### Principios Clave:
+- **Flujos informativos** (balance, consultas) se muestran inline con widgets
+- **Flujos interactivos** (transferencias, pagos) usan bottom sheets para input del usuario
+- **Mensajes generados por UI** tienen estilo distintivo (transparente + borde punteado)
+- **Feedback inmediato** para todas las acciones del usuario
+- **Registro limpio** mostrando acciones finales, no pasos intermedios
+
 ## 🛠️ Stack Tecnológico
 
 - **Next.js 14** - App Router + TypeScript
