@@ -145,6 +145,79 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
     </Card>
   )
 
+  const renderServiceDetailList = (props: Record<string, unknown>) => (
+    <Card 
+      className="w-full max-w-sm rounded-2xl border-none"
+      style={{
+        background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
+        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+      }}
+    >
+      <CardHeader className="p-4 pb-3">
+        <div className="flex items-center gap-2">
+          <div className="text-xl">📋</div>
+          <CardTitle className="text-base font-semibold">{props.title as string}</CardTitle>
+        </div>
+        {Array.isArray(props.services) && props.services.some((s: Record<string, unknown>) => s.status === 'overdue') && (
+          <div className="mt-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-md inline-flex items-center gap-1 self-start">
+            <span className="text-red-600">⚠️</span>
+            Tenés {props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length} factura{props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length > 1 ? 's' : ''} vencida{props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length > 1 ? 's' : ''}
+          </div>
+        )}
+      </CardHeader>
+      <CardContent className="p-4 pt-2">
+        <div className="space-y-3">
+          {Array.isArray(props.services) && props.services.map((service: Record<string, unknown>) => (
+            <div 
+              key={service.id as string} 
+              className={`p-3 rounded-lg border ${
+                service.status === 'overdue' 
+                  ? 'border-red-200 bg-red-50/50' 
+                  : 'border-gray-200 bg-white'
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <div className="text-2xl mt-0.5">
+                  {service.name === 'Edesur' && '💡'}
+                  {service.name === 'Metrogas' && '🔥'}
+                  {service.name === 'Telecentro' && '📡'}
+                  {service.name === 'AySA' && '💧'}
+                </div>
+                <div className="flex-1">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{service.name as string}</h4>
+                      <p className="text-sm text-gray-600">{service.provider as string}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-bold text-lg">${(service.amount as number).toLocaleString('es-AR')}</p>
+                      <p className={`text-xs ${
+                        service.status === 'overdue' ? 'text-red-600 font-medium' : 'text-gray-500'
+                      }`}>
+                        {service.status === 'overdue' ? 'Vencida' : `Vence ${service.dueDate as string}`}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+          
+          {typeof props.totalAmount === 'number' && (
+            <div className="pt-3 mt-3 border-t border-gray-200">
+              <div className="flex justify-between items-center">
+                <span className="text-sm font-medium text-gray-600">Total a pagar:</span>
+                <span className="text-lg font-bold text-gray-900">
+                  ${props.totalAmount.toLocaleString('es-AR')}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  )
+
   const renderPaymentCta = (props: Record<string, unknown>) => (
     <Card 
       className="w-full max-w-sm rounded-2xl border-none"
@@ -302,6 +375,8 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
         return renderPaymentCta(widget.props)
       case 'confirmation':
         return renderConfirmation(widget.props)
+      case 'service-detail-list':
+        return renderServiceDetailList(widget.props)
       case 'image':
         return renderImage(widget.props)
       default:

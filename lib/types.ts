@@ -7,6 +7,7 @@ export type WidgetType =
   | 'transfer-form'
   | 'confirmation'
   | 'image'
+  | 'service-detail-list'
 
 export type InlineWidget = {
   id: string

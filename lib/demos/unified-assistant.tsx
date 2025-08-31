@@ -82,16 +82,21 @@ export const unifiedAssistantDemo: DemoDefinition = {
     if (qr.label === 'Pagar servicios') {
       // Mostrar servicios pendientes inline
       setTimeout(() => {
+        const services = [
+          { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
+          { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
+          { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
+        ]
+        const totalAmount = services.reduce((sum, service) => sum + service.amount, 0)
+        const overdueCount = services.filter(s => s.status === 'overdue').length
+        
         ctx.pushAssistantMessage(
           createMessage('assistant', [
-            createTextBlock('Estos son tus servicios pendientes:'),
-            createWidgetBlock('payment-cta', {
+            createTextBlock(`Tenés ${services.length} servicios pendientes por un total de $${totalAmount.toLocaleString('es-AR')}${overdueCount > 0 ? `. Hay ${overdueCount > 1 ? '' : 'una '}factura${overdueCount > 1 ? 's' : ''} vencida${overdueCount > 1 ? 's' : ''}` : '.'}`),
+            createWidgetBlock('service-detail-list', {
               title: 'Servicios por Pagar',
-              services: [
-                { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
-                { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
-                { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
-              ]
+              services: services,
+              totalAmount: totalAmount
             })
           ])
         )
@@ -204,16 +209,21 @@ export const unifiedAssistantDemo: DemoDefinition = {
     if (isServicesQuery) {
       // Mostrar servicios pendientes inline
       setTimeout(() => {
+        const services = [
+          { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
+          { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
+          { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
+        ]
+        const totalAmount = services.reduce((sum, service) => sum + service.amount, 0)
+        const overdueCount = services.filter(s => s.status === 'overdue').length
+        
         ctx.pushAssistantMessage(
           createMessage('assistant', [
-            createTextBlock('Estos son tus servicios pendientes:'),
-            createWidgetBlock('payment-cta', {
+            createTextBlock(`Tenés ${services.length} servicios pendientes por un total de $${totalAmount.toLocaleString('es-AR')}${overdueCount > 0 ? `. Hay ${overdueCount > 1 ? '' : 'una '}factura${overdueCount > 1 ? 's' : ''} vencida${overdueCount > 1 ? 's' : ''}` : '.'}`),
+            createWidgetBlock('service-detail-list', {
               title: 'Servicios por Pagar',
-              services: [
-                { id: '1', name: 'Edesur', amount: 8500, provider: 'Electricidad', dueDate: '15/01/2024', status: 'pending' },
-                { id: '2', name: 'Metrogas', amount: 3200, provider: 'Gas', dueDate: '18/01/2024', status: 'pending' },
-                { id: '3', name: 'Telecentro', amount: 12000, provider: 'Internet', dueDate: '10/01/2024', status: 'overdue' }
-              ]
+              services: services,
+              totalAmount: totalAmount
             })
           ])
         )
