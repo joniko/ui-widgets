@@ -31,7 +31,7 @@ export function AppHeader({
             {currentDemo ? (
               <div>
                 <h1 className="flex items-center space-x-2 text-xl font-semibold">
-                  <span>{currentDemo.title}</span>
+                  {currentDemo.title}
                 </h1>
                 {currentDemo.description && (
                   <p className="text-muted-foreground mt-1 text-sm">

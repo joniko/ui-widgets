@@ -59,7 +59,7 @@ export function ChatComposer({
   }, [message])
 
   return (
-    <div className="bg-transparent px-2">
+    <div className="bg-transparent">
       <div className="relative max-h-full min-h-[60px] w-full">
         {/* Capa 1: Sombra exterior principal */}
         <div

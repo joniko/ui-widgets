@@ -9,7 +9,7 @@ import {
 export const payServiceDemo: DemoDefinition = {
   slug: 'pay-service',
   title: 'Pago de Servicios',
-  icon: '💳',
+  icon: 'CreditCard',
   initialMessages: [
     createMessage('assistant', [
       createTextBlock(

@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button as UIButton } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { InlineWidget } from '@/lib/types'
+import { ClipboardList } from 'lucide-react'
 import {
   WidgetComponentProps,
   createDomainWidgets,
@@ -99,7 +100,7 @@ export const TemplateItemList = ({
     >
       <CardHeader className="p-4 pb-3">
         <div className="flex items-center gap-2">
-          <div className="text-xl">📋</div>
+          <ClipboardList className="h-5 w-5 text-primary" />
           <CardTitle className="text-base font-semibold">
             {props.title as string}
           </CardTitle>

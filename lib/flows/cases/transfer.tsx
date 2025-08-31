@@ -72,19 +72,19 @@ const contacts = [
     id: '1',
     name: 'Mauro González',
     avatar: '/avatars/mauro1.jpg',
-    banks: ['🇦🇷', '🇧🇷'],
+    banks: ['AR', 'BR'],
   },
   {
     id: '2',
     name: 'Mauro Vera',
     avatar: '/avatars/mauro2.jpg',
-    banks: ['🇦🇷'],
+    banks: ['AR'],
   },
   {
     id: '3',
     name: 'Mauro Ariel Fernández',
     avatar: '/avatars/mauro3.jpg',
-    banks: ['🇧🇷'],
+    banks: ['BR'],
   },
 ]
 

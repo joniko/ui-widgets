@@ -231,7 +231,7 @@ export class FlowStorage {
         ],
         contacts: [
           { id: '1', name: 'Juan Pérez', avatar: 'user', banks: ['AR'] },
-          { id: '2', name: 'María García', avatar: '👩', banks: ['🇦🇷', '🇧🇷'] },
+          { id: '2', name: 'María García', avatar: 'user', banks: ['AR', 'BR'] },
         ],
         services: [
           {

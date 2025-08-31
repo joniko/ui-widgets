@@ -163,9 +163,9 @@ export function ChatLayout({
   )
 
   return (
-    <div className="mx-auto h-screen max-w-2xl">
+    <div className="mx-auto h-screen max-w-2xl min-w-full">
       {/* Messages - Full height with padding for header and bottom input */}
-      <div className="z-10 mx-auto h-full max-w-xl overflow-y-auto px-4 pb-20 pt-0">
+      <div className="z-10 mx-auto h-full max-w-xl overflow-y-auto pb-20 pt-0">
         <MessageList ref={messageListRef} messages={messages} />
       </div>
 

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useState } from 'react'
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
-import { ArrowLeftIcon } from 'lucide-react'
+import { ArrowLeftIcon, Heart, MapPin } from 'lucide-react'
 
 // Sistema de animaciones optimizado
 const ANIMATION = {
@@ -35,19 +35,19 @@ const mockContacts = [
     id: '1',
     name: 'Mauro González',
     avatar: '/avatars/mauro1.jpg',
-    banks: ['🇦🇷', '🇧🇷'],
+    banks: ['AR', 'BR'],
   },
   {
     id: '2',
     name: 'Mauro Vera',
     avatar: '/avatars/mauro2.jpg',
-    banks: ['🇦🇷'],
+    banks: ['AR'],
   },
   {
     id: '3',
     name: 'Mauro Ariel Fernández',
     avatar: '/avatars/mauro3.jpg',
-    banks: ['🇧🇷'],
+    banks: ['BR'],
   },
 ]
 
@@ -198,14 +198,17 @@ const TransferFlow = ({ monto, ctx }: { monto: number; ctx: DemoContext }) => {
                 <p className="font-medium">{contact.name}</p>
                 <div className="mt-1 flex gap-2">
                   {contact.banks.map((bank, index) => (
-                    <span key={index} className="text-lg">
-                      {bank}
-                    </span>
+                    <div key={index} className="flex items-center space-x-1">
+                      <MapPin className="h-3 w-3 text-muted-foreground" />
+                      <span className="text-xs font-medium text-muted-foreground">
+                        {bank}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
-            <span className="text-primary text-2xl">💙</span>
+            <Heart className="text-primary h-6 w-6" />
           </motion.button>
         ))}
       </div>
@@ -364,10 +367,9 @@ const TransferFlow = ({ monto, ctx }: { monto: number; ctx: DemoContext }) => {
 
 export const transferDemo: DemoDefinition = {
   slug: 'transfer',
-  title: 'Transferencia de Dinero',
-  icon: '💸',
+  title: 'Asistente',
   initialMessages: [
-    createMessage('assistant', [createTextBlock('¿En qué te ayudo hoy?')]),
+    createMessage('assistant', [createTextBlock('Hola Jonatan, ¿En qué te ayudo hoy?')]),
   ],
   initialQuickReplies: [
     {
