@@ -79,8 +79,7 @@ export const unifiedAssistantDemo: DemoDefinition = {
   ],
   
   onQuickReply: (qr, ctx) => {
-    // Simular que el usuario escribió el texto
-    ctx.pushUserMessage(qr.label)
+    // El mensaje del usuario ya fue agregado por ChatLayout
     
     // Detectar y ejecutar flujo
     const flow = detectFlow(qr.label)
