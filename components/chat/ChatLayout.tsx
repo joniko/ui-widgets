@@ -118,9 +118,19 @@ export function ChatLayout({
   }, [onUserMessage, openSheet, pushAssistantMessage, pushUserMessage, pushUIMessage])
 
   return (
-    <div className="h-screen bg-background relative">
+    <div className="h-screen bg-background relative overflow-hidden">
+      {/* Animated Background */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          animation: 'gentleGlow 10s ease-in-out infinite',
+          background: 'radial-gradient(ellipse at bottom right, rgba(255, 230, 0, .1) 0, rgba(255, 230, 0, .2) 0, transparent 25%), linear-gradient(180deg, hsla(0, 0%, 100%, .1) 40%, rgba(177, 220, 249, .1) 70%, rgba(120, 126, 234, .1))',
+          backgroundSize: '150% 120%, 100% 100%'
+        }}
+      />
+      
       {/* Messages - Full height with padding for header and bottom input */}
-      <div className="h-full overflow-y-auto bg-white pt-0 pb-20 px-4">
+      <div className="relative z-10 h-full overflow-y-auto pt-0 pb-20 px-4">
         <MessageList messages={messages} />
       </div>
 

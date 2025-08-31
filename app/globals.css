@@ -169,3 +169,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Chat Background Animation */
+@keyframes gentleGlow {
+  0%, 100% {
+    background-position: 0% 50%, 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%, 0% 0%;
+  }
+}
