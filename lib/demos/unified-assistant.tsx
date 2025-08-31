@@ -186,7 +186,7 @@ export const unifiedAssistantDemo: DemoDefinition = {
                 // Mensaje de confirmación específico según el flujo
                 setTimeout(() => {
                   if (flow.id === 'transfer') {
-                    ctx.pushUserMessage('Confirmar transferencia')
+                    ctx.pushUIMessage('Confirmar transferencia')
                     setTimeout(() => {
                       ctx.pushAssistantMessage(
                         createMessage('assistant', [

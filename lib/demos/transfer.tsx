@@ -132,7 +132,7 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
     ctx.closeSheet?.()
     
     setTimeout(() => {
-      ctx.pushUserMessage('Confirmar transferencia')
+      ctx.pushUIMessage('Confirmar transferencia')
       
       setTimeout(() => {
         ctx.pushAssistantMessage(
