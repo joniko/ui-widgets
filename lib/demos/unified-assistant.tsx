@@ -90,29 +90,6 @@ export const unifiedAssistantDemo: DemoDefinition = {
     // Si hay un texto de prefill para este quick reply, usarlo
     if (prefillTexts[qr.label]) {
       ctx.prefillInput(prefillTexts[qr.label])
-      
-      // Respuesta del asistente guiando al usuario
-      setTimeout(() => {
-        if (qr.label === 'Transferir dinero') {
-          ctx.pushAssistantMessage(
-            createMessage('assistant', [
-              createTextBlock('Claro! Por favor completa a quién quieres transferir y te ayudo con el proceso.')
-            ])
-          )
-        } else if (qr.label === 'Pagar servicios') {
-          ctx.pushAssistantMessage(
-            createMessage('assistant', [
-              createTextBlock('Por supuesto! ¿Qué servicio necesitas pagar? Puedes decirme el nombre o tipo de servicio.')
-            ])
-          )
-        } else if (qr.label === 'Ayuda') {
-          ctx.pushAssistantMessage(
-            createMessage('assistant', [
-              createTextBlock('¡Estoy aquí para ayudarte! Por favor completa tu pregunta y te asisto con lo que necesites.')
-            ])
-          )
-        }
-      }, 300)
       return
     }
     

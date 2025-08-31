@@ -54,7 +54,7 @@ export function ChatComposer({ onSendMessage, disabled = false, value, onChange 
   }, [message])
 
   return (
-    <div className="bg-transparent">
+    <div className="bg-transparent px-2">
       <div className="relative max-h-full min-h-[60px] w-full">
         {/* Capa 1: Sombra exterior principal */}
         <div 
@@ -80,15 +80,14 @@ export function ChatComposer({ onSendMessage, disabled = false, value, onChange 
           >
             {/* Capa 4: Gradiente de fondo */}
             <div 
-              className="relative bg-gradient-to-b from-neutral-400/10 to-white/35 p-2 rounded-3xl"
+              className="relative bg-gradient-to-b from-neutral-400/10 to-white p-2 rounded-3xl"
               style={{
                 boxShadow: 'rgba(255, 255, 255, 0.08) 0px 0px 0px 1px inset'
               }}
             >
               {/* Capa 5: Fondo final del input */}
-              <div className="bg-gradient-to-b from-white/90 to-white/0 rounded-2xl">
                 {/* Contenedor principal con textarea y botones */}
-                <div className="relative flex items-center">
+                <div className="relative flex items-center bg-background rounded-2xl">
                   {/* Textarea container */}
                   <div className="flex-1 flex items-center">
                     <div className="relative grow overflow-hidden">
@@ -169,7 +168,6 @@ export function ChatComposer({ onSendMessage, disabled = false, value, onChange 
                       )}
                     </button>
                   </div>
-                </div>
               </div>
             </div>
           </div>
