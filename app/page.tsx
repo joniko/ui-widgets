@@ -1,5 +1,4 @@
-import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+
 import {
   Card,
   CardContent,
@@ -8,8 +7,8 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { HeroSection } from '@/components/ui/hero-section'
+import { CTASection } from '@/components/ui/cta-section'
 import {
-  ArrowRightIcon,
   MessageCircleIcon,
   SmartphoneIcon,
   ZapIcon,
@@ -99,21 +98,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary text-primary-foreground px-4 py-20">
-        <div className="container mx-auto text-center">
-          <h2 className="mb-6 text-3xl font-bold">¿Listo para explorar?</h2>
-          <p className="mb-8 text-xl opacity-90">
-            Descubre cómo funciona el chat agéntico con widgets inline y bottom
-            sheet
-          </p>
-          <Link href="/demos">
-            <Button size="lg" variant="secondary" className="px-8 text-lg">
-              Explorar Demos
-              <ArrowRightIcon className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
-        </div>
-      </section>
+      <CTASection />
     </div>
   )
 }

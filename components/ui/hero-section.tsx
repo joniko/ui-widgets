@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { AnimatedText } from '@/components/ui/animated-text'
+import { AnimatedButton, AnimatedButtonVariants } from '@/components/ui/animated-button'
 import { motion } from 'framer-motion'
 import { ArrowRightIcon } from 'lucide-react'
 
@@ -38,14 +38,23 @@ export function HeroSection() {
             transition={{ delay: 1.6, duration: 0.6, ease: 'easeOut' }}
           >
             <Link href="/demos">
-              <Button size="lg" className="px-8 text-lg">
+              <AnimatedButton 
+                size="lg" 
+                className="px-8 text-lg"
+                {...AnimatedButtonVariants.normal}
+              >
                 Ver Demos
                 <ArrowRightIcon className="ml-2 h-5 w-5" />
-              </Button>
+              </AnimatedButton>
             </Link>
-            <Button variant="outline" size="lg" className="px-8 text-lg">
+            <AnimatedButton 
+              variant="outline" 
+              size="lg" 
+              className="px-8 text-lg"
+              {...AnimatedButtonVariants.subtle}
+            >
               Documentación
-            </Button>
+            </AnimatedButton>
           </motion.div>
         </div>
       </div>
