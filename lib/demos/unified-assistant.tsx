@@ -79,102 +79,59 @@ export const unifiedAssistantDemo: DemoDefinition = {
   ],
   
   onQuickReply: (qr, ctx) => {
-    // El mensaje del usuario ya fue agregado por ChatLayout
+    // Mapeo de quick replies a textos de prefill
+    const prefillTexts: Record<string, string> = {
+      'Transferir dinero': 'Quiero transferir a ',
+      'Ver mi saldo': 'Quiero ver mi saldo',
+      'Pagar servicios': 'Quiero pagar ',
+      'Ayuda': '¿Cómo puedo '
+    }
     
-    // Detectar y ejecutar flujo
-    const flow = detectFlow(qr.label)
-    if (flow) {
-      // Flujos informativos (inline) vs flujos interactivos (bottom sheet)
-      const informationalFlows = ['balance']
-      const isInformational = informationalFlows.includes(flow.id)
+    // Si hay un texto de prefill para este quick reply, usarlo
+    if (prefillTexts[qr.label]) {
+      ctx.prefillInput(prefillTexts[qr.label])
       
-      // En onQuickReply, payment siempre abre bottom sheet
-      // Ya que no tenemos contexto suficiente para determinar si es consulta
-      const isPaymentQuery = false
-      
-      if (isInformational || isPaymentQuery) {
-        // Flujos informativos se ejecutan inline
-        setTimeout(() => {
-          // Ejecutar el flujo directamente y mostrar resultado inline
-          if (flow.id === 'balance') {
-            ctx.pushAssistantMessage(
-              createMessage('assistant', [
-                createTextBlock('Aquí tienes el resumen de tus cuentas:'),
-                createWidgetBlock('account-list', {
-                  title: 'Tus Cuentas',
-                  accounts: [
-                    { id: '1', name: 'Cuenta Corriente', balance: 125000, number: '****1234', type: 'Corriente' },
-                    { id: '2', name: 'Caja de Ahorro', balance: 450000, number: '****5678', type: 'Ahorro' }
-                  ]
-                })
-              ])
-            )
-          }
-        }, 500)
-      } else {
-        // Flujos interactivos usan bottom sheet
-        setTimeout(() => {
-          ctx.openSheet(
-            <FlowEngine
-              flow={flow}
-              onComplete={(data) => {
-                // Mostrar mensaje de confirmación inmediatamente
-                if (flow.id === 'transfer') {
-                  ctx.pushUIMessage('Confirmar transferencia')
-                } else if (flow.id === 'payment') {
-                  ctx.pushUIMessage('Confirmar pago')
-                }
-                
-                ctx.closeSheet?.()
-                
-                // Mensaje de confirmación específico según el flujo
-                setTimeout(() => {
-                  if (flow.id === 'transfer') {
-                    ctx.pushAssistantMessage(
-                      createMessage('assistant', [
-                        createTextBlock('¡Listo! La transferencia fue realizada'),
-                        createWidgetBlock('confirmation', {
-                          type: 'success',
-                          title: '¡Transferencia realizada!',
-                          recipient: (data.contact as { name: string }).name,
-                          account: `${(data.account as { name: string; type: string; number: string }).name} - ${(data.account as { name: string; type: string; number: string }).type}****${(data.account as { name: string; type: string; number: string }).number.slice(-4)}`,
-                          amount: data.amount as number,
-                          accountType: 'Con dinero en cuenta',
-                          showReceipt: true
-                        })
-                      ])
-                    )
-                  } else if (flow.id === 'payment') {
-                    ctx.pushAssistantMessage(
-                      createMessage('assistant', [
-                        createTextBlock('¡Listo! El pago fue realizado'),
-                        createWidgetBlock('confirmation', {
-                          type: 'success',
-                          title: '¡Pago realizado!',
-                          recipient: (data.service as { name: string }).name,
-                          account: `${(data.account as { name: string }).name}`,
-                          amount: (data.service as { amount: number }).amount,
-                          accountType: 'Pago de servicio',
-                          showReceipt: true
-                        })
-                      ])
-                    )
-                  } else {
-                    // Para otros flujos, mostrar mensaje genérico
-                    ctx.pushAssistantMessage(
-                      createMessage('assistant', [
-                        createTextBlock('¡Listo! La operación se completó exitosamente.')
-                      ])
-                    )
-                  }
-                }, 500)
-              }}
-              onCancel={() => ctx.closeSheet?.()}
-            />,
-            { snapPoints: [0.5, 0.7, 0.9], initialSnap: 0.7 }
+      // Respuesta del asistente guiando al usuario
+      setTimeout(() => {
+        if (qr.label === 'Transferir dinero') {
+          ctx.pushAssistantMessage(
+            createMessage('assistant', [
+              createTextBlock('Claro! Por favor completa a quién quieres transferir y te ayudo con el proceso.')
+            ])
           )
-        }, 500)
-      }
+        } else if (qr.label === 'Pagar servicios') {
+          ctx.pushAssistantMessage(
+            createMessage('assistant', [
+              createTextBlock('Por supuesto! ¿Qué servicio necesitas pagar? Puedes decirme el nombre o tipo de servicio.')
+            ])
+          )
+        } else if (qr.label === 'Ayuda') {
+          ctx.pushAssistantMessage(
+            createMessage('assistant', [
+              createTextBlock('¡Estoy aquí para ayudarte! Por favor completa tu pregunta y te asisto con lo que necesites.')
+            ])
+          )
+        }
+      }, 300)
+      return
+    }
+    
+    // Si es "Ver mi saldo", ejecutarlo directamente sin prefill
+    if (qr.label === 'Ver mi saldo') {
+      setTimeout(() => {
+        ctx.pushAssistantMessage(
+          createMessage('assistant', [
+            createTextBlock('Aquí tienes el resumen de tus cuentas:'),
+            createWidgetBlock('account-list', {
+              title: 'Tus Cuentas',
+              accounts: [
+                { id: '1', name: 'Cuenta Corriente', balance: 125000, number: '****1234', type: 'Corriente' },
+                { id: '2', name: 'Caja de Ahorro', balance: 450000, number: '****5678', type: 'Ahorro' }
+              ]
+            })
+          ])
+        )
+      }, 500)
     }
   },
   

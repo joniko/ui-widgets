@@ -25,6 +25,7 @@ export function ChatLayout({
   const [messages, setMessages] = useState<Message[]>(initialMessages)
   const [quickReplies, setQuickReplies] = useState<QuickReply[]>(initialQuickReplies)
   const [hasUserInteracted, setHasUserInteracted] = useState(false)
+  const [inputValue, setInputValue] = useState('')
   const { openSheet, isOpen, content, closeSheet } = useBottomSheet()
 
   const pushMessage = useCallback((message: Message) => {
@@ -47,34 +48,47 @@ export function ChatLayout({
     return uiMessage
   }, [pushMessage])
 
+  const prefillInput = useCallback((text: string) => {
+    setInputValue(text)
+    // Focus the input after prefilling
+    setTimeout(() => {
+      const textarea = document.querySelector('textarea[name="message"]') as HTMLTextAreaElement
+      if (textarea) {
+        textarea.focus()
+        // Move cursor to the end
+        textarea.setSelectionRange(textarea.value.length, textarea.value.length)
+      }
+    }, 100)
+  }, [])
+
   const handleQuickReply = useCallback((quickReply: QuickReply) => {
     // Mark user interaction and hide quick replies
     setHasUserInteracted(true)
     setQuickReplies([])
-    
-    // Add user message for the quick reply
-    const userMessage = createMessage('user', [createTextBlock(quickReply.label)])
-    pushMessage(userMessage)
 
-    // Create demo context
+    // Create demo context with prefillInput
     const ctx: DemoContext = {
       openSheet,
       closeSheet,
       pushAssistantMessage,
       pushUserMessage,
-      pushUIMessage
+      pushUIMessage,
+      prefillInput
     }
 
     // Call demo handler if exists
     if (onQuickReply) {
       onQuickReply(quickReply, ctx)
     }
-  }, [onQuickReply, openSheet, pushAssistantMessage, pushMessage, pushUIMessage])
+  }, [onQuickReply, openSheet, pushAssistantMessage, pushUserMessage, pushUIMessage, prefillInput])
 
   const handleSendMessage = useCallback((text: string) => {
     // Mark user interaction and hide quick replies
     setHasUserInteracted(true)
     setQuickReplies([])
+    
+    // Clear input
+    setInputValue('')
     
     // Add user message
     pushUserMessage(text)
@@ -85,7 +99,8 @@ export function ChatLayout({
       closeSheet,
       pushAssistantMessage,
       pushUserMessage,
-      pushUIMessage
+      pushUIMessage,
+      prefillInput
     }
 
     // Call demo handler if exists
@@ -117,7 +132,11 @@ export function ChatLayout({
         )}
 
         {/* Composer */}
-        <ChatComposer onSendMessage={handleSendMessage} />
+        <ChatComposer 
+          onSendMessage={handleSendMessage} 
+          value={inputValue}
+          onChange={setInputValue}
+        />
       </div>
       
       {/* Bottom Sheet */}

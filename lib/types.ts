@@ -39,6 +39,7 @@ export type DemoContext = {
   pushAssistantMessage: (msg: Message) => void
   pushUserMessage: (text: string) => void
   pushUIMessage: (text: string) => void // Para mensajes generados por la UI
+  prefillInput: (text: string) => void
 }
 
 export type DemoDefinition = {

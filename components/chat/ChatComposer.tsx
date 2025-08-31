@@ -7,16 +7,24 @@ import { cn } from '@/lib/utils'
 interface ChatComposerProps {
   onSendMessage: (message: string) => void
   disabled?: boolean
+  value?: string
+  onChange?: (value: string) => void
 }
 
-export function ChatComposer({ onSendMessage, disabled = false }: ChatComposerProps) {
-  const [message, setMessage] = useState('')
+export function ChatComposer({ onSendMessage, disabled = false, value, onChange }: ChatComposerProps) {
+  const [internalMessage, setInternalMessage] = useState('')
+  const message = value !== undefined ? value : internalMessage
+  const setMessage = onChange || setInternalMessage
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSend = () => {
     if (message.trim() && !disabled) {
       onSendMessage(message.trim())
-      setMessage('')
+      // Clear both internal state and parent state
+      setInternalMessage('')
+      if (onChange) {
+        onChange('')
+      }
     }
   }
 
@@ -93,6 +101,7 @@ export function ChatComposer({ onSendMessage, disabled = false }: ChatComposerPr
                               </label>
                               <textarea
                                 id="userInput"
+                                name="message"
                                 ref={textareaRef}
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
