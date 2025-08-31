@@ -357,18 +357,18 @@ export const transferDemo: DemoDefinition = {
   initialQuickReplies: [
     { 
       id: 'transfer', 
-      label: 'Transferir dinero',
-      icon: 'refresh-cw'
+      label: 'Transferir dinero'
+      // No icon - will use getQuickReplyIcon
     },
     { 
       id: 'recharge', 
-      label: 'Recargar celular',
-      icon: 'smartphone'
+      label: 'Recargar celular'
+      // No icon - will use getQuickReplyIcon
     },
     { 
       id: 'pay-services', 
-      label: 'Pagar facturas y servicios',
-      icon: '📄'
+      label: 'Pagar facturas y servicios'
+      // No icon - will use getQuickReplyIcon
     }
   ],
   onQuickReply: (qr, ctx) => {

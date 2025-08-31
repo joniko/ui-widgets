@@ -57,23 +57,23 @@ export const unifiedAssistantDemo: DemoDefinition = {
   initialQuickReplies: [
     { 
       id: 'transfer', 
-      label: 'Transferir dinero',
-      icon: '💸'
+      label: 'Transferir dinero'
+      // No icon - will use getQuickReplyIcon
     },
     { 
       id: 'balance', 
-      label: 'Ver saldo',
-      icon: 'wallet'
+      label: 'Ver saldo'
+      // No icon - will use getQuickReplyIcon
     },
     { 
       id: 'pay', 
-      label: 'Pagar servicios',
-      icon: 'credit-card'
+      label: 'Pagar servicios'
+      // No icon - will use getQuickReplyIcon
     },
     { 
       id: 'help', 
-      label: 'Ayuda',
-      icon: '❓'
+      label: 'Ayuda'
+      // No icon - will use getQuickReplyIcon
     }
   ],
   

@@ -4,18 +4,28 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 import { QuickReply } from '@/lib/types'
-import { Search, DollarSign, TrendingUp, CreditCard, Calculator, BarChart3, Wallet, Receipt } from 'lucide-react'
+import { Search, DollarSign, TrendingUp, CreditCard, BarChart3, Wallet, Receipt } from 'lucide-react'
 
 const getQuickReplyIcon = (label: string) => {
   const lowerLabel = label.toLowerCase()
   
-  if (lowerLabel.includes('pago') || lowerLabel.includes('payment')) return <Receipt className="w-5 h-5" />
-  if (lowerLabel.includes('transfer') || lowerLabel.includes('dinero')) return <DollarSign className="w-5 h-5" />
-  if (lowerLabel.includes('gasto') || lowerLabel.includes('expense')) return <BarChart3 className="w-5 h-5" />
-  if (lowerLabel.includes('consulta') || lowerLabel.includes('check')) return <Search className="w-5 h-5" />
-  if (lowerLabel.includes('cuenta') || lowerLabel.includes('account')) return <Wallet className="w-5 h-5" />
-  if (lowerLabel.includes('servicio') || lowerLabel.includes('service')) return <CreditCard className="w-5 h-5" />
-  if (lowerLabel.includes('ayuda') || lowerLabel.includes('help')) return <Calculator className="w-5 h-5" />
+  // Transferencias
+  if (lowerLabel.includes('transfer') || lowerLabel.includes('dinero') || lowerLabel.includes('enviar')) return <DollarSign className="w-5 h-5" />
+  
+  // Saldos y cuentas
+  if (lowerLabel.includes('saldo') || lowerLabel.includes('balance') || lowerLabel.includes('cuenta') || lowerLabel.includes('account')) return <Wallet className="w-5 h-5" />
+  
+  // Pagos y servicios
+  if (lowerLabel.includes('pago') || lowerLabel.includes('payment') || lowerLabel.includes('servicio') || lowerLabel.includes('service') || lowerLabel.includes('factura')) return <CreditCard className="w-5 h-5" />
+  
+  // Recargas
+  if (lowerLabel.includes('recarga') || lowerLabel.includes('celular') || lowerLabel.includes('móvil')) return <Receipt className="w-5 h-5" />
+  
+  // Ayuda y soporte
+  if (lowerLabel.includes('ayuda') || lowerLabel.includes('help') || lowerLabel.includes('soporte') || lowerLabel.includes('contactar')) return <Search className="w-5 h-5" />
+  
+  // Consultas y reportes
+  if (lowerLabel.includes('consulta') || lowerLabel.includes('check') || lowerLabel.includes('gasto') || lowerLabel.includes('expense') || lowerLabel.includes('historial')) return <BarChart3 className="w-5 h-5" />
   
   return <TrendingUp className="w-5 h-5" />
 }
