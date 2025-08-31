@@ -11,6 +11,7 @@ interface MessageBubbleProps {
 
 export function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user'
+  const isUIGenerated = message.isUIGenerated
 
   const renderBlock = (block: ChatBlock, index: number) => {
     if (block.kind === 'text') {
@@ -24,8 +25,9 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           )}
           style={isUser ? {
             borderRadius: 'var(--border-radius-xlarge, 20px) var(--border-radius-xlarge, 20px) var(--border-radius-tiny, 4px) var(--border-radius-xlarge, 20px)',
-            background: 'rgb(244 244 245)',
-            boxShadow: '0 0 0 1px rgba(34, 34, 34, 0.08), 0 1px 1px -0.5px rgba(34, 34, 34, 0.04), 0 2px 2px -1px rgba(34, 34, 34, 0.04), 0 6px 6px -3px rgba(34, 34, 34, 0.04)'
+            background: isUIGenerated ? 'transparent' : 'rgb(244 244 245)',
+            border: isUIGenerated ? '2px dashed rgba(156, 163, 175, 0.5)' : undefined,
+            boxShadow: isUIGenerated ? 'none' : '0 0 0 1px rgba(34, 34, 34, 0.08), 0 1px 1px -0.5px rgba(34, 34, 34, 0.04), 0 2px 2px -1px rgba(34, 34, 34, 0.04), 0 6px 6px -3px rgba(34, 34, 34, 0.04)'
           } : undefined}
         >
           {block.text}

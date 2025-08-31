@@ -13,8 +13,8 @@ interface AppHeaderProps {
 
 export function AppHeader({ currentDemo, showBackButton = false }: AppHeaderProps) {
   return (
-    <header className="fixed top-0 left-0 right-0 border-b border-gray-200/50 bg-white/85 backdrop-blur-sm  z-20">
-      <div className="container mx-auto px-4 py-4">
+    <header className="fixed top-0 left-0 right-0 border-b border-gray-200/50 bg-white/85 backdrop-blur-sm z-20">
+      <div className="max-w-xl mx-auto px-0 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {showBackButton && (

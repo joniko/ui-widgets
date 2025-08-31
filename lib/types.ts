@@ -23,6 +23,7 @@ export type Message = {
   role: Role
   blocks: ChatBlock[]
   createdAt: string
+  isUIGenerated?: boolean // Para mensajes generados por la UI (no escritos por el usuario)
 }
 
 export type QuickReply = { 
@@ -37,6 +38,7 @@ export type DemoContext = {
   closeSheet?: () => void
   pushAssistantMessage: (msg: Message) => void
   pushUserMessage: (text: string) => void
+  pushUIMessage: (text: string) => void // Para mensajes generados por la UI
 }
 
 export type DemoDefinition = {

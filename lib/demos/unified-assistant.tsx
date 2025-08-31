@@ -1,7 +1,7 @@
 'use client'
 
 import { DemoDefinition, DemoContext } from '../types'
-import { createMessage, createTextBlock, createWidgetBlock } from '../agenticMocks'
+import { createMessage, createTextBlock, createWidgetBlock, createUIMessage } from '../agenticMocks'
 import { FlowEngine } from '../flows/FlowEngine'
 import { transferFlow } from '../flows/cases/transfer'
 import { balanceFlow } from '../flows/cases/balance'
@@ -90,45 +90,47 @@ export const unifiedAssistantDemo: DemoDefinition = {
           <FlowEngine
             flow={flow}
             onComplete={(data) => {
+              // Mostrar mensaje de confirmación inmediatamente
+              if (flow.id === 'transfer') {
+                ctx.pushUIMessage('Confirmar transferencia')
+              } else if (flow.id === 'payment') {
+                ctx.pushUIMessage('Confirmar pago')
+              }
+              
               ctx.closeSheet?.()
+              
               // Mensaje de confirmación específico según el flujo
               setTimeout(() => {
                 if (flow.id === 'transfer') {
-                  ctx.pushUserMessage('Confirmar transferencia')
-                  setTimeout(() => {
-                    ctx.pushAssistantMessage(
-                      createMessage('assistant', [
-                        createTextBlock('¡Listo! La transferencia fue realizada'),
-                        createWidgetBlock('confirmation', {
-                          type: 'success',
-                          title: '¡Transferencia realizada!',
-                          recipient: (data.contact as { name: string }).name,
-                          account: `${(data.account as { name: string; type: string; number: string }).name} - ${(data.account as { name: string; type: string; number: string }).type}****${(data.account as { name: string; type: string; number: string }).number.slice(-4)}`,
-                          amount: data.amount as number,
-                          accountType: 'Con dinero en cuenta',
-                          showReceipt: true
-                        })
-                      ])
-                    )
-                  }, 500)
+                  ctx.pushAssistantMessage(
+                    createMessage('assistant', [
+                      createTextBlock('¡Listo! La transferencia fue realizada'),
+                      createWidgetBlock('confirmation', {
+                        type: 'success',
+                        title: '¡Transferencia realizada!',
+                        recipient: (data.contact as { name: string }).name,
+                        account: `${(data.account as { name: string; type: string; number: string }).name} - ${(data.account as { name: string; type: string; number: string }).type}****${(data.account as { name: string; type: string; number: string }).number.slice(-4)}`,
+                        amount: data.amount as number,
+                        accountType: 'Con dinero en cuenta',
+                        showReceipt: true
+                      })
+                    ])
+                  )
                 } else if (flow.id === 'payment') {
-                  ctx.pushUserMessage('Confirmar pago')
-                  setTimeout(() => {
-                    ctx.pushAssistantMessage(
-                      createMessage('assistant', [
-                        createTextBlock('¡Listo! El pago fue realizado'),
-                        createWidgetBlock('confirmation', {
-                          type: 'success',
-                          title: '¡Pago realizado!',
-                          recipient: (data.service as { name: string }).name,
-                          account: `${(data.account as { name: string }).name}`,
-                          amount: (data.service as { amount: number }).amount,
-                          accountType: 'Pago de servicio',
-                          showReceipt: true
-                        })
-                      ])
-                    )
-                  }, 500)
+                  ctx.pushAssistantMessage(
+                    createMessage('assistant', [
+                      createTextBlock('¡Listo! El pago fue realizado'),
+                      createWidgetBlock('confirmation', {
+                        type: 'success',
+                        title: '¡Pago realizado!',
+                        recipient: (data.service as { name: string }).name,
+                        account: `${(data.account as { name: string }).name}`,
+                        amount: (data.service as { amount: number }).amount,
+                        accountType: 'Pago de servicio',
+                        showReceipt: true
+                      })
+                    ])
+                  )
                 } else {
                   // Para otros flujos, mostrar mensaje genérico
                   ctx.pushAssistantMessage(

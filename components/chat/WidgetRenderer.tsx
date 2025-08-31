@@ -197,7 +197,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
     if (props.type === 'success' && props.amount) {
       return (
         <Card 
-          className="w-full max-w-sm rounded-2xl border-0"
+          className="w-full max-w-sm rounded-2xl border-0 py-0"
           style={{
             background: 'rgb(220 252 231)', // green-100
             boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
@@ -315,7 +315,7 @@ export function WidgetRenderer({ widget }: WidgetRendererProps) {
       initial="hidden"
       animate="visible"
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="flex justify-center my-4"
+      className="flex justify-center my-0"
     >
       {renderWidget()}
     </motion.div>

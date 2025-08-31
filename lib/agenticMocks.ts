@@ -9,6 +9,14 @@ export const createMessage = (role: 'user' | 'assistant', blocks: ChatBlock[]): 
   createdAt: new Date().toISOString()
 })
 
+export const createUIMessage = (role: 'user' | 'assistant', blocks: ChatBlock[]): Message => ({
+  id: generateId(),
+  role,
+  blocks,
+  createdAt: new Date().toISOString(),
+  isUIGenerated: true
+})
+
 export const createTextBlock = (text: string) => ({ kind: 'text' as const, text })
 
 export const createWidgetBlock = (type: WidgetType, props: Record<string, unknown>): ChatBlock => ({

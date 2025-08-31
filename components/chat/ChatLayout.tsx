@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import { Message, QuickReply, DemoContext } from '@/lib/types'
-import { createMessage, createTextBlock } from '@/lib/agenticMocks'
+import { createMessage, createTextBlock, createUIMessage } from '@/lib/agenticMocks'
 import { MessageList } from './MessageList'
 import { QuickReplies } from './QuickReplies'
 import { ChatComposer } from './ChatComposer'
@@ -41,6 +41,12 @@ export function ChatLayout({
     pushMessage(message)
   }, [pushMessage])
 
+  const pushUIMessage = useCallback((text: string) => {
+    const uiMessage = createUIMessage('user', [createTextBlock(text)])
+    pushMessage(uiMessage)
+    return uiMessage
+  }, [pushMessage])
+
   const handleQuickReply = useCallback((quickReply: QuickReply) => {
     // Mark user interaction and hide quick replies
     setHasUserInteracted(true)
@@ -55,14 +61,15 @@ export function ChatLayout({
       openSheet,
       closeSheet,
       pushAssistantMessage,
-      pushUserMessage
+      pushUserMessage,
+      pushUIMessage
     }
 
     // Call demo handler if exists
     if (onQuickReply) {
       onQuickReply(quickReply, ctx)
     }
-  }, [onQuickReply, openSheet, pushAssistantMessage, pushMessage])
+  }, [onQuickReply, openSheet, pushAssistantMessage, pushMessage, pushUIMessage])
 
   const handleSendMessage = useCallback((text: string) => {
     // Mark user interaction and hide quick replies
@@ -77,7 +84,8 @@ export function ChatLayout({
       openSheet,
       closeSheet,
       pushAssistantMessage,
-      pushUserMessage
+      pushUserMessage,
+      pushUIMessage
     }
 
     // Call demo handler if exists
@@ -92,7 +100,7 @@ export function ChatLayout({
         pushAssistantMessage(assistantMessage)
       }, 1000)
     }
-  }, [onUserMessage, openSheet, pushAssistantMessage, pushUserMessage])
+  }, [onUserMessage, openSheet, pushAssistantMessage, pushUserMessage, pushUIMessage])
 
   return (
     <div className="h-screen bg-background relative">
