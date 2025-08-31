@@ -72,19 +72,19 @@ export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) 
     >
       <div className="">
         <ScrollArea className="w-full">
-          <div className="flex space-x-3 min-w-max px-2">
+          <div className="flex space-x-3 min-w-max p-2">
           {quickReplies.map((quickReply) => (
             <motion.div key={quickReply.id} variants={itemVariants}>
               <Button
                 variant="outline"
                 size="lg"
-                className="flex flex-col items-center space-y-2 p-4 h-auto min-w-[140px] rounded-2xl border border-[#D0D4E6] bg-indigo-50 hover:bg-indigo-100 transition-all duration-200"
+                className="flex flex-col items-left p-4 h-auto min-w-[140px] rounded-2xl border-none bg-transparent hover:bg-indigo-50 transition-all duration-200"
                 style={{
-                  boxShadow: '0 2px 4px 0 rgba(40, 40, 52, 0.10)'
+                  boxShadow: '0 0 0 1px rgba(34, 34, 34, 0.08), 0 1px 1px -0.5px rgba(34, 34, 34, 0.04), 0 2px 2px -1px rgba(34, 34, 34, 0.04), 0 6px 6px -3px rgba(34, 34, 34, 0.04)'
                 }}
                 onClick={() => onQuickReply(quickReply)}
               >
-                <div className="w-8 h-8 bg-indigo-200 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center">
                   {quickReply.icon ? (
                     <span className="text-lg">{quickReply.icon}</span>
                   ) : (
