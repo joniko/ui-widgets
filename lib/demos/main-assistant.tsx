@@ -4,7 +4,6 @@ import { createMessage, createTextBlock, createWidgetBlock } from '@/lib/agentic
 export const mainAssistantDemo = {
   slug: 'main-assistant',
   title: 'Asistente Principal',
-  description: 'Interfaz principal del asistente virtual',
   icon: '🤖',
   initialMessages: [
     createMessage('assistant', [

@@ -4,7 +4,6 @@ import { createMessage, createTextBlock, createWidgetBlock } from '../agenticMoc
 export const helpDemo: DemoDefinition = {
   slug: 'help',
   title: 'Ayuda Contextual',
-  description: 'Obtén ayuda paso a paso para operaciones bancarias',
   icon: '❓',
   initialMessages: [
     createMessage('assistant', [

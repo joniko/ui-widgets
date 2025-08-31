@@ -5,8 +5,25 @@ import { createMessage, createTextBlock, createWidgetBlock } from '../agenticMoc
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion'
 import { ArrowLeftIcon } from 'lucide-react'
+
+// Sistema de animaciones optimizado
+const ANIMATION = {
+  // Duraciones consistentes
+  duration: {
+    instant: 0.1,
+    fast: 0.15,
+    normal: 0.2,
+    slow: 0.3
+  },
+  // Cubic bezier curves optimizadas
+  ease: {
+    smooth: [0.32, 0.72, 0, 1],     // iOS-style easeOut
+    sharp: [0.12, 0, 0.39, 0],      // Entrada rápida
+    bounce: [0.68, -0.6, 0.32, 1.6] // Sutil rebote
+  }
+}
 
 // Mock de contactos
 const mockContacts = [
@@ -55,33 +72,58 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const [currentStep, setCurrentStep] = useState<'contacts' | 'accounts' | 'confirmation'>('contacts')
   const [selectedContact, setSelectedContact] = useState<typeof mockContacts[0] | null>(null)
   const [selectedAccount, setSelectedAccount] = useState<typeof mockBankAccounts[0] | null>(null)
+  const [direction, setDirection] = useState(0)
 
-  const scaleVariants = {
-    enter: {
-      scale: 0.97,
+  // Variantes optimizadas para performance
+  const pageVariants = {
+    enter: (direction: number) => ({
+      y: direction > 0 ? 30 : -10,
       opacity: 0,
-      y: 20
-    },
+      scale: 0.98
+    }),
     center: {
-      scale: 1,
+      y: 0,
       opacity: 1,
-      y: 0
+      scale: 1
     },
-    exit: {
-      scale: 1,
+    exit: (direction: number) => ({
+      y: direction < 0 ? 30 : -10,
       opacity: 0,
-      y: 10
+      scale: 0.98
+    })
+  }
+  
+  // Transición separada para mejor control
+  const pageTransition = {
+    y: { 
+      type: "tween" as const, 
+      duration: ANIMATION.duration.fast,
+      ease: ANIMATION.ease.smooth as [number, number, number, number]
+    },
+    opacity: { 
+      duration: ANIMATION.duration.instant 
+    },
+    scale: { 
+      duration: ANIMATION.duration.fast,
+      ease: ANIMATION.ease.smooth as [number, number, number, number]
     }
   }
 
   const handleContactSelect = (contact: typeof mockContacts[0]) => {
     setSelectedContact(contact)
+    setDirection(1)
     setCurrentStep('accounts')
   }
 
   const handleAccountSelect = (account: typeof mockBankAccounts[0]) => {
     setSelectedAccount(account)
+    setDirection(1)
     setCurrentStep('confirmation')
+  }
+  
+  const handleBack = (target: 'contacts' | 'accounts') => {
+    setDirection(-1)
+    setCurrentStep(target)
   }
 
   const handleConfirm = () => {
@@ -114,33 +156,36 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const renderContactsStep = () => (
     <motion.div
       key="contacts"
-      variants={scaleVariants}
+      custom={direction}
+      variants={pageVariants}
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{
-        scale: { type: "tween", ease: "easeInOut", duration: 0.3 },
-        opacity: { duration: 0.1 },
-        y: { type: "tween", ease: "easeInOut", duration: 0.3 }
-      }}
+      transition={pageTransition}
       className="flex flex-col"
     >
-      <div className="px-0 py-4">
-        <h2 className="text-xl font-semibold">Elegí el contacto</h2>
-      </div>
+      <motion.div className="px-0 py-4" layoutId="header">
+        <h2 className="text-xl font-semibold">
+          Elegí el contacto
+        </h2>
+      </motion.div>
       
       <div className="">
         {mockContacts.map((contact) => (
-          <button
+          <motion.button
             key={contact.id}
-            className="w-full px-0 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+            className="w-full px-0 py-4 flex items-center justify-between hover:bg-gray-50"
             onClick={() => handleContactSelect(contact)}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: ANIMATION.duration.instant }}
           >
             <div className="flex items-center gap-4">
-              <Avatar className="w-12 h-12">
-                <AvatarImage src={contact.avatar} />
-                <AvatarFallback>{contact.name.charAt(0)}</AvatarFallback>
-              </Avatar>
+              <motion.div layoutId={`avatar-${contact.id}`}>
+                <Avatar className="w-12 h-12">
+                  <AvatarImage src={contact.avatar} />
+                  <AvatarFallback>{contact.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              </motion.div>
               <div className="text-left">
                 <p className="font-medium">{contact.name}</p>
                 <div className="flex gap-2 mt-1">
@@ -151,7 +196,7 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
               </div>
             </div>
             <span className="text-2xl text-primary">💙</span>
-          </button>
+          </motion.button>
         ))}
       </div>
       
@@ -166,27 +211,26 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const renderAccountsStep = () => (
     <motion.div
       key="accounts"
-      variants={scaleVariants}
+      custom={direction}
+      variants={pageVariants}
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{
-        scale: { type: "tween", ease: "easeInOut", duration: 0.3 },
-        opacity: { duration: 0.1 },
-        y: { type: "tween", ease: "easeInOut", duration: 0.3 }
-      }}
+      transition={pageTransition}
       className="flex flex-col"
     >
-      <div className="flex flex-row px-0 py-4">
+      <motion.div className="flex flex-row px-0 py-4" layoutId="header">
         <Button 
           variant="ghost"
-          onClick={() => setCurrentStep('contacts')}
+          onClick={() => handleBack('contacts')}
           className="p-2 mb-2 -ml-2 flex-shrink-0"
         >
           <ArrowLeftIcon className="w-4 h-4" />
         </Button>
-        <h2 className="text-xl font-semibold">Seleccioná la cuenta para transferir</h2>
-      </div>
+        <h2 className="text-xl font-semibold">
+          Seleccioná la cuenta para transferir
+        </h2>
+      </motion.div>
       
       <div className="">
         <div className="p-0">
@@ -216,43 +260,44 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
   const renderConfirmationStep = () => (
     <motion.div
       key="confirmation"
-      variants={scaleVariants}
+      custom={direction}
+      variants={pageVariants}
       initial="enter"
       animate="center"
       exit="exit"
-      transition={{
-        scale: { type: "tween", ease: "easeInOut", duration: 0.3 },
-        opacity: { duration: 0.1 },
-        y: { type: "tween", ease: "easeInOut", duration: 0.3 }
-      }}
+      transition={pageTransition}
       className="flex flex-col"
     >
-      <div className="flex flex-row px-0 py-4">
+      <motion.div className="flex flex-row px-0 py-4" layoutId="header">
         <Button 
           variant="ghost"
-          onClick={() => setCurrentStep('accounts')}
+          onClick={() => handleBack('accounts')}
           className="p-2 mb-2 -ml-2 flex-shrink-0"
         >
           <ArrowLeftIcon className="w-4 h-4" />
         </Button>
-        <h2 className="text-xl font-semibold">Confirma la transferencia</h2>
-      </div>
+        <h2 className="text-xl font-semibold">
+          Confirma la transferencia
+        </h2>
+      </motion.div>
       
       <div className="px-0 py-0">
         <div className="flex items-center gap-4 mb-6">
-          <Avatar className="w-12 h-12">
-            <AvatarImage src={selectedContact?.avatar} />
-            <AvatarFallback>{selectedContact?.name.charAt(0)}</AvatarFallback>
-          </Avatar>
+          <motion.div layoutId={`avatar-${selectedContact?.id}`}>
+            <Avatar className="w-12 h-12">
+              <AvatarImage src={selectedContact?.avatar} />
+              <AvatarFallback>{selectedContact?.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+          </motion.div>
           <div>
             <p className="font-medium">{selectedContact?.name}</p>
             <p className="text-sm text-gray-600">{selectedAccount?.name} - {selectedAccount?.type}****{selectedAccount?.number.slice(-4)}</p>
           </div>
         </div>
         
-        <div className="text-center py-8">
+        <motion.div className="text-center py-8" layoutId="amount">
           <p className="text-4xl font-bold">${monto.toLocaleString()}</p>
-        </div>
+        </motion.div>
         
         <div className="bg-gray-50 rounded-lg p-4">
           <div className="flex justify-between items-center">
@@ -278,14 +323,24 @@ const TransferFlow = ({ monto, ctx }: { monto: number, ctx: DemoContext }) => {
       className="flex flex-col relative overflow-hidden"
       layout
       transition={{ 
-        layout: { duration: 0.3, ease: "easeInOut" }
+        layout: { 
+          duration: ANIMATION.duration.normal,
+          ease: ANIMATION.ease.smooth as [number, number, number, number]
+        }
+      }}
+      style={{
+        willChange: 'transform',
+        backfaceVisibility: 'hidden',
+        perspective: 1000
       }}
     >
-      <AnimatePresence mode="wait">
-        {currentStep === 'contacts' && renderContactsStep()}
-        {currentStep === 'accounts' && renderAccountsStep()}
-        {currentStep === 'confirmation' && renderConfirmationStep()}
-      </AnimatePresence>
+      <LayoutGroup>
+        <AnimatePresence mode="wait" custom={direction}>
+          {currentStep === 'contacts' && renderContactsStep()}
+          {currentStep === 'accounts' && renderAccountsStep()}
+          {currentStep === 'confirmation' && renderConfirmationStep()}
+        </AnimatePresence>
+      </LayoutGroup>
     </motion.div>
   )
 }
