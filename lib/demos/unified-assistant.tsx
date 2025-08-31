@@ -115,7 +115,6 @@ export const unifiedAssistantDemo: DemoDefinition = {
     // Mapeo de quick replies a textos de prefill
     const prefillTexts: Record<string, string> = {
       'Transferir dinero': 'Quiero transferir a ',
-      'Ver mi saldo': 'Quiero ver mi saldo',
       'Ayuda': '¿Cómo puedo '
     }
     
