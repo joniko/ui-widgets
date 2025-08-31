@@ -95,17 +95,14 @@ export function ChatLayout({
   }, [onUserMessage, openSheet, pushAssistantMessage, pushUserMessage])
 
   return (
-    <div className="flex flex-col h-screen bg-background relative">
-      {/* Header */}
-
-
-      {/* Messages - Full height with padding for floating bottom */}
-      <div className="flex-1 overflow-hidden bg-white px-4 pb-32">
+    <div className="h-screen bg-background relative">
+      {/* Messages - Full height with padding for header and bottom input */}
+      <div className="h-full overflow-y-auto bg-white pt-20 pb-32 px-4">
         <MessageList messages={messages} />
       </div>
 
-      {/* Floating Bottom Container */}
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/95 to-transparent pt-6 pb-6 px-4">
+      {/* Fixed Bottom Container */}
+      <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-white via-white/95 to-transparent pt-6 pb-6 px-4 backdrop-blur-sm z-10">
         {/* Quick Replies - Only show if user hasn't interacted */}
         {!hasUserInteracted && (
           <QuickReplies quickReplies={quickReplies} onQuickReply={handleQuickReply} />

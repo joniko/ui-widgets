@@ -52,13 +52,13 @@ export function ChatComposer({ onSendMessage, disabled = false }: ChatComposerPr
         <div 
           className="absolute inset-0 rounded-3xl"
           style={{
-            boxShadow: 'rgba(0, 0, 0, 0.18) 0px 10px 24px 0px'
+            boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
           }}
         />
         
         {/* Capa 2: Backdrop blur y fondo base */}
         <div 
-          className="relative backdrop-blur-2xl backdrop-saturate-200 bg-neutral-100/60 rounded-3xl"
+          className="relative backdrop-blur-2xl backdrop-saturate-200 bg-neutral-100/40 rounded-3xl"
           style={{
             boxShadow: 'rgba(0, 0, 0, 0.06) 0px 42px 30px 0px'
           }}
@@ -72,13 +72,13 @@ export function ChatComposer({ onSendMessage, disabled = false }: ChatComposerPr
           >
             {/* Capa 4: Gradiente de fondo */}
             <div 
-              className="relative bg-gradient-to-b from-neutral-400/10 to-white/35 p-1.5 rounded-3xl"
+              className="relative bg-gradient-to-b from-neutral-400/10 to-white/35 p-2 rounded-3xl"
               style={{
                 boxShadow: 'rgba(255, 255, 255, 0.08) 0px 0px 0px 1px inset'
               }}
             >
               {/* Capa 5: Fondo final del input */}
-              <div className="bg-gradient-to-b from-white/90 to-white/0 rounded-3xl">
+              <div className="bg-gradient-to-b from-white/90 to-white/0 rounded-2xl">
                 {/* Contenedor principal con textarea y botones */}
                 <div className="relative flex items-center">
                   {/* Textarea container */}

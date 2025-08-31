@@ -21,14 +21,12 @@ export function DemoClient({ slug }: DemoClientProps) {
     <>
       <AppHeader currentDemo={demo} showBackButton />
       
-      <div className="flex-1">
-        <ChatLayout
-          initialMessages={demo.initialMessages}
-          initialQuickReplies={demo.initialQuickReplies}
-          onQuickReply={demo.onQuickReply}
-          onUserMessage={demo.onUserMessage}
-        />
-      </div>
+      <ChatLayout
+        initialMessages={demo.initialMessages}
+        initialQuickReplies={demo.initialQuickReplies}
+        onQuickReply={demo.onQuickReply}
+        onUserMessage={demo.onUserMessage}
+      />
       <Toaster />
     </>
   )

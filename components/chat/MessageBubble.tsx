@@ -19,7 +19,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           key={index}
           className={cn(
             isUser
-              ? "max-w-[310px] px-4 py-3 ml-auto text-base leading-relaxed"
+              ? "max-w-[310px] px-4 py-3 ml-auto text-base leading-relaxed border-t border-t-white/20"
               : "max-w-[310px] text-neutral-800 text-base leading-relaxed py-1"
           )}
           style={isUser ? {
