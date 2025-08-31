@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { HeroSection } from '@/components/ui/hero-section'
 import {
   ArrowRightIcon,
   MessageCircleIcon,
@@ -19,35 +19,7 @@ export default function HomePage() {
   return (
     <div className="bg-background min-h-screen">
       {/* Hero Section */}
-      <section className="px-4 py-20">
-        <div className="container mx-auto text-center">
-          <div className="mb-8">
-            <Badge variant="secondary" className="mb-4">
-              Prototipo
-            </Badge>
-            <h1 className="mb-8 text-center text-4xl font-bold">
-              Chat Agéntico con{' '}
-              <span className="text-primary"> Widgets Inline</span>
-            </h1>
-            <p className="text-muted-foreground mx-auto mb-8 max-w-3xl text-xl">
-              Demostración de un chat inteligente donde el asistente puede
-              insertar widgets interactivos entre mensajes y resolver flujos
-              complejos en un bottom sheet con gestos.
-            </p>
-            <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link href="/demos">
-                <Button size="lg" className="px-8 text-lg">
-                  Ver Demos
-                  <ArrowRightIcon className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Button variant="outline" size="lg" className="px-8 text-lg">
-                Documentación
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* Features Section */}
       <section className="bg-muted/30 px-4 py-20">
