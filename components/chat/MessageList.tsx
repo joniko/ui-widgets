@@ -20,7 +20,7 @@ export function MessageList({ messages }: MessageListProps) {
 
   return (
     <ScrollArea className="flex-1 h-full" ref={scrollRef}>
-      <div className="px-4 py-6 space-y-2">
+      <div className="px-4 py-6 space-y-2 pt-20">
         {messages.length === 0 ? (
           <div className="text-center text-muted-foreground py-8">
             <div className="text-4xl mb-4">💬</div>
