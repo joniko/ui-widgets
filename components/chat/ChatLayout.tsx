@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { Message, QuickReply, DemoContext } from '@/lib/types'
 import { createMessage, createTextBlock, createUIMessage } from '@/lib/agenticMocks'
-import { MessageList } from './MessageList'
+import { MessageList, MessageListRef } from './MessageList'
 import { QuickReplies } from './QuickReplies'
 import { ChatComposer } from './ChatComposer'
 import { useBottomSheet } from '@/components/drawers/useBottomSheet'
@@ -27,9 +27,14 @@ export function ChatLayout({
   const [hasUserInteracted, setHasUserInteracted] = useState(false)
   const [inputValue, setInputValue] = useState('')
   const { openSheet, isOpen, content, closeSheet } = useBottomSheet()
+  const messageListRef = useRef<MessageListRef>(null)
 
   const pushMessage = useCallback((message: Message) => {
     setMessages(prev => [...prev, message])
+    // Hacer scroll después de agregar el mensaje
+    setTimeout(() => {
+      messageListRef.current?.scrollToBottom()
+    }, 100)
   }, [])
 
   const pushUserMessage = useCallback((text: string) => {
@@ -80,7 +85,7 @@ export function ChatLayout({
     if (onQuickReply) {
       onQuickReply(quickReply, ctx)
     }
-  }, [onQuickReply, openSheet, pushAssistantMessage, pushUserMessage, pushUIMessage, prefillInput])
+  }, [onQuickReply, openSheet, closeSheet, pushAssistantMessage, pushUserMessage, pushUIMessage, prefillInput])
 
   const handleSendMessage = useCallback((text: string) => {
     // Mark user interaction and hide quick replies
@@ -115,14 +120,14 @@ export function ChatLayout({
         pushAssistantMessage(assistantMessage)
       }, 1000)
     }
-  }, [onUserMessage, openSheet, pushAssistantMessage, pushUserMessage, pushUIMessage])
+  }, [onUserMessage, openSheet, closeSheet, pushAssistantMessage, pushUserMessage, pushUIMessage, prefillInput])
 
   return (
     <div className="h-screen">
       
       {/* Messages - Full height with padding for header and bottom input */}
       <div className="relative z-10 h-full overflow-y-auto pt-0 pb-20 px-4">
-        <MessageList messages={messages} />
+        <MessageList ref={messageListRef} messages={messages} />
       </div>
 
       {/* Fixed Bottom Container */}

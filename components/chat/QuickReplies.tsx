@@ -72,7 +72,7 @@ export function QuickReplies({ quickReplies, onQuickReply }: QuickRepliesProps) 
     >
       <div className="">
         <ScrollArea className="w-full">
-          <div className="flex space-x-3 min-w-max p-2">
+          <div className="flex space-x-3 min-w-max px-4 py-2">
           {quickReplies.map((quickReply) => (
             <motion.div key={quickReply.id} variants={itemVariants}>
               <Button
