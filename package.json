@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "scaffold-demo": "tsx scripts/scaffold-demo.ts"
+    "scaffold-demo": "tsx scripts/scaffold-demo.ts",
+    "register-widgets": "tsx scripts/auto-register-widgets.ts",
+    "prebuild": "npm run register-widgets"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.10",

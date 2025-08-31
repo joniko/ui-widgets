@@ -6,9 +6,9 @@ import { SelectList } from '../components/SelectList'
 import { Button } from '../components'
 import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-
 import { Button as UIButton } from '@/components/ui/button'
 import { InlineWidget } from '@/lib/types'
+import { WidgetComponentProps, createDomainWidgets } from '@/lib/widgets/registry'
 
 // Types for payment flow data
 interface ServiceData {
@@ -73,7 +73,7 @@ const accounts = [
 ]
 
 // Payment-specific widgets and BottomSheets
-export const PaymentServiceDetailList = ({ widget }: { widget: InlineWidget; openSheet: (node: React.ReactNode) => void }) => {
+export const PaymentServiceDetailList = ({ widget }: WidgetComponentProps) => {
   const props = widget.props
   
   return (
@@ -150,7 +150,7 @@ export const PaymentServiceDetailList = ({ widget }: { widget: InlineWidget; ope
   )
 }
 
-export const PaymentCta = ({ widget, openSheet }: { widget: InlineWidget; openSheet: (node: React.ReactNode) => void }) => {
+export const PaymentCta = ({ widget, openSheet }: WidgetComponentProps) => {
   const props = widget.props
   
   return (
@@ -205,11 +205,11 @@ export const PaymentBottomSheet = ({ services }: { services: Record<string, unkn
   </div>
 )
 
-// Widget registry for payment domain
-export const paymentWidgets = {
+// Widget registry for payment domain with type safety
+export const paymentWidgets = createDomainWidgets({
   'service-detail-list': PaymentServiceDetailList,
   'payment-cta': PaymentCta,
-}
+})
 
 export const paymentFlow: FlowDefinition = {
   id: 'payment',
