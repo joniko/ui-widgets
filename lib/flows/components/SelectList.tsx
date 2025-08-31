@@ -9,7 +9,12 @@ interface SelectListProps<T> {
   keyExtractor: (item: T) => string
 }
 
-export function SelectList<T>({ items, onSelect, renderItem, keyExtractor }: SelectListProps<T>) {
+export function SelectList<T>({
+  items,
+  onSelect,
+  renderItem,
+  keyExtractor,
+}: SelectListProps<T>) {
   return (
     <div className="divide-y divide-gray-100">
       {items.map((item, index) => (
@@ -19,7 +24,7 @@ export function SelectList<T>({ items, onSelect, renderItem, keyExtractor }: Sel
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: index * 0.05 }}
           onClick={() => onSelect(item)}
-          className="w-full p-4 flex items-center hover:bg-gray-50 transition-colors"
+          className="flex w-full items-center p-4 transition-colors hover:bg-gray-50"
         >
           {renderItem(item)}
         </motion.button>

@@ -6,11 +6,11 @@ import { mainAssistantDemo } from './main-assistant'
 import { unifiedAssistantDemo } from './unified-assistant'
 
 export const DEMO_REGISTRY: Record<string, DemoDefinition> = {
-  'unified': unifiedAssistantDemo,
+  unified: unifiedAssistantDemo,
   'main-assistant': mainAssistantDemo,
   transfer: transferDemo,
   'pay-service': payServiceDemo,
-  help: helpDemo
+  help: helpDemo,
 }
 
 export const DEMOS = Object.values(DEMO_REGISTRY)

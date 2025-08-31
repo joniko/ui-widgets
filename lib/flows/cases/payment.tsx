@@ -8,8 +8,19 @@ import { motion } from 'framer-motion'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button as UIButton } from '@/components/ui/button'
 import { InlineWidget } from '@/lib/types'
-import { WidgetComponentProps, createDomainWidgets } from '@/lib/widgets/registry'
-import { Lightbulb, Flame, Droplets, Wifi, FileText, AlertTriangle, CreditCard } from 'lucide-react'
+import {
+  WidgetComponentProps,
+  createDomainWidgets,
+} from '@/lib/widgets/registry'
+import {
+  Lightbulb,
+  Flame,
+  Droplets,
+  Wifi,
+  FileText,
+  AlertTriangle,
+  CreditCard,
+} from 'lucide-react'
 
 // Types for payment flow data
 interface ServiceData {
@@ -30,115 +41,161 @@ interface AccountData {
 
 // Mock data
 const services = [
-  { 
-    id: '1', 
+  {
+    id: '1',
     name: 'Edesur',
     type: 'Electricidad',
     amount: 8500,
     dueDate: '2024-01-15',
-    icon: <Lightbulb className="w-4 h-4" />,
-    status: 'pending'
+    icon: <Lightbulb className="h-4 w-4" />,
+    status: 'pending',
   },
-  { 
-    id: '2', 
+  {
+    id: '2',
     name: 'Metrogas',
     type: 'Gas',
     amount: 3200,
     dueDate: '2024-01-18',
-    icon: <Flame className="w-4 h-4" />,
-    status: 'pending'
+    icon: <Flame className="h-4 w-4" />,
+    status: 'pending',
   },
-  { 
-    id: '3', 
+  {
+    id: '3',
     name: 'AySA',
     type: 'Agua',
     amount: 2100,
     dueDate: '2024-01-20',
-    icon: <Droplets className="w-4 h-4" />,
-    status: 'pending'
+    icon: <Droplets className="h-4 w-4" />,
+    status: 'pending',
   },
-  { 
-    id: '4', 
+  {
+    id: '4',
     name: 'Telecentro',
     type: 'Internet',
     amount: 12000,
     dueDate: '2024-01-10',
-    icon: <Wifi className="w-4 h-4" />,
-    status: 'overdue'
-  }
+    icon: <Wifi className="h-4 w-4" />,
+    status: 'overdue',
+  },
 ]
 
 const accounts = [
   { id: '1', name: 'Cuenta Sueldo', balance: 125000 },
-  { id: '2', name: 'Cuenta Ahorros', balance: 450000 }
+  { id: '2', name: 'Cuenta Ahorros', balance: 450000 },
 ]
 
 // Payment-specific widgets and BottomSheets
 export const PaymentServiceDetailList = ({ widget }: WidgetComponentProps) => {
   const props = widget.props
-  
+
   return (
-    <Card 
+    <Card
       className="w-full max-w-sm rounded-2xl border-none"
       style={{
         background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
-        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+        boxShadow:
+          '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)',
       }}
     >
       <CardHeader className="p-4 pb-3">
         <div className="flex items-center gap-2">
-          <FileText className="w-5 h-5" />
-          <CardTitle className="text-base font-semibold">{props.title as string}</CardTitle>
+          <FileText className="h-5 w-5" />
+          <CardTitle className="text-base font-semibold">
+            {props.title as string}
+          </CardTitle>
         </div>
-        {Array.isArray(props.services) && props.services.some((s: Record<string, unknown>) => s.status === 'overdue') && (
-          <div className="mt-2 px-2 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-md inline-flex items-center gap-1 self-start">
-            <AlertTriangle className="w-4 h-4 text-red-600" />
-            Tenés {props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length} factura{props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length > 1 ? 's' : ''} vencida{props.services.filter((s: Record<string, unknown>) => s.status === 'overdue').length > 1 ? 's' : ''}
-          </div>
-        )}
+        {Array.isArray(props.services) &&
+          props.services.some(
+            (s: Record<string, unknown>) => s.status === 'overdue',
+          ) && (
+            <div className="mt-2 inline-flex items-center gap-1 self-start rounded-md bg-red-100 px-2 py-1 text-xs font-medium text-red-700">
+              <AlertTriangle className="h-4 w-4 text-red-600" />
+              Tenés{' '}
+              {
+                props.services.filter(
+                  (s: Record<string, unknown>) => s.status === 'overdue',
+                ).length
+              }{' '}
+              factura
+              {props.services.filter(
+                (s: Record<string, unknown>) => s.status === 'overdue',
+              ).length > 1
+                ? 's'
+                : ''}{' '}
+              vencida
+              {props.services.filter(
+                (s: Record<string, unknown>) => s.status === 'overdue',
+              ).length > 1
+                ? 's'
+                : ''}
+            </div>
+          )}
       </CardHeader>
       <CardContent className="p-4 pt-2">
         <div className="space-y-3">
-          {Array.isArray(props.services) && props.services.map((service: Record<string, unknown>) => (
-            <div 
-              key={service.id as string} 
-              className={`p-3 rounded-lg border ${
-                service.status === 'overdue' 
-                  ? 'border-red-200 bg-red-50/50' 
-                  : 'border-gray-200 bg-white'
-              }`}
-            >
-              <div className="flex items-start gap-3">
-                <div className="text-gray-600 mt-0.5">
-                  {service.name === 'Edesur' && <Lightbulb className="w-6 h-6" />}
-                  {service.name === 'Metrogas' && <Flame className="w-6 h-6" />}
-                  {service.name === 'Telecentro' && <Wifi className="w-6 h-6" />}
-                  {service.name === 'AySA' && <Droplets className="w-6 h-6" />}
-                </div>
-                <div className="flex-1">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="font-semibold text-gray-900">{service.name as string}</h4>
-                      <p className="text-sm text-gray-600">{service.provider as string}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-bold text-lg">${(service.amount as number).toLocaleString('es-AR')}</p>
-                      <p className={`text-xs ${
-                        service.status === 'overdue' ? 'text-red-600 font-medium' : 'text-gray-500'
-                      }`}>
-                        {service.status === 'overdue' ? 'Vencida' : `Vence ${service.dueDate as string}`}
-                      </p>
+          {Array.isArray(props.services) &&
+            props.services.map((service: Record<string, unknown>) => (
+              <div
+                key={service.id as string}
+                className={`rounded-lg border p-3 ${
+                  service.status === 'overdue'
+                    ? 'border-red-200 bg-red-50/50'
+                    : 'border-gray-200 bg-white'
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 text-gray-600">
+                    {service.name === 'Edesur' && (
+                      <Lightbulb className="h-6 w-6" />
+                    )}
+                    {service.name === 'Metrogas' && (
+                      <Flame className="h-6 w-6" />
+                    )}
+                    {service.name === 'Telecentro' && (
+                      <Wifi className="h-6 w-6" />
+                    )}
+                    {service.name === 'AySA' && (
+                      <Droplets className="h-6 w-6" />
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-semibold text-gray-900">
+                          {service.name as string}
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          {service.provider as string}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-bold">
+                          ${(service.amount as number).toLocaleString('es-AR')}
+                        </p>
+                        <p
+                          className={`text-xs ${
+                            service.status === 'overdue'
+                              ? 'font-medium text-red-600'
+                              : 'text-gray-500'
+                          }`}
+                        >
+                          {service.status === 'overdue'
+                            ? 'Vencida'
+                            : `Vence ${service.dueDate as string}`}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
-          
+            ))}
+
           {typeof props.totalAmount === 'number' && (
-            <div className="pt-3 mt-3 border-t border-gray-200">
-              <div className="flex justify-between items-center">
-                <span className="text-sm font-medium text-gray-600">Total a pagar:</span>
+            <div className="mt-3 border-t border-gray-200 pt-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-gray-600">
+                  Total a pagar:
+                </span>
                 <span className="text-lg font-bold text-gray-900">
                   ${props.totalAmount.toLocaleString('es-AR')}
                 </span>
@@ -153,29 +210,34 @@ export const PaymentServiceDetailList = ({ widget }: WidgetComponentProps) => {
 
 export const PaymentCta = ({ widget, openSheet }: WidgetComponentProps) => {
   const props = widget.props
-  
+
   return (
-    <Card 
+    <Card
       className="w-full max-w-sm rounded-2xl border-none"
       style={{
         background: 'var(--antimetal-com-nero-80, rgba(255, 255, 255, 0.80))',
-        boxShadow: '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)'
+        boxShadow:
+          '0 0 0 1px rgba(14, 63, 126, 0.04), 0 1px 1px -0.5px rgba(42, 51, 69, 0.04), 0 3px 3px -1.5px rgba(42, 51, 70, 0.04), 0 6px 6px -3px rgba(42, 51, 70, 0.04), 0 12px 12px -6px rgba(14, 63, 126, 0.04), 0 24px 24px -12px rgba(14, 63, 126, 0.04)',
       }}
     >
       <CardContent className="p-4">
-        <div className="text-center space-y-3">
-          <CreditCard className="w-8 h-8 text-indigo-600" />
+        <div className="space-y-3 text-center">
+          <CreditCard className="h-8 w-8 text-indigo-600" />
           <div>
             <h3 className="font-semibold">Servicios Pendientes</h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Total: ${props.totalAmount?.toLocaleString()}
             </p>
           </div>
-          <UIButton 
+          <UIButton
             className="w-full"
-            onClick={() => openSheet(
-              <PaymentBottomSheet services={props.services as Record<string, unknown>[]} />
-            )}
+            onClick={() =>
+              openSheet(
+                <PaymentBottomSheet
+                  services={props.services as Record<string, unknown>[]}
+                />,
+              )
+            }
           >
             Pagar Servicios
           </UIButton>
@@ -185,19 +247,32 @@ export const PaymentCta = ({ widget, openSheet }: WidgetComponentProps) => {
   )
 }
 
-export const PaymentBottomSheet = ({ services }: { services: Record<string, unknown>[] }) => (
+export const PaymentBottomSheet = ({
+  services,
+}: {
+  services: Record<string, unknown>[]
+}) => (
   <div className="p-6">
-    <h3 className="text-lg font-semibold mb-4">Pago de Servicios</h3>
+    <h3 className="mb-4 text-lg font-semibold">Pago de Servicios</h3>
     <div className="space-y-4">
       {services?.map((service: Record<string, unknown>) => (
-        <div key={service.id as string} className="flex items-center justify-between p-3 border rounded-lg">
+        <div
+          key={service.id as string}
+          className="flex items-center justify-between rounded-lg border p-3"
+        >
           <div>
             <div className="font-medium">{service.name as string}</div>
-            <div className="text-sm text-muted-foreground">{service.provider as string}</div>
+            <div className="text-muted-foreground text-sm">
+              {service.provider as string}
+            </div>
           </div>
           <div className="text-right">
-            <div className="font-semibold">${(service.amount as number).toLocaleString()}</div>
-            <div className="text-xs text-muted-foreground">Vence: {service.dueDate as string}</div>
+            <div className="font-semibold">
+              ${(service.amount as number).toLocaleString()}
+            </div>
+            <div className="text-muted-foreground text-xs">
+              Vence: {service.dueDate as string}
+            </div>
           </div>
         </div>
       ))}
@@ -215,7 +290,7 @@ export const paymentWidgets = createDomainWidgets({
 export const paymentFlow: FlowDefinition = {
   id: 'payment',
   name: 'Pago de Servicios',
-  
+
   triggers: [
     'quiero pagar',
     'pagar servicio',
@@ -224,15 +299,15 @@ export const paymentFlow: FlowDefinition = {
     'pagar gas',
     'pagar agua',
     'pagar internet',
-    /pagar?\s+(luz|gas|agua|internet|edesur|metrogas|aysa|telecentro)/i
+    /pagar?\s+(luz|gas|agua|internet|edesur|metrogas|aysa|telecentro)/i,
   ],
-  
+
   steps: [
     {
       id: 'select-service',
       title: 'Elegí el servicio',
       render: ({ onNext, onBack, isFirstStep }) => (
-        <FlowContainer 
+        <FlowContainer
           title="Servicios pendientes"
           onBack={onBack}
           showBack={!isFirstStep}
@@ -242,13 +317,14 @@ export const paymentFlow: FlowDefinition = {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-orange-50 border border-orange-200 rounded-lg p-3 mb-4"
+              className="mb-4 rounded-lg border border-orange-200 bg-orange-50 p-3"
             >
               <p className="text-sm text-orange-800">
-                Tenés {services.filter(s => s.status === 'overdue').length} facturas vencidas
+                Tenés {services.filter((s) => s.status === 'overdue').length}{' '}
+                facturas vencidas
               </p>
             </motion.div>
-            
+
             {/* Lista de servicios */}
             <div className="space-y-3">
               {services.map((service, index) => (
@@ -258,13 +334,11 @@ export const paymentFlow: FlowDefinition = {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.05 }}
                   onClick={() => onNext({ service })}
-                  className={`
-                    w-full p-4 rounded-lg border transition-all
-                    ${service.status === 'overdue' 
-                      ? 'border-red-200 bg-red-50 hover:bg-red-100' 
+                  className={`w-full rounded-lg border p-4 transition-all ${
+                    service.status === 'overdue'
+                      ? 'border-red-200 bg-red-50 hover:bg-red-100'
                       : 'border-gray-200 bg-white hover:bg-gray-50'
-                    }
-                  `}
+                  } `}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -275,10 +349,16 @@ export const paymentFlow: FlowDefinition = {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">${service.amount.toLocaleString()}</p>
-                      <p className={`text-xs ${
-                        service.status === 'overdue' ? 'text-red-600' : 'text-gray-500'
-                      }`}>
+                      <p className="font-semibold">
+                        ${service.amount.toLocaleString()}
+                      </p>
+                      <p
+                        className={`text-xs ${
+                          service.status === 'overdue'
+                            ? 'text-red-600'
+                            : 'text-gray-500'
+                        }`}
+                      >
                         Vence: {new Date(service.dueDate).toLocaleDateString()}
                       </p>
                     </div>
@@ -286,49 +366,61 @@ export const paymentFlow: FlowDefinition = {
                 </motion.button>
               ))}
             </div>
-            
+
             {/* Pagar todas */}
-            <button className="w-full mt-4 p-3 text-indigo-600 font-medium hover:bg-indigo-50 rounded-lg transition-colors">
+            <button className="mt-4 w-full rounded-lg p-3 font-medium text-indigo-600 transition-colors hover:bg-indigo-50">
               Pagar todas las facturas
             </button>
           </div>
         </FlowContainer>
-      )
+      ),
     },
-    
+
     {
       id: 'select-account',
       title: 'Elegí la cuenta',
       render: ({ data, onNext, onBack }) => (
-        <FlowContainer 
+        <FlowContainer
           title="¿Desde qué cuenta?"
           onBack={onBack}
           showBack={true}
         >
           <div className="py-4">
             {/* Servicio seleccionado */}
-            <div className="bg-gray-50 rounded-lg p-4 mb-4">
+            <div className="mb-4 rounded-lg bg-gray-50 p-4">
               <div className="flex items-center gap-3">
                 <div className="text-gray-600">
-                  {(data.service as ServiceData).icon === 'lightbulb' && <Lightbulb className="w-6 h-6" />}
-                  {(data.service as ServiceData).icon === 'flame' && <Flame className="w-6 h-6" />}
-                  {(data.service as ServiceData).icon === 'droplets' && <Droplets className="w-6 h-6" />}
-                  {(data.service as ServiceData).icon === 'wifi' && <Wifi className="w-6 h-6" />}
+                  {(data.service as ServiceData).icon === 'lightbulb' && (
+                    <Lightbulb className="h-6 w-6" />
+                  )}
+                  {(data.service as ServiceData).icon === 'flame' && (
+                    <Flame className="h-6 w-6" />
+                  )}
+                  {(data.service as ServiceData).icon === 'droplets' && (
+                    <Droplets className="h-6 w-6" />
+                  )}
+                  {(data.service as ServiceData).icon === 'wifi' && (
+                    <Wifi className="h-6 w-6" />
+                  )}
                 </div>
                 <div className="flex-1">
-                  <p className="font-medium">{(data.service as ServiceData).name}</p>
-                  <p className="text-sm text-gray-600">{(data.service as ServiceData).type}</p>
+                  <p className="font-medium">
+                    {(data.service as ServiceData).name}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    {(data.service as ServiceData).type}
+                  </p>
                 </div>
                 <p className="text-xl font-semibold">
                   ${(data.service as ServiceData).amount.toLocaleString()}
                 </p>
               </div>
             </div>
-            
+
             {/* Cuentas */}
             <SelectList
               items={accounts}
-              keyExtractor={a => a.id}
+              keyExtractor={(a) => a.id}
               onSelect={(account) => onNext({ account })}
               renderItem={(account) => (
                 <div className="flex-1">
@@ -341,71 +433,77 @@ export const paymentFlow: FlowDefinition = {
             />
           </div>
         </FlowContainer>
-      )
+      ),
     },
-    
+
     {
       id: 'confirm',
       title: 'Confirmá el pago',
       render: ({ data, onNext, onBack }) => (
-        <FlowContainer 
-          title="Confirmá el pago"
-          onBack={onBack}
-          showBack={true}
-        >
+        <FlowContainer title="Confirmá el pago" onBack={onBack} showBack={true}>
           <div className="py-4">
             <div className="space-y-4">
               {/* Servicio */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm text-gray-600 mb-1">Servicio</p>
+              <div className="rounded-lg bg-gray-50 p-4">
+                <p className="mb-1 text-sm text-gray-600">Servicio</p>
                 <div className="flex items-center gap-2">
                   <div className="text-gray-600">
-                    {(data.service as ServiceData).icon === 'lightbulb' && <Lightbulb className="w-5 h-5" />}
-                    {(data.service as ServiceData).icon === 'flame' && <Flame className="w-5 h-5" />}
-                    {(data.service as ServiceData).icon === 'droplets' && <Droplets className="w-5 h-5" />}
-                    {(data.service as ServiceData).icon === 'wifi' && <Wifi className="w-5 h-5" />}
+                    {(data.service as ServiceData).icon === 'lightbulb' && (
+                      <Lightbulb className="h-5 w-5" />
+                    )}
+                    {(data.service as ServiceData).icon === 'flame' && (
+                      <Flame className="h-5 w-5" />
+                    )}
+                    {(data.service as ServiceData).icon === 'droplets' && (
+                      <Droplets className="h-5 w-5" />
+                    )}
+                    {(data.service as ServiceData).icon === 'wifi' && (
+                      <Wifi className="h-5 w-5" />
+                    )}
                   </div>
-                  <p className="font-medium">{(data.service as ServiceData).name}</p>
+                  <p className="font-medium">
+                    {(data.service as ServiceData).name}
+                  </p>
                 </div>
               </div>
-              
+
               {/* Monto */}
-              <div className="text-center py-6">
+              <div className="py-6 text-center">
                 <p className="text-4xl font-bold">
                   ${(data.service as ServiceData).amount.toLocaleString()}
                 </p>
               </div>
-              
+
               {/* Cuenta */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <p className="text-sm text-gray-600 mb-1">Desde</p>
-                <p className="font-medium">{(data.account as AccountData).name}</p>
+              <div className="rounded-lg bg-gray-50 p-4">
+                <p className="mb-1 text-sm text-gray-600">Desde</p>
+                <p className="font-medium">
+                  {(data.account as AccountData).name}
+                </p>
                 <p className="text-sm text-gray-500">
-                  Saldo disponible: ${(data.account as AccountData).balance.toLocaleString()}
+                  Saldo disponible: $
+                  {(data.account as AccountData).balance.toLocaleString()}
                 </p>
               </div>
-              
+
               {/* Fecha de pago */}
-              <div className="bg-indigo-50 rounded-lg p-4">
+              <div className="rounded-lg bg-indigo-50 p-4">
                 <p className="text-sm text-indigo-800">
                   Se pagará hoy {new Date().toLocaleDateString()}
                 </p>
               </div>
             </div>
-            
-            <Button
-              onClick={() => onNext()}
-              className="w-full mt-6 py-3"
-            >
+
+            <Button onClick={() => onNext()} className="mt-6 w-full py-3">
               Confirmar pago
             </Button>
           </div>
         </FlowContainer>
-      )
-    }
+      ),
+    },
   ],
-  
+
   onComplete: (data) => {
     console.log('Pago completado:', data)
-  }
+  },
 }

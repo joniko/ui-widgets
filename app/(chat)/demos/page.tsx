@@ -1,5 +1,11 @@
 import Link from 'next/link'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { getAllDemos } from '@/lib/demos'
@@ -9,21 +15,22 @@ export default function DemosPage() {
   const demos = getAllDemos()
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background min-h-screen">
       <AppHeader />
-      
+
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">Demos del Chat Agéntico</h1>
+          <h1 className="mb-4 text-3xl font-bold">Demos del Chat Agéntico</h1>
           <p className="text-muted-foreground">
-            Explora diferentes escenarios donde el asistente puede insertar widgets inline y abrir bottom sheets
+            Explora diferentes escenarios donde el asistente puede insertar
+            widgets inline y abrir bottom sheets
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {demos.map((demo) => (
             <Link key={demo.slug} href={`/demos/${demo.slug}`}>
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
+              <Card className="group h-full cursor-pointer transition-shadow hover:shadow-lg">
                 <CardHeader>
                   <div className="flex items-center space-x-3">
                     <div className="text-3xl">{demo.icon}</div>
@@ -43,7 +50,7 @@ export default function DemosPage() {
                       {demo.description}
                     </CardDescription>
                   )}
-                  <div className={demo.description ? "mt-4" : ""}>
+                  <div className={demo.description ? 'mt-4' : ''}>
                     <Button className="w-full" variant="outline">
                       Probar Demo
                     </Button>
@@ -56,7 +63,9 @@ export default function DemosPage() {
 
         <div className="mt-12 text-center">
           <div className="bg-muted/50 rounded-lg p-8">
-            <h2 className="text-2xl font-semibold mb-4">¿Quieres crear tu propio demo?</h2>
+            <h2 className="mb-4 text-2xl font-semibold">
+              ¿Quieres crear tu propio demo?
+            </h2>
             <p className="text-muted-foreground mb-6">
               Aprende cómo extender el sistema con nuevos widgets y flujos
             </p>

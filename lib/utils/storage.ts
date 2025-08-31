@@ -24,12 +24,9 @@ export class LocalStorage {
       const item: StorageItem<T> = {
         value,
         timestamp: Date.now(),
-        expiresIn
+        expiresIn,
       }
-      localStorage.setItem(
-        `${this.prefix}${key}`, 
-        JSON.stringify(item)
-      )
+      localStorage.setItem(`${this.prefix}${key}`, JSON.stringify(item))
     } catch (e) {
       console.error('Error saving to localStorage:', e)
     }
@@ -44,7 +41,7 @@ export class LocalStorage {
       if (!itemStr) return null
 
       const item: StorageItem<T> = JSON.parse(itemStr)
-      
+
       // Verificar si expiró
       if (item.expiresIn) {
         const now = Date.now()
@@ -79,7 +76,7 @@ export class LocalStorage {
   static clear(): void {
     try {
       const keys = Object.keys(localStorage)
-      keys.forEach(key => {
+      keys.forEach((key) => {
         if (key.startsWith(this.prefix)) {
           localStorage.removeItem(key)
         }
@@ -96,8 +93,8 @@ export class LocalStorage {
     try {
       const result: Record<string, unknown> = {}
       const keys = Object.keys(localStorage)
-      
-      keys.forEach(key => {
+
+      keys.forEach((key) => {
         if (key.startsWith(this.prefix)) {
           const cleanKey = key.replace(this.prefix, '')
           const value = this.get(cleanKey)
@@ -106,7 +103,7 @@ export class LocalStorage {
           }
         }
       })
-      
+
       return result
     } catch (e) {
       console.error('Error getting all from localStorage:', e)
@@ -117,5 +114,3 @@ export class LocalStorage {
 
 // Re-export hook from separate file
 export { useLocalStorage } from './useLocalStorage'
-
-

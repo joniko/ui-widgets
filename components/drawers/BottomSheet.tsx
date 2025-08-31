@@ -31,25 +31,18 @@ export function BottomSheet({
   children,
   footer,
   modal = true,
-  className
+  className,
 }: BottomSheetProps) {
   const { isOpen, closeSheet } = useBottomSheet()
-  
+
   const isControlled = open !== undefined
   const isOpenState = isControlled ? open : isOpen
   const handleOpenChange = isControlled ? onOpenChange : closeSheet
 
   return (
-    <Drawer
-      open={isOpenState}
-      onOpenChange={handleOpenChange}
-      modal={modal}
-    >
-      <DrawerContent className={cn(
-        "max-h-[95svh]",
-        className
-      )}>
-        <DrawerHeader className={!title && !description ? "sr-only" : ""}>
+    <Drawer open={isOpenState} onOpenChange={handleOpenChange} modal={modal}>
+      <DrawerContent className={cn('max-h-[95svh]', className)}>
+        <DrawerHeader className={!title && !description ? 'sr-only' : ''}>
           {title ? (
             <DrawerTitle>{title}</DrawerTitle>
           ) : (
@@ -59,16 +52,10 @@ export function BottomSheet({
           )}
           {description && <DrawerDescription>{description}</DrawerDescription>}
         </DrawerHeader>
-        
-        <div className="flex-1 overflow-auto px-4">
-          {children}
-        </div>
-        
-        {footer && (
-          <DrawerFooter>
-            {footer}
-          </DrawerFooter>
-        )}
+
+        <div className="flex-1 overflow-auto px-4">{children}</div>
+
+        {footer && <DrawerFooter>{footer}</DrawerFooter>}
       </DrawerContent>
     </Drawer>
   )

@@ -20,7 +20,7 @@ export function DemoClient({ slug }: DemoClientProps) {
   return (
     <>
       <AppHeader currentDemo={demo} showBackButton />
-      
+
       <ChatLayout
         initialMessages={demo.initialMessages}
         initialQuickReplies={demo.initialQuickReplies}

@@ -27,15 +27,18 @@ export type Message = {
   isUIGenerated?: boolean // Para mensajes generados por la UI (no escritos por el usuario)
 }
 
-export type QuickReply = { 
-  id: string 
-  label: string 
+export type QuickReply = {
+  id: string
+  label: string
   icon?: string
   payload?: Record<string, unknown>
 }
 
 export type DemoContext = {
-  openSheet: (node: React.ReactNode, opts?: { snapPoints?: number[]; initialSnap?: number }) => void
+  openSheet: (
+    node: React.ReactNode,
+    opts?: { snapPoints?: number[]; initialSnap?: number },
+  ) => void
   closeSheet?: () => void
   pushAssistantMessage: (msg: Message) => void
   pushUserMessage: (text: string) => void

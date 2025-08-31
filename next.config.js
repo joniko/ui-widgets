@@ -11,9 +11,9 @@ const nextConfig = {
   experimental: {
     // Reducir logs de desarrollo
     logging: {
-      level: 'error'
-    }
-  }
+      level: 'error',
+    },
+  },
 }
 
 module.exports = nextConfig

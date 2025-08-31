@@ -11,27 +11,27 @@ interface ErrorAnimationProps {
   onCancel?: () => void
 }
 
-export const ErrorAnimation = ({ 
-  title = 'Algo salió mal', 
+export const ErrorAnimation = ({
+  title = 'Algo salió mal',
   message = 'Hubo un error al procesar tu solicitud',
   onRetry,
-  onCancel 
+  onCancel,
 }: ErrorAnimationProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col items-center justify-center min-h-[400px] p-8"
+      className="flex min-h-[400px] flex-col items-center justify-center p-8"
     >
       {/* Círculo animado de error */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 200, 
+        transition={{
+          type: 'spring',
+          stiffness: 200,
           damping: 15,
-          delay: 0.1 
+          delay: 0.1,
         }}
         className="relative"
       >
@@ -42,58 +42,52 @@ export const ErrorAnimation = ({
           transition={{
             duration: 1,
             repeat: 2,
-            ease: "easeOut"
+            ease: 'easeOut',
           }}
-          className="absolute inset-0 w-24 h-24 bg-red-500 rounded-full"
+          className="absolute inset-0 h-24 w-24 rounded-full bg-red-500"
         />
-        
+
         {/* Círculo principal */}
-        <div className="relative w-24 h-24 bg-red-500 rounded-full flex items-center justify-center">
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-red-500">
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ 
+            transition={{
               delay: 0.3,
-              type: "spring",
-              stiffness: 200
+              type: 'spring',
+              stiffness: 200,
             }}
           >
-            <X className="w-12 h-12 text-white" strokeWidth={3} />
+            <X className="h-12 w-12 text-white" strokeWidth={3} />
           </motion.div>
         </div>
       </motion.div>
-      
+
       {/* Texto */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="text-center mt-6"
+        className="mt-6 text-center"
       >
-        <h3 className="text-2xl font-semibold mb-2">{title}</h3>
+        <h3 className="mb-2 text-2xl font-semibold">{title}</h3>
         <p className="text-gray-600">{message}</p>
       </motion.div>
-      
+
       {/* Botones */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7 }}
-        className="flex gap-3 mt-8"
+        className="mt-8 flex gap-3"
       >
         {onRetry && (
-          <Button
-            onClick={onRetry}
-            variant="primary"
-          >
+          <Button onClick={onRetry} variant="primary">
             Reintentar
           </Button>
         )}
         {onCancel && (
-          <Button
-            onClick={onCancel}
-            variant="ghost"
-          >
+          <Button onClick={onCancel} variant="ghost">
             Cancelar
           </Button>
         )}
@@ -111,8 +105,8 @@ export const FormError = ({ message }: { message: string }) => {
       exit={{ opacity: 0, height: 0 }}
       className="overflow-hidden"
     >
-      <div className="flex items-center gap-2 p-3 mt-2 bg-red-50 border border-red-200 rounded-lg">
-        <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0" />
+      <div className="mt-2 flex items-center gap-2 rounded-lg border border-red-200 bg-red-50 p-3">
+        <AlertCircle className="h-4 w-4 flex-shrink-0 text-red-600" />
         <p className="text-sm text-red-800">{message}</p>
       </div>
     </motion.div>

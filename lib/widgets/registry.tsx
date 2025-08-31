@@ -6,7 +6,10 @@ import { InlineWidget } from '@/lib/types'
 // Type for widget component props
 export interface WidgetComponentProps {
   widget: InlineWidget
-  openSheet: (node: React.ReactNode, opts?: { snapPoints?: number[]; initialSnap?: number }) => void
+  openSheet: (
+    node: React.ReactNode,
+    opts?: { snapPoints?: number[]; initialSnap?: number },
+  ) => void
 }
 
 // Type for widget component
@@ -39,7 +42,7 @@ export const getRegisteredWidgetTypes = (): string[] => {
 
 // Helper function to create a domain widget registry with type safety
 export const createDomainWidgets = <T extends string>(
-  widgets: DomainWidgetRegistry<T>
+  widgets: DomainWidgetRegistry<T>,
 ): WidgetRegistry => {
   return widgets as WidgetRegistry
 }

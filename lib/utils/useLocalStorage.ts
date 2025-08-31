@@ -4,9 +4,9 @@ import { useState, useEffect, useCallback } from 'react'
 import { LocalStorage, StorageItem } from './storage'
 
 export function useLocalStorage<T>(
-  key: string, 
+  key: string,
   initialValue: T,
-  expiresIn?: number
+  expiresIn?: number,
 ): [T, (value: T) => void, () => void] {
   // Estado para almacenar el valor
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -20,14 +20,17 @@ export function useLocalStorage<T>(
   })
 
   // Función para actualizar el valor
-  const setValue = useCallback((value: T) => {
-    try {
-      setStoredValue(value)
-      LocalStorage.set(key, value, expiresIn)
-    } catch (error) {
-      console.error(error)
-    }
-  }, [key, expiresIn])
+  const setValue = useCallback(
+    (value: T) => {
+      try {
+        setStoredValue(value)
+        LocalStorage.set(key, value, expiresIn)
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    [key, expiresIn],
+  )
 
   // Función para eliminar el valor
   const removeValue = useCallback(() => {

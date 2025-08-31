@@ -18,5 +18,13 @@ registerWidgets({
 })
 
 // Re-export registry functions for convenience
-export { getWidgetComponent, getRegisteredWidgetTypes, debugWidgetRegistry } from './registry'
-export type { WidgetComponent, WidgetComponentProps, WidgetRegistry } from './registry'
+export {
+  getWidgetComponent,
+  getRegisteredWidgetTypes,
+  debugWidgetRegistry,
+} from './registry'
+export type {
+  WidgetComponent,
+  WidgetComponentProps,
+  WidgetRegistry,
+} from './registry'

@@ -59,25 +59,31 @@ export const DEMO_REGISTRY: Record<string, DemoDefinition> = {
 
 function scaffoldDemo() {
   const args = process.argv.slice(2)
-  
+
   if (args.length < 3) {
-    console.log('Uso: npm run scaffold-demo <nombre> <slug> <descripción> [icono]')
-    console.log('Ejemplo: npm run scaffold-demo "Mi Demo" "mi-demo" "Descripción del demo" "rocket"')
+    console.log(
+      'Uso: npm run scaffold-demo <nombre> <slug> <descripción> [icono]',
+    )
+    console.log(
+      'Ejemplo: npm run scaffold-demo "Mi Demo" "mi-demo" "Descripción del demo" "rocket"',
+    )
     process.exit(1)
   }
 
   const [name, slug, description, icon = 'lightbulb'] = args
-  
+
   // Crear el archivo del demo
-  const demoContent = DEMO_TEMPLATE
-    .replace(/{{DEMO_NAME}}/g, name.replace(/\s+/g, ''))
+  const demoContent = DEMO_TEMPLATE.replace(
+    /{{DEMO_NAME}}/g,
+    name.replace(/\s+/g, ''),
+  )
     .replace(/{{DEMO_SLUG}}/g, slug)
     .replace(/{{DEMO_TITLE}}/g, name)
     .replace(/{{DEMO_DESCRIPTION}}/g, description)
     .replace(/{{DEMO_ICON}}/g, icon)
 
   const demoPath = path.join(__dirname, '..', 'lib', 'demos', `${slug}.ts`)
-  
+
   try {
     fs.writeFileSync(demoPath, demoContent)
     console.log(`✓ Demo creado: ${demoPath}`)
@@ -88,23 +94,23 @@ function scaffoldDemo() {
 
   // Actualizar el registro
   const registryPath = path.join(__dirname, '..', 'lib', 'demos', 'index.ts')
-  
+
   try {
     let registryContent = fs.readFileSync(registryPath, 'utf8')
-    
+
     // Agregar el import
     const importLine = `import { ${name.replace(/\s+/g, '')}Demo } from './${slug}'`
     registryContent = registryContent.replace(
       /import { helpDemo } from '\.\/help'/,
-      `import { helpDemo } from './help'\nimport { ${name.replace(/\s+/g, '')}Demo } from './${slug}'`
+      `import { helpDemo } from './help'\nimport { ${name.replace(/\s+/g, '')}Demo } from './${slug}'`,
     )
-    
+
     // Agregar al registro
     registryContent = registryContent.replace(
       /help: helpDemo/,
-      `help: helpDemo,\n  '${slug}': ${name.replace(/\s+/g, '')}Demo`
+      `help: helpDemo,\n  '${slug}': ${name.replace(/\s+/g, '')}Demo`,
     )
-    
+
     fs.writeFileSync(registryPath, registryContent)
     console.log(`✓ Registro actualizado: ${registryPath}`)
   } catch (error) {

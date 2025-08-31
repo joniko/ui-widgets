@@ -10,30 +10,33 @@ interface FlowContainerProps {
   showBack?: boolean
 }
 
-export const FlowContainer = ({ children, title, onBack, showBack = false }: FlowContainerProps) => {
+export const FlowContainer = ({
+  children,
+  title,
+  onBack,
+  showBack = false,
+}: FlowContainerProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2 }}
-      className="flex flex-col h-full"
+      className="flex h-full flex-col"
     >
-      <div className="flex items-center gap-3 py-4 border-b">
+      <div className="flex items-center gap-3 border-b py-4">
         {showBack && (
           <button
             onClick={onBack}
-            className="p-2 -ml-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="-ml-2 rounded-lg p-2 transition-colors hover:bg-gray-100"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="h-5 w-5" />
           </button>
         )}
-        <h2 className="text-xl font-semibold flex-1">{title}</h2>
+        <h2 className="flex-1 text-xl font-semibold">{title}</h2>
       </div>
-      
-      <div className="flex-1 overflow-auto">
-        {children}
-      </div>
+
+      <div className="flex-1 overflow-auto">{children}</div>
     </motion.div>
   )
 }

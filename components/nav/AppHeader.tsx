@@ -11,27 +11,30 @@ interface AppHeaderProps {
   showBackButton?: boolean
 }
 
-export function AppHeader({ currentDemo, showBackButton = false }: AppHeaderProps) {
+export function AppHeader({
+  currentDemo,
+  showBackButton = false,
+}: AppHeaderProps) {
   return (
-    <header className="fixed top-0 left-0 right-0 border-b border-gray-200/50 bg-white/85 backdrop-blur-sm z-20">
-      <div className="max-w-xl mx-auto px-0 py-4">
+    <header className="fixed left-0 right-0 top-0 z-20 border-b border-gray-200/50 bg-white/85 backdrop-blur-sm">
+      <div className="mx-auto max-w-xl px-0 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {showBackButton && (
               <Link href="/demos">
                 <Button variant="ghost" size="sm" className="p-2">
-                  <ArrowLeftIcon className="w-4 h-4" />
+                  <ArrowLeftIcon className="h-4 w-4" />
                 </Button>
               </Link>
             )}
-            
+
             {currentDemo ? (
               <div>
-                <h1 className="text-xl font-semibold flex items-center space-x-2">
+                <h1 className="flex items-center space-x-2 text-xl font-semibold">
                   <span>{currentDemo.title}</span>
                 </h1>
                 {currentDemo.description && (
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-muted-foreground mt-1 text-sm">
                     {currentDemo.description}
                   </p>
                 )}
@@ -39,7 +42,7 @@ export function AppHeader({ currentDemo, showBackButton = false }: AppHeaderProp
             ) : (
               <div>
                 <h1 className="text-xl font-semibold">Chat Agéntico</h1>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Prototipo con widgets inline y bottom sheet
                 </p>
               </div>

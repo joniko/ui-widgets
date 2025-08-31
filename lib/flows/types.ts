@@ -19,7 +19,10 @@ export interface FlowDefinition {
   name: string
   triggers: (string | RegExp | ((text: string) => boolean))[]
   steps: FlowStep[]
-  onComplete: (data: Record<string, unknown>, ctx: Record<string, unknown>) => void
+  onComplete: (
+    data: Record<string, unknown>,
+    ctx: Record<string, unknown>,
+  ) => void
 }
 
 export interface FlowState {

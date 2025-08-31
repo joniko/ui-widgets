@@ -9,26 +9,26 @@ interface SuccessAnimationProps {
   onComplete?: () => void
 }
 
-export const SuccessAnimation = ({ 
-  title = '¡Listo!', 
+export const SuccessAnimation = ({
+  title = '¡Listo!',
   message = 'Operación completada exitosamente',
-  onComplete 
+  onComplete,
 }: SuccessAnimationProps) => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col items-center justify-center min-h-[400px] p-8"
+      className="flex min-h-[400px] flex-col items-center justify-center p-8"
     >
       {/* Círculo animado */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 200, 
+        transition={{
+          type: 'spring',
+          stiffness: 200,
           damping: 15,
-          delay: 0.1 
+          delay: 0.1,
         }}
         className="relative"
       >
@@ -39,38 +39,38 @@ export const SuccessAnimation = ({
           transition={{
             duration: 1,
             repeat: 2,
-            ease: "easeOut"
+            ease: 'easeOut',
           }}
-          className="absolute inset-0 w-24 h-24 bg-green-500 rounded-full"
+          className="absolute inset-0 h-24 w-24 rounded-full bg-green-500"
         />
-        
+
         {/* Círculo principal */}
-        <div className="relative w-24 h-24 bg-green-500 rounded-full flex items-center justify-center">
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-green-500">
           <motion.div
             initial={{ scale: 0, rotate: -180 }}
             animate={{ scale: 1, rotate: 0 }}
-            transition={{ 
+            transition={{
               delay: 0.3,
-              type: "spring",
-              stiffness: 200
+              type: 'spring',
+              stiffness: 200,
             }}
           >
-            <Check className="w-12 h-12 text-white" strokeWidth={3} />
+            <Check className="h-12 w-12 text-white" strokeWidth={3} />
           </motion.div>
         </div>
       </motion.div>
-      
+
       {/* Texto */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5 }}
-        className="text-center mt-6"
+        className="mt-6 text-center"
       >
-        <h3 className="text-2xl font-semibold mb-2">{title}</h3>
+        <h3 className="mb-2 text-2xl font-semibold">{title}</h3>
         <p className="text-gray-600">{message}</p>
       </motion.div>
-      
+
       {/* Auto-complete */}
       {onComplete && (
         <motion.div
@@ -78,7 +78,7 @@ export const SuccessAnimation = ({
           animate={{ scaleX: 1 }}
           transition={{ duration: 2, delay: 0.5 }}
           onAnimationComplete={onComplete}
-          className="w-full max-w-xs h-1 bg-gray-200 rounded-full mt-8 overflow-hidden"
+          className="mt-8 h-1 w-full max-w-xs overflow-hidden rounded-full bg-gray-200"
         >
           <motion.div
             initial={{ x: '-100%' }}

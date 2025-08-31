@@ -11,22 +11,29 @@ interface FlowEngineProps {
   initialData?: Record<string, unknown>
 }
 
-export const FlowEngine = ({ flow, onComplete, onCancel, initialData = {} }: FlowEngineProps) => {
+export const FlowEngine = ({
+  flow,
+  onComplete,
+  onCancel,
+  initialData = {},
+}: FlowEngineProps) => {
   const [state, setState] = useState<FlowState>({
     currentStep: 0,
     data: initialData,
-    history: []
+    history: [],
   })
 
   const currentStep = flow.steps[state.currentStep]
 
   const goNext = (stepData?: Record<string, unknown>) => {
     const newData = { ...state.data, ...stepData }
-    
+
     // Si es el último paso, completar
     if (state.currentStep >= flow.steps.length - 1) {
       onComplete(newData)
-      flow.onComplete(newData, { /* context */ })
+      flow.onComplete(newData, {
+        /* context */
+      })
       return
     }
 
@@ -34,7 +41,7 @@ export const FlowEngine = ({ flow, onComplete, onCancel, initialData = {} }: Flo
     setState({
       currentStep: state.currentStep + 1,
       data: newData,
-      history: [...state.history, state.currentStep]
+      history: [...state.history, state.currentStep],
     })
   }
 
@@ -46,11 +53,11 @@ export const FlowEngine = ({ flow, onComplete, onCancel, initialData = {} }: Flo
 
     const newHistory = [...state.history]
     const previousStep = newHistory.pop()!
-    
+
     setState({
       ...state,
       currentStep: previousStep,
-      history: newHistory
+      history: newHistory,
     })
   }
 
@@ -61,7 +68,7 @@ export const FlowEngine = ({ flow, onComplete, onCancel, initialData = {} }: Flo
           data: state.data,
           onNext: goNext,
           onBack: goBack,
-          isFirstStep: state.currentStep === 0
+          isFirstStep: state.currentStep === 0,
         })}
       </div>
     </AnimatePresence>

@@ -2,7 +2,7 @@
 
 /**
  * 🤖 Auto-registro de widgets
- * 
+ *
  * Este script detecta automáticamente todos los archivos de dominio
  * en lib/flows/cases/ y genera el archivo de registro de widgets.
  */
@@ -34,20 +34,20 @@ function detectDomainFiles(): DomainInfo[] {
 
     const filePath = path.join(CASES_DIR, file)
     const content = fs.readFileSync(filePath, 'utf-8')
-    
+
     // Buscar export de widgets (ej: export const paymentWidgets)
     const widgetsExportMatch = content.match(/export const (\w+Widgets)\s*=/)
-    
+
     if (widgetsExportMatch) {
       const domainName = file.replace('.tsx', '')
       const widgetsExportName = widgetsExportMatch[1]
-      
+
       domains.push({
         fileName: file,
         domainName,
-        widgetsExportName
+        widgetsExportName,
       })
-      
+
       console.log(`✓ Detectado dominio: ${domainName} (${widgetsExportName})`)
     } else {
       console.log(`⚠ Archivo sin widgets: ${file}`)
@@ -62,11 +62,14 @@ function detectDomainFiles(): DomainInfo[] {
  */
 function generateWidgetsIndex(domains: DomainInfo[]): string {
   const imports = domains
-    .map(d => `import { ${d.widgetsExportName} } from '@/lib/flows/cases/${d.domainName}'`)
+    .map(
+      (d) =>
+        `import { ${d.widgetsExportName} } from '@/lib/flows/cases/${d.domainName}'`,
+    )
     .join('\n')
 
   const registrations = domains
-    .map(d => `  ...${d.widgetsExportName},`)
+    .map((d) => `  ...${d.widgetsExportName},`)
     .join('\n')
 
   return `'use client'
@@ -99,14 +102,16 @@ function main() {
   try {
     // Detectar dominios
     const domains = detectDomainFiles()
-    
+
     if (domains.length === 0) {
       console.log('✗ No se encontraron dominios con widgets')
       return
     }
 
     console.log(`\n📦 Encontrados ${domains.length} dominios:`)
-    domains.forEach(d => console.log(`   - ${d.domainName} (${d.widgetsExportName})`))
+    domains.forEach((d) =>
+      console.log(`   - ${d.domainName} (${d.widgetsExportName})`),
+    )
 
     // Generar archivo
     const content = generateWidgetsIndex(domains)
@@ -114,7 +119,6 @@ function main() {
 
     console.log(`\n✓ Archivo generado: ${WIDGETS_INDEX_FILE}`)
     console.log('🎯 Widgets registrados automáticamente!')
-
   } catch (error) {
     console.error('✗ Error:', error)
     process.exit(1)

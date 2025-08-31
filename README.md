@@ -16,6 +16,7 @@ Un prototipo completo que demuestra cómo funcionará un chat agéntico donde el
 Este proyecto implementa un sistema de diseño completo para experiencias conversacionales que combina lo mejor de las interfaces de chat con micro-UIs. Para principios y lineamientos detallados, consulta nuestra [Documentación del Sistema de Diseño de Chat UI](docs/CHAT_UI_DESIGN_SYSTEM.md).
 
 ### Principios Clave:
+
 - **Flujos informativos** (balance, consultas) se muestran inline con widgets
 - **Flujos interactivos** (transferencias, pagos) usan bottom sheets para input del usuario
 - **Mensajes generados por UI** tienen estilo distintivo (transparente + borde punteado)
@@ -36,17 +37,20 @@ Este proyecto implementa un sistema de diseño completo para experiencias conver
 ## 📦 Instalación
 
 1. **Clonar el repositorio**
+
    ```bash
    git clone <repo-url>
    cd ui-widgets
    ```
 
 2. **Instalar dependencias**
+
    ```bash
    npm install
    ```
 
 3. **Ejecutar en desarrollo**
+
    ```bash
    npm run dev
    ```
@@ -59,16 +63,19 @@ Este proyecto implementa un sistema de diseño completo para experiencias conver
 ## 🎯 Demos Disponibles
 
 ### 1. Transferencia de Dinero (`/demos/transfer`)
+
 - Gestiona transferencias entre cuentas
 - Widgets de resumen de cuentas
 - Bottom sheet con formulario de transferencia
 
 ### 2. Pago de Servicios (`/demos/pay-service`)
+
 - Paga facturas de servicios públicos
 - Lista de servicios pendientes
 - Formulario de pago en bottom sheet
 
 ### 3. Ayuda Contextual (`/demos/help`)
+
 - Obtén ayuda paso a paso
 - Guías interactivas
 - Información de contacto
@@ -76,6 +83,7 @@ Este proyecto implementa un sistema de diseño completo para experiencias conver
 ## 🏗️ Arquitectura
 
 ### Estructura de Archivos
+
 ```
 app/
   layout.tsx                 # Layout principal
@@ -110,6 +118,7 @@ lib/
 ```
 
 ### Flujo de Datos
+
 1. **Demo Definition** define mensajes iniciales y quick replies
 2. **ChatLayout** orquesta la conversación
 3. **WidgetRenderer** renderiza widgets según su tipo
@@ -119,6 +128,7 @@ lib/
 ## 🎨 Widgets Disponibles
 
 ### Tipos de Widget
+
 - `info-card`: Cards informativas con datos
 - `account-list`: Lista de cuentas clicables
 - `payment-cta`: Botones de llamada a la acción
@@ -127,6 +137,7 @@ lib/
 - `image`: Imágenes con soporte responsive
 
 ### Crear Nuevos Widgets
+
 1. Agregar el tipo en `lib/types.ts`
 2. Implementar el renderizado en `WidgetRenderer.tsx`
 3. Usar en los demos con `createWidgetBlock()`
@@ -134,17 +145,20 @@ lib/
 ## 🔧 Crear Nuevos Demos
 
 ### Usando el Script de Scaffold
+
 ```bash
 npm run scaffold-demo "Mi Demo" "mi-demo" "Descripción del demo" "🚀"
 ```
 
 ### Manualmente
+
 1. Crear archivo en `lib/demos/[slug].ts`
 2. Exportar `DemoDefinition`
 3. Agregar al registro en `lib/demos/index.ts`
 4. Implementar handlers `onQuickReply` y `onUserMessage`
 
 ### Estructura de Demo
+
 ```typescript
 export const miDemo: DemoDefinition = {
   slug: 'mi-demo',
@@ -165,6 +179,7 @@ export const miDemo: DemoDefinition = {
 ## 📱 Bottom Sheet
 
 ### Características
+
 - **Snap Points**: Múltiples alturas configurables
 - **Gestos**: Drag to dismiss, snap to points
 - **Teclado**: `repositionInputs` para inputs
@@ -172,6 +187,7 @@ export const miDemo: DemoDefinition = {
 - **Modal**: Soporte para modo no-modal
 
 ### Uso
+
 ```typescript
 const ctx: DemoContext = {
   openSheet: (node, options) => {
@@ -189,12 +205,14 @@ ctx.openSheet(
 ## 🎭 Animaciones
 
 ### Widgets Inline
+
 - Fade + slide sutil (8-12px)
 - Duración: 180-220ms
 - Easing: easeOut
 - Stagger en quick replies
 
 ### Bottom Sheet
+
 - Curva iOS-like (proporcionada por Vaul)
 - Overlay con opacidad vinculada al drag
 - Transiciones suaves entre snap points
@@ -227,16 +245,19 @@ npm run scaffold-demo # Crear nuevo demo
 ## 📝 Notas de Desarrollo
 
 ### Consideraciones de Performance
+
 - Widgets renderizados bajo demanda
 - Lazy loading de componentes pesados
 - Optimización de re-renders
 
 ### Estado del Bottom Sheet
+
 - Contexto compartido entre componentes
 - Estado local para cada instancia
 - Cleanup automático al cerrar
 
 ### Manejo de Errores
+
 - Fallbacks para widgets no soportados
 - Error boundaries en componentes críticos
 - Logging para debugging
