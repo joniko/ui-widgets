@@ -170,7 +170,7 @@ export function ChatLayout({
       </div>
 
       {/* Fixed Bottom Container */}
-      <div className="fixed bottom-0 left-0 right-0 z-10 mx-auto max-w-xl py-6">
+      <div className="fixed bottom-0 left-0 right-0 z-10 mx-auto max-w-xl pt-6 md:pb-6">
         {/* Quick Replies - Only show if user hasn't interacted */}
         {!hasUserInteracted && (
           <QuickReplies
