@@ -67,12 +67,18 @@ export function ChatLayout({
     }
   }, [])
 
-  // Auto scroll cuando se abre el teclado
+  // Auto scroll cuando se abre el teclado y ajustar posición
   useEffect(() => {
     if (isKeyboardOpen) {
+      // Scroll al final de los mensajes
       setTimeout(() => {
         messageListRef.current?.scrollToBottom()
-      }, 300)
+      }, 100)
+      
+      // Asegurar que el contenedor principal esté en la posición correcta
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 200)
     }
   }, [isKeyboardOpen])
 
@@ -206,20 +212,27 @@ export function ChatLayout({
 
   return (
     <div 
-      className="mx-auto max-w-2xl min-w-full relative"
-      style={{ height: viewportHeight }}
+      className="mx-auto max-w-2xl min-w-full flex flex-col"
+      style={{ 
+        height: viewportHeight,
+        maxHeight: viewportHeight,
+        overflow: 'hidden'
+      }}
     >
-      {/* Messages - Full height with padding for header and bottom input */}
+      {/* Messages - Flex grow to fill available space */}
       <div 
-        className={`z-10 mx-auto h-full max-w-xl overflow-y-auto pt-0 ${
-          isKeyboardOpen ? 'pb-32' : 'pb-20'
+        className={`flex-1 z-10 mx-auto max-w-xl overflow-y-auto pt-0 ${
+          isKeyboardOpen ? 'pb-4' : 'pb-4'
         }`}
+        style={{ 
+          minHeight: 0, // Permite que flex-1 funcione correctamente
+        }}
       >
         <MessageList ref={messageListRef} messages={messages} />
       </div>
 
-      {/* Fixed Bottom Container */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 mx-auto max-w-xl pt-6 md:pb-6">
+      {/* Bottom Container - Fixed height */}
+      <div className="flex-shrink-0 z-10 mx-auto max-w-xl pt-6 md:pb-6">
         {/* Quick Replies - Only show if user hasn't interacted */}
         {!hasUserInteracted && (
           <QuickReplies
