@@ -232,7 +232,7 @@ export function ChatLayout({
       </div>
 
       {/* Bottom Container - Fixed height */}
-      <div className="flex-shrink-0 z-10 mx-auto max-w-xl pt-6 md:pb-6">
+      <div className="flex-shrink-0 z-10 w-full mx-auto max-w-xl pt-6 md:pb-6">
         {/* Quick Replies - Only show if user hasn't interacted */}
         {!hasUserInteracted && (
           <QuickReplies
