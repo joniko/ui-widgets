@@ -122,11 +122,23 @@ export function ChatComposer({
                                 'text-base leading-relaxed',
                                 'disabled:cursor-not-allowed disabled:opacity-50',
                               )}
+                              style={{
+                                WebkitAppearance: 'none',
+                                WebkitUserSelect: 'text',
+                                WebkitTouchCallout: 'none',
+                                WebkitTapHighlightColor: 'transparent',
+                              }}
                               rows={1}
                               role="textbox"
-                              aria-autocomplete="both"
+                              aria-autocomplete="off"
                               spellCheck={false}
-                              enterKeyHint="enter"
+                              autoComplete="off"
+                              autoCorrect="off"
+                              autoCapitalize="off"
+                              data-gramm="false"
+                              data-gramm_editor="false"
+                              data-enable-grammarly="false"
+                              enterKeyHint="send"
                             />
                           </div>
                         </div>
