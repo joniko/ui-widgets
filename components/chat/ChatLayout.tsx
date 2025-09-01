@@ -221,7 +221,7 @@ export function ChatLayout({
     >
       {/* Messages - Flex grow to fill available space */}
       <div 
-        className={`flex-1 z-10 mx-auto max-w-xl overflow-y-auto pt-0 ${
+        className={`flex-1 z-10 mx-auto w-full max-w-xl overflow-y-auto pt-0 ${
           isKeyboardOpen ? 'pb-4' : 'pb-4'
         }`}
         style={{ 
