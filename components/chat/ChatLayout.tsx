@@ -43,11 +43,16 @@ export function ChatLayout({
       if (window.visualViewport) {
         const height = window.visualViewport.height
         const windowHeight = window.innerHeight
-        setViewportHeight(`${height}px`)
-        setIsKeyboardOpen(height < windowHeight * 0.75)
+        const newViewportHeight = `${height}px`
+        const newIsKeyboardOpen = height < windowHeight * 0.75
+        
+        // Actualizar estado de forma sincronizada para evitar re-renders múltiples
+        setViewportHeight(newViewportHeight)
+        setIsKeyboardOpen(newIsKeyboardOpen)
       } else {
         // Fallback para navegadores que no soportan visualViewport
         setViewportHeight(`${window.innerHeight}px`)
+        setIsKeyboardOpen(false)
       }
     }
 
@@ -70,24 +75,22 @@ export function ChatLayout({
   // Auto scroll cuando se abre el teclado y ajustar posición
   useEffect(() => {
     if (isKeyboardOpen) {
-      // Scroll al final de los mensajes
+      // Ajuste inmediato sin animación para evitar el "salto"
+      window.scrollTo({ top: 0, behavior: 'auto' })
+      
+      // Scroll al final de los mensajes - más rápido
       setTimeout(() => {
         messageListRef.current?.scrollToBottom()
-      }, 100)
-      
-      // Asegurar que el contenedor principal esté en la posición correcta
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }, 200)
+      }, 50)
     }
   }, [isKeyboardOpen])
 
   const pushMessage = useCallback((message: Message) => {
     setMessages((prev) => [...prev, message])
-    // Hacer scroll después de agregar el mensaje
+    // Hacer scroll después de agregar el mensaje - más rápido
     setTimeout(() => {
       messageListRef.current?.scrollToBottom()
-    }, 100)
+    }, 50)
   }, [])
 
   const pushUserMessage = useCallback(
