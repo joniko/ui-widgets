@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { Message, QuickReply, DemoContext } from '@/lib/types'
 import {
   createMessage,
@@ -31,8 +31,50 @@ export function ChatLayout({
     useState<QuickReply[]>(initialQuickReplies)
   const [hasUserInteracted, setHasUserInteracted] = useState(false)
   const [inputValue, setInputValue] = useState('')
+  const [viewportHeight, setViewportHeight] = useState('100vh')
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false)
   const { openSheet, isOpen, content, closeSheet } = useBottomSheet()
   const messageListRef = useRef<MessageListRef>(null)
+
+  // Manejar viewport height dinámico para teclado virtual
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      // Usar visualViewport si está disponible (mejor para teclado virtual)
+      if (window.visualViewport) {
+        const height = window.visualViewport.height
+        const windowHeight = window.innerHeight
+        setViewportHeight(`${height}px`)
+        setIsKeyboardOpen(height < windowHeight * 0.75)
+      } else {
+        // Fallback para navegadores que no soportan visualViewport
+        setViewportHeight(`${window.innerHeight}px`)
+      }
+    }
+
+    // Configurar listeners
+    updateViewportHeight()
+    
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateViewportHeight)
+      return () => {
+        window.visualViewport?.removeEventListener('resize', updateViewportHeight)
+      }
+    } else {
+      window.addEventListener('resize', updateViewportHeight)
+      return () => {
+        window.removeEventListener('resize', updateViewportHeight)
+      }
+    }
+  }, [])
+
+  // Auto scroll cuando se abre el teclado
+  useEffect(() => {
+    if (isKeyboardOpen) {
+      setTimeout(() => {
+        messageListRef.current?.scrollToBottom()
+      }, 300)
+    }
+  }, [isKeyboardOpen])
 
   const pushMessage = useCallback((message: Message) => {
     setMessages((prev) => [...prev, message])
@@ -163,14 +205,21 @@ export function ChatLayout({
   )
 
   return (
-    <div className="mx-auto h-screen max-w-2xl min-w-full">
+    <div 
+      className="mx-auto max-w-2xl min-w-full relative"
+      style={{ height: viewportHeight }}
+    >
       {/* Messages - Full height with padding for header and bottom input */}
-      <div className="z-10 mx-auto h-full max-w-xl overflow-y-auto pb-20 pt-0">
+      <div 
+        className={`z-10 mx-auto h-full max-w-xl overflow-y-auto pt-0 ${
+          isKeyboardOpen ? 'pb-32' : 'pb-20'
+        }`}
+      >
         <MessageList ref={messageListRef} messages={messages} />
       </div>
 
       {/* Fixed Bottom Container */}
-      <div className="fixed bottom-0 left-0 right-0 z-10 mx-auto max-w-xl pt-6 md:pb-6">
+      <div className="absolute bottom-0 left-0 right-0 z-10 mx-auto max-w-xl pt-6 md:pb-6">
         {/* Quick Replies - Only show if user hasn't interacted */}
         {!hasUserInteracted && (
           <QuickReplies
