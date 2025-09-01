@@ -212,7 +212,7 @@ export function ChatLayout({
 
   return (
     <div 
-      className="mx-auto max-w-2xl min-w-full flex flex-col"
+      className="mx-auto max-w-2xl w-full flex flex-col"
       style={{ 
         height: viewportHeight,
         maxHeight: viewportHeight,
