@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 interface AvatarProps {
   src?: string
   alt?: string
@@ -22,10 +24,18 @@ export const Avatar = ({
   }
 
   if (src) {
+    const sizeMap = {
+      sm: 32,
+      md: 48,
+      lg: 64,
+    }
+    
     return (
-      <img
+      <Image
         src={src}
-        alt={alt}
+        alt={alt || ''}
+        width={sizeMap[size]}
+        height={sizeMap[size]}
         className={`${sizes[size]} rounded-full object-cover ${className}`}
       />
     )

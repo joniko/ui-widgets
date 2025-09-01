@@ -130,7 +130,7 @@ export function ChatComposer({
                               }}
                               rows={1}
                               role="textbox"
-                              aria-autocomplete="off"
+                              aria-autocomplete="none"
                               spellCheck={false}
                               autoComplete="off"
                               autoCorrect="off"

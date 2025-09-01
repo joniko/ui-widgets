@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button as UIButton } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import Image from 'next/image'
 import {
   WidgetComponentProps,
   createDomainWidgets,
@@ -137,9 +138,11 @@ export const transferFlow: FlowDefinition = {
                 className="flex w-full items-center justify-between rounded-lg p-4 transition-colors hover:bg-gray-50"
               >
                 <div className="flex items-center gap-3">
-                  <img
+                  <Image
                     src={contact.avatar}
                     alt={contact.name}
+                    width={48}
+                    height={48}
                     className="h-12 w-12 rounded-full object-cover"
                   />
                   <div className="text-left">
@@ -272,9 +275,11 @@ export const transferFlow: FlowDefinition = {
           <div className="py-4">
             {/* Destinatario */}
             <div className="mb-6 flex items-center gap-3">
-              <img
+              <Image
                 src={(data.contact as ContactData).avatar}
                 alt={(data.contact as ContactData).name}
+                width={48}
+                height={48}
                 className="h-12 w-12 rounded-full object-cover"
               />
               <div>
@@ -419,7 +424,6 @@ export const TransferQuickAction = ({
   widget,
   openSheet,
 }: WidgetComponentProps) => {
-  const _props = widget.props
 
   return (
     <Card
